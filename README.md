@@ -8,6 +8,21 @@
 
 ---
 
+## 🎤 Pitch
+
+Todo ano, **mais de 110 mil brasileiros** são diagnosticados com tuberculose, uma doença que tem tratamento e cura, mas que voltou a crescer: **+30,9% entre 2013 e 2024**. Os dados para agir já existem e são públicos, mas ficam presos em planilhas do DATASUS que poucos gestores têm tempo de analisar. O resultado é um sistema de saúde que reage ao problema depois que ele aparece.
+
+O **AlertaTB** transforma essas planilhas num painel que mostra, em segundos, **onde a doença cresce mais rápido** e **quantos casos esperar nos próximos dez anos**. Assim, as secretarias de saúde podem comprar testes e medicamentos, reforçar equipes e direcionar campanhas **antes** do pico.
+
+### Nosso diferencial
+- **Prevê, não só descreve:** além do histórico, projeta os casos de 2025 a 2034 por região, estado e sexo.
+- **Alerta automático:** cada região recebe um selo (🔴 Crítico, 🟠 Atenção, 🟢 Moderado) calculado pela velocidade **e** pela consistência do crescimento, não por opinião.
+- **Transparência estatística:** o painel mostra o R² e o erro do modelo testado com dados reais, para o gestor saber quanto pode confiar em cada projeção.
+- **Dados 100% públicos e oficiais** (SINAN/DATASUS), com cálculo reproduzível em Python aberto neste repositório.
+- **Feito para quem decide:** leitura em segundos, sem precisar entender estatística.
+
+---
+
 ## 📌 Sobre o projeto
 
 ### O problema

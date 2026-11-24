@@ -4,8 +4,8 @@ A banca avalia a **contribuição visível de todos os integrantes**. Por isso, 
 
 ## Primeira vez
 ```bash
-git clone https://github.com/<usuario>/<repositorio>.git
-cd <repositorio>
+git clone https://github.com/mateusmellomaia12-cloud/alertatb.git
+cd alertatb
 git config user.name  "Seu Nome"
 git config user.email "seu-email-do-github@exemplo.com"
 ```

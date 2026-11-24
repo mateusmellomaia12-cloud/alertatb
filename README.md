@@ -90,8 +90,8 @@ Arquivos em [`data/`](data/):
 
 ```bash
 # 1. Clonar o repositório
-git clone https://github.com/<usuario>/<repositorio>.git
-cd <repositorio>
+git clone https://github.com/mateusmellomaia12-cloud/alertatb.git
+cd alertatb
 
 # 2. Análise de dados (Python 3.10+)
 pip install -r analysis/requirements.txt

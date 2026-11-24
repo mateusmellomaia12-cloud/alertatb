@@ -41,7 +41,10 @@ Meta **3.3** da ONU: acabar com epidemias de doenças transmissíveis como a tub
 Arquivos em [`data/`](data/):
 - [`data/raw/Analise_Tuberculose.xlsx`](data/raw/Analise_Tuberculose.xlsx): planilha original com estatística descritiva, correlação, regressões e projeções.
 - [`data/processed/tuberculose_2013_2024.csv`](data/processed/tuberculose_2013_2024.csv): série histórica limpa.
-- [`data/processed/projecao_2025_2034.csv`](data/processed/projecao_2025_2034.csv): projeção linear.
+- [`data/processed/projecao_2025_2034.csv`](data/processed/projecao_2025_2034.csv): projeção linear original da planilha.
+- [`data/processed/dados_painel.json`](data/processed/dados_painel.json): gerado por [`analysis/regressao.py`](analysis/regressao.py), usado pelo portal web.
+
+📋 **Avaliação da base, problemas encontrados e próximos passos:** [docs/avaliacao_da_base.md](docs/avaliacao_da_base.md)
 
 ### Principais indicadores
 
@@ -93,9 +96,9 @@ Arquivos em [`data/`](data/):
 git clone https://github.com/mateusmellomaia12-cloud/alertatb.git
 cd alertatb
 
-# 2. Análise de dados (Python 3.10+)
+# 2. Análise de dados (Python 3.10+): gera data/processed/dados_painel.json
 pip install -r analysis/requirements.txt
-python analysis/<script_principal>.py
+python analysis/regressao.py
 
 # 3. Portal web
 # Abrir web/index.html no navegador (ou usar a extensão Live Server do VS Code)

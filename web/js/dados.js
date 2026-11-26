@@ -1,0 +1,1125 @@
+// Gerado por analysis/regressao.py — não editar à mão
+window.DADOS = {
+  "fonte": "SINAN/DATASUS — Ministério da Saúde",
+  "periodo_historico": [
+    2013,
+    2024
+  ],
+  "anos_excluidos_do_ajuste": [
+    2020
+  ],
+  "regra_status": {
+    "Crítico": "crescimento >= 2.0%/ano e R² >= 0.8",
+    "Atenção": "crescimento >= 1.5%/ano ou R² >= 0.8",
+    "Moderado": "demais casos"
+  },
+  "avisos_consistencia": [
+    {
+      "ano": 2013,
+      "recorte": "regiões",
+      "total": 85212,
+      "soma": 84222,
+      "diferenca": -990
+    },
+    {
+      "ano": 2015,
+      "recorte": "regiões",
+      "total": 85416,
+      "soma": 85462,
+      "diferenca": 46
+    },
+    {
+      "ano": 2015,
+      "recorte": "sexo",
+      "total": 85416,
+      "soma": 85652,
+      "diferenca": 236
+    },
+    {
+      "ano": 2021,
+      "recorte": "regiões",
+      "total": 91385,
+      "soma": 91345,
+      "diferenca": -40
+    },
+    {
+      "ano": 2022,
+      "recorte": "regiões",
+      "total": 103322,
+      "soma": 103124,
+      "diferenca": -198
+    }
+  ],
+  "recortes": {
+    "Brasil": {
+      "grupo": "Brasil",
+      "historico": [
+        {
+          "ano": 2013,
+          "casos": 85212
+        },
+        {
+          "ano": 2014,
+          "casos": 85216
+        },
+        {
+          "ano": 2015,
+          "casos": 85416
+        },
+        {
+          "ano": 2016,
+          "casos": 86210
+        },
+        {
+          "ano": 2017,
+          "casos": 90295
+        },
+        {
+          "ano": 2018,
+          "casos": 94735
+        },
+        {
+          "ano": 2019,
+          "casos": 96685
+        },
+        {
+          "ano": 2020,
+          "casos": 86236
+        },
+        {
+          "ano": 2021,
+          "casos": 91385
+        },
+        {
+          "ano": 2022,
+          "casos": 103322
+        },
+        {
+          "ano": 2023,
+          "casos": 109807
+        },
+        {
+          "ano": 2024,
+          "casos": 111521
+        }
+      ],
+      "projecao": [
+        {
+          "ano": 2025,
+          "casos": 110501
+        },
+        {
+          "ano": 2026,
+          "casos": 112908
+        },
+        {
+          "ano": 2027,
+          "casos": 115315
+        },
+        {
+          "ano": 2028,
+          "casos": 117722
+        },
+        {
+          "ano": 2029,
+          "casos": 120129
+        },
+        {
+          "ano": 2030,
+          "casos": 122536
+        },
+        {
+          "ano": 2031,
+          "casos": 124943
+        },
+        {
+          "ano": 2032,
+          "casos": 127350
+        },
+        {
+          "ano": 2033,
+          "casos": 129757
+        },
+        {
+          "ano": 2034,
+          "casos": 132164
+        }
+      ],
+      "coeficiente_anual": 2407.0,
+      "intercepto": -4763652.7,
+      "r2": 0.85,
+      "crescimento_pct_ano": 2.16,
+      "crescimento_total_pct": 30.9,
+      "casos_ultimo_ano": 111521,
+      "backtest_erro_pct": {
+        "2022": -6.4,
+        "2023": -10.6,
+        "2024": -10.8
+      },
+      "status": "Crítico"
+    },
+    "Norte": {
+      "grupo": "Região",
+      "historico": [
+        {
+          "ano": 2013,
+          "casos": 8887
+        },
+        {
+          "ano": 2014,
+          "casos": 8776
+        },
+        {
+          "ano": 2015,
+          "casos": 9013
+        },
+        {
+          "ano": 2016,
+          "casos": 9365
+        },
+        {
+          "ano": 2017,
+          "casos": 10152
+        },
+        {
+          "ano": 2018,
+          "casos": 10413
+        },
+        {
+          "ano": 2019,
+          "casos": 11765
+        },
+        {
+          "ano": 2020,
+          "casos": 10494
+        },
+        {
+          "ano": 2021,
+          "casos": 11556
+        },
+        {
+          "ano": 2022,
+          "casos": 13155
+        },
+        {
+          "ano": 2023,
+          "casos": 13939
+        },
+        {
+          "ano": 2024,
+          "casos": 15065
+        }
+      ],
+      "projecao": [
+        {
+          "ano": 2025,
+          "casos": 14842
+        },
+        {
+          "ano": 2026,
+          "casos": 15406
+        },
+        {
+          "ano": 2027,
+          "casos": 15971
+        },
+        {
+          "ano": 2028,
+          "casos": 16535
+        },
+        {
+          "ano": 2029,
+          "casos": 17099
+        },
+        {
+          "ano": 2030,
+          "casos": 17663
+        },
+        {
+          "ano": 2031,
+          "casos": 18227
+        },
+        {
+          "ano": 2032,
+          "casos": 18791
+        },
+        {
+          "ano": 2033,
+          "casos": 19355
+        },
+        {
+          "ano": 2034,
+          "casos": 19919
+        }
+      ],
+      "coeficiente_anual": 564.1,
+      "intercepto": -1127480.3,
+      "r2": 0.938,
+      "crescimento_pct_ano": 3.74,
+      "crescimento_total_pct": 69.5,
+      "casos_ultimo_ano": 15065,
+      "backtest_erro_pct": {
+        "2022": -7.0,
+        "2023": -9.2,
+        "2024": -13.2
+      },
+      "status": "Crítico"
+    },
+    "Nordeste": {
+      "grupo": "Região",
+      "historico": [
+        {
+          "ano": 2013,
+          "casos": 23073
+        },
+        {
+          "ano": 2014,
+          "casos": 22390
+        },
+        {
+          "ano": 2015,
+          "casos": 22202
+        },
+        {
+          "ano": 2016,
+          "casos": 22545
+        },
+        {
+          "ano": 2017,
+          "casos": 23815
+        },
+        {
+          "ano": 2018,
+          "casos": 25230
+        },
+        {
+          "ano": 2019,
+          "casos": 25407
+        },
+        {
+          "ano": 2020,
+          "casos": 22313
+        },
+        {
+          "ano": 2021,
+          "casos": 23830
+        },
+        {
+          "ano": 2022,
+          "casos": 27206
+        },
+        {
+          "ano": 2023,
+          "casos": 27903
+        },
+        {
+          "ano": 2024,
+          "casos": 27559
+        }
+      ],
+      "projecao": [
+        {
+          "ano": 2025,
+          "casos": 28029
+        },
+        {
+          "ano": 2026,
+          "casos": 28539
+        },
+        {
+          "ano": 2027,
+          "casos": 29048
+        },
+        {
+          "ano": 2028,
+          "casos": 29557
+        },
+        {
+          "ano": 2029,
+          "casos": 30066
+        },
+        {
+          "ano": 2030,
+          "casos": 30575
+        },
+        {
+          "ano": 2031,
+          "casos": 31084
+        },
+        {
+          "ano": 2032,
+          "casos": 31593
+        },
+        {
+          "ano": 2033,
+          "casos": 32102
+        },
+        {
+          "ano": 2034,
+          "casos": 32611
+        }
+      ],
+      "coeficiente_anual": 509.1,
+      "intercepto": -1002879.0,
+      "r2": 0.794,
+      "crescimento_pct_ano": 1.85,
+      "crescimento_total_pct": 19.4,
+      "casos_ultimo_ano": 27559,
+      "backtest_erro_pct": {
+        "2022": -7.2,
+        "2023": -8.4,
+        "2024": -6.1
+      },
+      "status": "Atenção"
+    },
+    "Centro-Oeste": {
+      "grupo": "Região",
+      "historico": [
+        {
+          "ano": 2013,
+          "casos": 4529
+        },
+        {
+          "ano": 2014,
+          "casos": 4295
+        },
+        {
+          "ano": 2015,
+          "casos": 4018
+        },
+        {
+          "ano": 2016,
+          "casos": 4076
+        },
+        {
+          "ano": 2017,
+          "casos": 4162
+        },
+        {
+          "ano": 2018,
+          "casos": 4585
+        },
+        {
+          "ano": 2019,
+          "casos": 4714
+        },
+        {
+          "ano": 2020,
+          "casos": 4194
+        },
+        {
+          "ano": 2021,
+          "casos": 4361
+        },
+        {
+          "ano": 2022,
+          "casos": 5034
+        },
+        {
+          "ano": 2023,
+          "casos": 5670
+        },
+        {
+          "ano": 2024,
+          "casos": 5491
+        }
+      ],
+      "projecao": [
+        {
+          "ano": 2025,
+          "casos": 5410
+        },
+        {
+          "ano": 2026,
+          "casos": 5528
+        },
+        {
+          "ano": 2027,
+          "casos": 5645
+        },
+        {
+          "ano": 2028,
+          "casos": 5763
+        },
+        {
+          "ano": 2029,
+          "casos": 5880
+        },
+        {
+          "ano": 2030,
+          "casos": 5998
+        },
+        {
+          "ano": 2031,
+          "casos": 6115
+        },
+        {
+          "ano": 2032,
+          "casos": 6233
+        },
+        {
+          "ano": 2033,
+          "casos": 6350
+        },
+        {
+          "ano": 2034,
+          "casos": 6468
+        }
+      ],
+      "coeficiente_anual": 117.5,
+      "intercepto": -232528.6,
+      "r2": 0.628,
+      "crescimento_pct_ano": 2.14,
+      "crescimento_total_pct": 21.2,
+      "casos_ultimo_ano": 5491,
+      "backtest_erro_pct": {
+        "2022": -10.8,
+        "2023": -20.3,
+        "2024": -17.2
+      },
+      "status": "Atenção"
+    },
+    "Sul": {
+      "grupo": "Região",
+      "historico": [
+        {
+          "ano": 2013,
+          "casos": 11266
+        },
+        {
+          "ano": 2014,
+          "casos": 11174
+        },
+        {
+          "ano": 2015,
+          "casos": 11026
+        },
+        {
+          "ano": 2016,
+          "casos": 10678
+        },
+        {
+          "ano": 2017,
+          "casos": 10922
+        },
+        {
+          "ano": 2018,
+          "casos": 11476
+        },
+        {
+          "ano": 2019,
+          "casos": 12065
+        },
+        {
+          "ano": 2020,
+          "casos": 10531
+        },
+        {
+          "ano": 2021,
+          "casos": 10865
+        },
+        {
+          "ano": 2022,
+          "casos": 12065
+        },
+        {
+          "ano": 2023,
+          "casos": 13125
+        },
+        {
+          "ano": 2024,
+          "casos": 13145
+        }
+      ],
+      "projecao": [
+        {
+          "ano": 2025,
+          "casos": 12778
+        },
+        {
+          "ano": 2026,
+          "casos": 12953
+        },
+        {
+          "ano": 2027,
+          "casos": 13128
+        },
+        {
+          "ano": 2028,
+          "casos": 13303
+        },
+        {
+          "ano": 2029,
+          "casos": 13477
+        },
+        {
+          "ano": 2030,
+          "casos": 13652
+        },
+        {
+          "ano": 2031,
+          "casos": 13827
+        },
+        {
+          "ano": 2032,
+          "casos": 14002
+        },
+        {
+          "ano": 2033,
+          "casos": 14176
+        },
+        {
+          "ano": 2034,
+          "casos": 14351
+        }
+      ],
+      "coeficiente_anual": 174.7,
+      "intercepto": -341053.0,
+      "r2": 0.562,
+      "crescimento_pct_ano": 1.33,
+      "crescimento_total_pct": 16.7,
+      "casos_ultimo_ano": 13145,
+      "backtest_erro_pct": {
+        "2022": -6.1,
+        "2023": -13.5,
+        "2024": -13.5
+      },
+      "status": "Moderado"
+    },
+    "Sudeste": {
+      "grupo": "Região",
+      "historico": [
+        {
+          "ano": 2013,
+          "casos": 36467
+        },
+        {
+          "ano": 2014,
+          "casos": 38581
+        },
+        {
+          "ano": 2015,
+          "casos": 39203
+        },
+        {
+          "ano": 2016,
+          "casos": 39546
+        },
+        {
+          "ano": 2017,
+          "casos": 41243
+        },
+        {
+          "ano": 2018,
+          "casos": 43031
+        },
+        {
+          "ano": 2019,
+          "casos": 42733
+        },
+        {
+          "ano": 2020,
+          "casos": 38704
+        },
+        {
+          "ano": 2021,
+          "casos": 40733
+        },
+        {
+          "ano": 2022,
+          "casos": 45664
+        },
+        {
+          "ano": 2023,
+          "casos": 49171
+        },
+        {
+          "ano": 2024,
+          "casos": 50261
+        }
+      ],
+      "projecao": [
+        {
+          "ano": 2025,
+          "casos": 49538
+        },
+        {
+          "ano": 2026,
+          "casos": 50610
+        },
+        {
+          "ano": 2027,
+          "casos": 51683
+        },
+        {
+          "ano": 2028,
+          "casos": 52755
+        },
+        {
+          "ano": 2029,
+          "casos": 53828
+        },
+        {
+          "ano": 2030,
+          "casos": 54900
+        },
+        {
+          "ano": 2031,
+          "casos": 55972
+        },
+        {
+          "ano": 2032,
+          "casos": 57045
+        },
+        {
+          "ano": 2033,
+          "casos": 58117
+        },
+        {
+          "ano": 2034,
+          "casos": 59190
+        }
+      ],
+      "coeficiente_anual": 1072.4,
+      "intercepto": -2122076.7,
+      "r2": 0.846,
+      "crescimento_pct_ano": 2.13,
+      "crescimento_total_pct": 37.8,
+      "casos_ultimo_ano": 50261,
+      "backtest_erro_pct": {
+        "2022": -4.3,
+        "2023": -9.8,
+        "2024": -10.5
+      },
+      "status": "Crítico"
+    },
+    "São Paulo": {
+      "grupo": "Estado",
+      "historico": [
+        {
+          "ano": 2013,
+          "casos": 19534
+        },
+        {
+          "ano": 2014,
+          "casos": 19979
+        },
+        {
+          "ano": 2015,
+          "casos": 20386
+        },
+        {
+          "ano": 2016,
+          "casos": 20589
+        },
+        {
+          "ano": 2017,
+          "casos": 21860
+        },
+        {
+          "ano": 2018,
+          "casos": 22445
+        },
+        {
+          "ano": 2019,
+          "casos": 21809
+        },
+        {
+          "ano": 2020,
+          "casos": 19523
+        },
+        {
+          "ano": 2021,
+          "casos": 19959
+        },
+        {
+          "ano": 2022,
+          "casos": 22891
+        },
+        {
+          "ano": 2023,
+          "casos": 24807
+        },
+        {
+          "ano": 2024,
+          "casos": 25318
+        }
+      ],
+      "projecao": [
+        {
+          "ano": 2025,
+          "casos": 24627
+        },
+        {
+          "ano": 2026,
+          "casos": 25056
+        },
+        {
+          "ano": 2027,
+          "casos": 25485
+        },
+        {
+          "ano": 2028,
+          "casos": 25914
+        },
+        {
+          "ano": 2029,
+          "casos": 26343
+        },
+        {
+          "ano": 2030,
+          "casos": 26772
+        },
+        {
+          "ano": 2031,
+          "casos": 27201
+        },
+        {
+          "ano": 2032,
+          "casos": 27630
+        },
+        {
+          "ano": 2033,
+          "casos": 28059
+        },
+        {
+          "ano": 2034,
+          "casos": 28488
+        }
+      ],
+      "coeficiente_anual": 429.0,
+      "intercepto": -844070.9,
+      "r2": 0.675,
+      "crescimento_pct_ano": 1.69,
+      "crescimento_total_pct": 29.6,
+      "casos_ultimo_ano": 25318,
+      "backtest_erro_pct": {
+        "2022": -4.8,
+        "2023": -11.5,
+        "2024": -12.6
+      },
+      "status": "Atenção"
+    },
+    "Rio de Janeiro": {
+      "grupo": "Estado",
+      "historico": [
+        {
+          "ano": 2013,
+          "casos": 13349
+        },
+        {
+          "ano": 2014,
+          "casos": 13095
+        },
+        {
+          "ano": 2015,
+          "casos": 13367
+        },
+        {
+          "ano": 2016,
+          "casos": 13645
+        },
+        {
+          "ano": 2017,
+          "casos": 13929
+        },
+        {
+          "ano": 2018,
+          "casos": 14857
+        },
+        {
+          "ano": 2019,
+          "casos": 15097
+        },
+        {
+          "ano": 2020,
+          "casos": 13712
+        },
+        {
+          "ano": 2021,
+          "casos": 15091
+        },
+        {
+          "ano": 2022,
+          "casos": 16100
+        },
+        {
+          "ano": 2023,
+          "casos": 16954
+        },
+        {
+          "ano": 2024,
+          "casos": 17228
+        }
+      ],
+      "projecao": [
+        {
+          "ano": 2025,
+          "casos": 17309
+        },
+        {
+          "ano": 2026,
+          "casos": 17688
+        },
+        {
+          "ano": 2027,
+          "casos": 18067
+        },
+        {
+          "ano": 2028,
+          "casos": 18446
+        },
+        {
+          "ano": 2029,
+          "casos": 18825
+        },
+        {
+          "ano": 2030,
+          "casos": 19205
+        },
+        {
+          "ano": 2031,
+          "casos": 19584
+        },
+        {
+          "ano": 2032,
+          "casos": 19963
+        },
+        {
+          "ano": 2033,
+          "casos": 20342
+        },
+        {
+          "ano": 2034,
+          "casos": 20721
+        }
+      ],
+      "coeficiente_anual": 379.2,
+      "intercepto": -750573.8,
+      "r2": 0.937,
+      "crescimento_pct_ano": 2.2,
+      "crescimento_total_pct": 29.1,
+      "casos_ultimo_ano": 17228,
+      "backtest_erro_pct": {
+        "2022": -3.0,
+        "2023": -6.2,
+        "2024": -6.0
+      },
+      "status": "Crítico"
+    },
+    "Masculino": {
+      "grupo": "Sexo",
+      "historico": [
+        {
+          "ano": 2013,
+          "casos": 58271
+        },
+        {
+          "ano": 2014,
+          "casos": 58081
+        },
+        {
+          "ano": 2015,
+          "casos": 59012
+        },
+        {
+          "ano": 2016,
+          "casos": 59680
+        },
+        {
+          "ano": 2017,
+          "casos": 63375
+        },
+        {
+          "ano": 2018,
+          "casos": 66291
+        },
+        {
+          "ano": 2019,
+          "casos": 67700
+        },
+        {
+          "ano": 2020,
+          "casos": 60769
+        },
+        {
+          "ano": 2021,
+          "casos": 64219
+        },
+        {
+          "ano": 2022,
+          "casos": 72592
+        },
+        {
+          "ano": 2023,
+          "casos": 77611
+        },
+        {
+          "ano": 2024,
+          "casos": 78208
+        }
+      ],
+      "projecao": [
+        {
+          "ano": 2025,
+          "casos": 78233
+        },
+        {
+          "ano": 2026,
+          "casos": 80090
+        },
+        {
+          "ano": 2027,
+          "casos": 81946
+        },
+        {
+          "ano": 2028,
+          "casos": 83803
+        },
+        {
+          "ano": 2029,
+          "casos": 85659
+        },
+        {
+          "ano": 2030,
+          "casos": 87516
+        },
+        {
+          "ano": 2031,
+          "casos": 89373
+        },
+        {
+          "ano": 2032,
+          "casos": 91229
+        },
+        {
+          "ano": 2033,
+          "casos": 93086
+        },
+        {
+          "ano": 2034,
+          "casos": 94942
+        }
+      ],
+      "coeficiente_anual": 1856.5,
+      "intercepto": -3681243.3,
+      "r2": 0.878,
+      "crescimento_pct_ano": 2.37,
+      "crescimento_total_pct": 34.2,
+      "casos_ultimo_ano": 78208,
+      "backtest_erro_pct": {
+        "2022": -5.6,
+        "2023": -10.2,
+        "2024": -9.3
+      },
+      "status": "Crítico"
+    },
+    "Feminino": {
+      "grupo": "Sexo",
+      "historico": [
+        {
+          "ano": 2013,
+          "casos": 26941
+        },
+        {
+          "ano": 2014,
+          "casos": 27135
+        },
+        {
+          "ano": 2015,
+          "casos": 26640
+        },
+        {
+          "ano": 2016,
+          "casos": 26530
+        },
+        {
+          "ano": 2017,
+          "casos": 26920
+        },
+        {
+          "ano": 2018,
+          "casos": 28444
+        },
+        {
+          "ano": 2019,
+          "casos": 28985
+        },
+        {
+          "ano": 2020,
+          "casos": 25461
+        },
+        {
+          "ano": 2021,
+          "casos": 27154
+        },
+        {
+          "ano": 2022,
+          "casos": 30717
+        },
+        {
+          "ano": 2023,
+          "casos": 32185
+        },
+        {
+          "ano": 2024,
+          "casos": 33301
+        }
+      ],
+      "projecao": [
+        {
+          "ano": 2025,
+          "casos": 32238
+        },
+        {
+          "ano": 2026,
+          "casos": 32782
+        },
+        {
+          "ano": 2027,
+          "casos": 33325
+        },
+        {
+          "ano": 2028,
+          "casos": 33868
+        },
+        {
+          "ano": 2029,
+          "casos": 34412
+        },
+        {
+          "ano": 2030,
+          "casos": 34955
+        },
+        {
+          "ano": 2031,
+          "casos": 35499
+        },
+        {
+          "ano": 2032,
+          "casos": 36042
+        },
+        {
+          "ano": 2033,
+          "casos": 36585
+        },
+        {
+          "ano": 2034,
+          "casos": 37129
+        }
+      ],
+      "coeficiente_anual": 543.4,
+      "intercepto": -1068155.4,
+      "r2": 0.721,
+      "crescimento_pct_ano": 1.63,
+      "crescimento_total_pct": 23.6,
+      "casos_ultimo_ano": 33301,
+      "backtest_erro_pct": {
+        "2022": -8.1,
+        "2023": -11.8,
+        "2024": -14.3
+      },
+      "status": "Atenção"
+    }
+  }
+};

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlertaTB — Monitoramento da Tuberculose no Brasil</title>
+  <meta name="description" content="Painel preditivo e monitoramento epidemiológico da tuberculose no Brasil com dados do SINAN/DATASUS.">
+  <link rel="icon" type="image/svg+xml" href="img/icone.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="topo">
+    <div class="topo-conteudo">
+      <a href="#visao-geral" class="marca" aria-label="AlertaTB — início">
+        <img src="img/logo-negativo.svg" alt="AlertaTB" width="240" height="52">
+      </a>
+      <nav class="abas" aria-label="Telas do painel">
+        <a href="#visao-geral" data-tela="visao-geral">Visão Geral</a>
+        <a href="#regioes" data-tela="regioes">Regiões e Perfil</a>
+        <a href="#alertas" data-tela="alertas">Alertas</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="conteudo">
+
+    <!-- ============ TELA 1 — VISÃO GERAL ============ -->
+    <section id="tela-visao-geral" class="tela" aria-labelledby="t1">
+      <div class="tela-cabecalho">
+        <div>
+          <p class="sobretitulo">Tela 1 · Dashboard executivo</p>
+          <h1 id="t1">Visão geral dos casos</h1>
+        </div>
+        <div class="filtro">
+          <label for="filtro-recorte">Recorte</label>
+          <select id="filtro-recorte"></select>
+        </div>
+      </div>
+
+      <div class="kpis">
+        <div class="kpi">
+          <span class="kpi-rotulo">Casos em 2024</span>
+          <span class="kpi-valor" id="kpi-casos">—</span>
+          <span class="kpi-sub" id="kpi-casos-sub"></span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-rotulo">Crescimento 2013–2024</span>
+          <span class="kpi-valor" id="kpi-cresc">—</span>
+          <span class="kpi-sub" id="kpi-cresc-sub"></span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-rotulo">Novos casos por ano</span>
+          <span class="kpi-valor" id="kpi-ano">—</span>
+          <span class="kpi-sub" id="kpi-ano-sub"></span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-rotulo">Projeção 2034</span>
+          <span class="kpi-valor" id="kpi-proj">—</span>
+          <span class="kpi-sub" id="kpi-proj-sub"></span>
+        </div>
+      </div>
+
+      <div class="painel">
+        <div class="painel-cabecalho">
+          <h2 id="titulo-grafico">Evolução histórica e projeção</h2>
+          <span class="selo" id="selo-recorte"></span>
+        </div>
+        <div class="grafico grafico-linha"><canvas id="grafico-linha" aria-label="Gráfico de casos históricos e projeção"></canvas></div>
+        <div class="legenda">
+          <span><i class="leg-linha"></i>Histórico (SINAN/DATASUS)</span>
+          <span><i class="leg-tracejada"></i>Projeção linear</span>
+          <span><i class="leg-ponto"></i>2020: ano atípico (pandemia), fora do cálculo</span>
+        </div>
+      </div>
+
+      <aside class="nota" id="nota-modelo"></aside>
+    </section>
+
+    <!-- ============ TELA 2 — REGIÕES E PERFIL ============ -->
+    <section id="tela-regioes" class="tela" aria-labelledby="t2" hidden>
+      <div class="tela-cabecalho">
+        <div>
+          <p class="sobretitulo">Tela 2 · Análise regional e demográfica</p>
+          <h1 id="t2">Onde e em quem a doença se concentra</h1>
+        </div>
+        <div class="filtro">
+          <label for="filtro-ano">Ano</label>
+          <select id="filtro-ano"></select>
+        </div>
+      </div>
+
+      <div class="grade-2">
+        <div class="painel">
+          <div class="painel-cabecalho"><h2>Casos por macrorregião</h2></div>
+          <div class="grafico grafico-barras"><canvas id="grafico-regioes" aria-label="Casos por macrorregião"></canvas></div>
+        </div>
+        <div class="painel">
+          <div class="painel-cabecalho"><h2>Perfil por sexo</h2></div>
+          <div class="grafico grafico-rosca"><canvas id="grafico-sexo" aria-label="Distribuição por sexo"></canvas></div>
+          <p class="destaque-texto" id="texto-sexo"></p>
+        </div>
+      </div>
+
+      <div class="painel">
+        <div class="painel-cabecalho"><h2>Destaques estaduais</h2></div>
+        <div class="estados" id="cards-estados"></div>
+      </div>
+    </section>
+
+    <!-- ============ TELA 3 — ALERTAS ============ -->
+    <section id="tela-alertas" class="tela" aria-labelledby="t3" hidden>
+      <div class="tela-cabecalho">
+        <div>
+          <p class="sobretitulo">Tela 3 · Alertas e projeções preditivas</p>
+          <h1 id="t3">Onde agir primeiro</h1>
+        </div>
+        <div class="chips" role="group" aria-label="Filtrar por tipo de recorte">
+          <button type="button" class="chip ativo" data-grupo="todos">Todos</button>
+          <button type="button" class="chip" data-grupo="Região">Regiões</button>
+          <button type="button" class="chip" data-grupo="Estado">Estados</button>
+          <button type="button" class="chip" data-grupo="Sexo">Sexo</button>
+        </div>
+      </div>
+
+      <div class="alerta-critico" id="banner-alerta" role="status"></div>
+
+      <div class="painel">
+        <div class="painel-cabecalho">
+          <h2>Ranking de risco</h2>
+          <span class="dica">Clique numa linha para ver o gráfico</span>
+        </div>
+        <div class="tabela-rolagem">
+          <table class="tabela" id="tabela-risco">
+            <thead>
+              <tr>
+                <th>Recorte</th>
+                <th class="num">Casos 2024</th>
+                <th class="num">Novos casos/ano</th>
+                <th class="num">Cresc. %/ano</th>
+                <th class="num">R²</th>
+                <th class="num">Projeção 2034</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="grade-2">
+        <div class="painel">
+          <div class="painel-cabecalho"><h2>Como o status é calculado</h2></div>
+          <ul class="regras" id="regras-status"></ul>
+          <p class="pequeno">Crescimento %/ano = novos casos por ano ÷ casos de 2024. O R² mede o quanto o crescimento é consistente (de 0 a 1).</p>
+        </div>
+        <div class="painel">
+          <div class="painel-cabecalho"><h2>Qualidade dos dados</h2></div>
+          <p class="pequeno">Anos em que a soma das regiões ou por sexo não bate com o total do Brasil. Em revisão no TABNET/DATASUS.</p>
+          <ul class="avisos" id="avisos-dados"></ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="rodape">
+    <div class="rodape-conteudo">
+      <span>Fonte: SINAN/DATASUS — Ministério da Saúde · Série histórica 2013–2024</span>
+      <span>Equipe TechCare Analytics · FMU TECH Inovação 2026.2 · ODS 3 Saúde e Bem-Estar</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="js/dados.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

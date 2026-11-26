@@ -30,6 +30,7 @@ from sklearn.metrics import r2_score
 RAIZ = Path(__file__).resolve().parent.parent
 ENTRADA = RAIZ / "data" / "processed" / "tuberculose_2013_2024.csv"
 SAIDA = RAIZ / "data" / "processed" / "dados_painel.json"
+SAIDA_WEB = RAIZ / "web" / "js" / "dados.js"   # mesmo conteúdo, para o site abrir sem servidor
 
 ANOS_ATIPICOS = [2020]            # excluídos do ajuste
 ANO_CORTE_BACKTEST = 2021         # treina até este ano, testa os seguintes
@@ -38,7 +39,19 @@ ANOS_PROJECAO = list(range(2025, 2035))
 REGIOES = ["Norte", "Nordeste", "Centro Oeste", "Sul", "Sudeste"]
 ESTADOS = ["São Paulo", "Rio Janeiro"]
 SEXO = ["Masculino", "Feminino"]
-RECORTES = {"Brasil": "Tuberculose", **{c: c for c in REGIOES + ESTADOS + SEXO}}
+# nome exibido no painel -> (coluna no CSV, grupo)
+RECORTES = {
+    "Brasil": ("Tuberculose", "Brasil"),
+    "Norte": ("Norte", "Região"),
+    "Nordeste": ("Nordeste", "Região"),
+    "Centro-Oeste": ("Centro Oeste", "Região"),
+    "Sul": ("Sul", "Região"),
+    "Sudeste": ("Sudeste", "Região"),
+    "São Paulo": ("São Paulo", "Estado"),
+    "Rio de Janeiro": ("Rio Janeiro", "Estado"),
+    "Masculino": ("Masculino", "Sexo"),
+    "Feminino": ("Feminino", "Sexo"),
+}
 
 # Regra dos selos (SUGESTÃO — o grupo pode ajustar os limites):
 #   crescimento % ao ano = coeficiente anual / casos do último ano real
@@ -86,7 +99,7 @@ def verificar_consistencia(df: pd.DataFrame) -> list[dict]:
     return avisos
 
 
-def analisar_recorte(df: pd.DataFrame, coluna: str) -> dict:
+def analisar_recorte(df: pd.DataFrame, coluna: str, grupo: str) -> dict:
     anos = df["Ano"].to_numpy()
     casos = df[coluna].to_numpy(dtype=float)
     mascara = ~np.isin(anos, ANOS_ATIPICOS)
@@ -106,6 +119,7 @@ def analisar_recorte(df: pd.DataFrame, coluna: str) -> dict:
     primeiro_real = casos[0]
 
     return {
+        "grupo": grupo,
         "historico": [{"ano": int(a), "casos": int(c)} for a, c in zip(anos, casos)],
         "projecao": [{"ano": a, "casos": round(float(p))}
                      for a, p in zip(ANOS_PROJECAO, prever(modelo, ANOS_PROJECAO))],
@@ -137,10 +151,14 @@ def main() -> None:
             "Moderado": "demais casos",
         },
         "avisos_consistencia": avisos,
-        "recortes": {nome: analisar_recorte(df, col) for nome, col in RECORTES.items()},
+        "recortes": {nome: analisar_recorte(df, col, grupo) for nome, (col, grupo) in RECORTES.items()},
     }
 
-    SAIDA.write_text(json.dumps(resultado, ensure_ascii=False, indent=2), encoding="utf-8")
+    texto = json.dumps(resultado, ensure_ascii=False, indent=2)
+    SAIDA.write_text(texto, encoding="utf-8")
+    SAIDA_WEB.parent.mkdir(parents=True, exist_ok=True)
+    SAIDA_WEB.write_text("// Gerado por analysis/regressao.py — não editar à mão\n"
+                         "window.DADOS = " + texto + ";\n", encoding="utf-8")
 
     # Resumo no terminal
     print(f"{'Recorte':<14}{'Casos 2024':>11}{'Cresc/ano':>11}{'%/ano':>7}{'R²':>7}"
@@ -157,7 +175,7 @@ def main() -> None:
             print(f"  {a['ano']}: soma por {a['recorte']} = {a['soma']:,} | total = {a['total']:,} "
                   f"(diferença {a['diferenca']:+,})".replace(",", "."))
 
-    print(f"\n✔ Arquivo gerado: {SAIDA.relative_to(RAIZ)}")
+    print(f"\n✔ Arquivos gerados: {SAIDA.relative_to(RAIZ)} e {SAIDA_WEB.relative_to(RAIZ)}")
 
 
 if __name__ == "__main__":

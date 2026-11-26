@@ -1,7 +1,7 @@
 # analysis/ — Tratamento e modelagem (Python)
 
 ## `regressao.py`
-Lê `../data/processed/tuberculose_2013_2024.csv`, ajusta uma regressão linear (Scikit-learn) para cada recorte (Brasil, 5 regiões, SP, RJ, sexo) e gera **`../data/processed/dados_painel.json`**, que o portal web consome.
+Lê `../data/processed/tuberculose_2013_2024.csv`, ajusta uma regressão linear (Scikit-learn) para cada recorte (Brasil, 5 regiões, SP, RJ, sexo) e gera **`../data/processed/dados_painel.json`** e **`../web/js/dados.js`**, que o painel web consome.
 
 O que o script faz:
 - Exclui **2020** do ajuste (ano atípico da pandemia), mas mantém o ano no histórico

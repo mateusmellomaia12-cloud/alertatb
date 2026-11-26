@@ -3,8 +3,13 @@
 > **FMU TECH Inovação — 1ª Edição 2026.2** · Desafio **ODS 3 – Saúde e Bem-Estar**
 > Equipe **TechCare Analytics** (Squad M2SV2) · Centro Universitário FMU | FIAM-FAAM — Escola TECH (FMU Level UP)
 
-<!-- TODO (identidade visual): inserir o logo do projeto aqui -->
-<!-- ![AlertaTB](assets/identidade-visual/logo.png) -->
+<p align="center">
+  <img src="assets/identidade-visual/logo.svg" alt="AlertaTB" width="360">
+</p>
+
+<p align="center">
+  <a href="https://mateusmellomaia12-cloud.github.io/alertatb/"><strong>🌐 Acessar o painel online</strong></a>
+</p>
 
 ---
 
@@ -82,41 +87,75 @@ Arquivos em [`data/`](data/):
 
 | Camada | Tecnologias | Papel |
 |---|---|---|
-| Tratamento e modelagem estatística | Python (Pandas, NumPy, Scikit-learn) | Limpeza da base, estatística descritiva, correlação e regressão linear |
-| Visualização (BI) | Microsoft Power BI | Painéis interativos com filtros por região, estado e sexo |
-| Interface web (portal) | HTML5, CSS3, JavaScript | Portal do painel, relatórios executivos e alertas de tendência |
+| Tratamento e modelagem estatística | Python (Pandas, NumPy, Scikit-learn) | Regressão linear por recorte, backtest, projeção 2025–2034 e selos de alerta ([`analysis/regressao.py`](analysis/regressao.py)) |
+| Interface web (painel) | HTML5, CSS3, JavaScript + [Chart.js](https://www.chartjs.org/) | As 3 telas do AlertaTB, com filtros, gráficos e ranking de risco ([`web/`](web/)) |
+| Hospedagem | GitHub Pages | Painel publicado online, acessível de qualquer navegador |
+| Visualização (BI) | Microsoft Power BI | Painéis complementares *(em avaliação pelo grupo)* |
 | Versionamento e prototipação | Git, GitHub, Draw.io / Canva | Controle de versão, documentação e wireframes |
+| Identidade visual | Poppins + Inter, paleta roxa | Guia em [`assets/identidade-visual/`](assets/identidade-visual/) |
+
+**Por que essas escolhas:**
+- **Python + Scikit-learn:** padrão de mercado para análise de dados; o cálculo fica reproduzível e auditável, sem números copiados à mão.
+- **Site em HTML/CSS/JS puro:** roda em qualquer navegador, sem instalar nada e sem licença. O gestor de saúde só precisa de um link.
+- **Chart.js:** biblioteca leve e gratuita para gráficos interativos (tooltips, filtros).
+- **GitHub Pages:** hospedagem gratuita no próprio repositório; cada atualização do código atualiza o site.
+
+**Como os dados chegam ao painel:**
+```
+data/processed/tuberculose_2013_2024.csv  (SINAN/DATASUS)
+        │
+        ▼  python analysis/regressao.py
+data/processed/dados_painel.json  +  web/js/dados.js
+        │
+        ▼  lido pelo navegador
+web/index.html  →  Visão Geral · Regiões e Perfil · Alertas
+```
 
 ---
 
 ## 🖥️ Telas do protótipo
 
-1. **Visão Geral (Dashboard Executivo):** KPIs (casos 2024, crescimento 2013–2024, projeção 2034), gráfico histórico + projeção e filtros.
-2. **Análise Regional e Demográfica:** casos por macrorregião, distribuição por sexo, destaques de SP e RJ.
-3. **Alertas e Projeções Preditivas:** banner de alerta crítico e tabela de risco com selos *Crítico / Atenção / Moderado*.
+**Fluxo principal:** o gestor abre o painel, vê os indicadores do Brasil, filtra por região, estado ou sexo e vê o gráfico atualizar. Na tela de Alertas, encontra as regiões que exigem ação e, com um clique, abre o gráfico daquela região.
 
-<!-- TODO (Checkpoint 2): adicionar prints do protótipo funcionando -->
-<!-- ![Tela 1](assets/prints/tela1-visao-geral.png) -->
-<!-- ![Tela 2](assets/prints/tela2-regioes.png) -->
-<!-- ![Tela 3](assets/prints/tela3-alertas.png) -->
+### 1. Visão Geral (Dashboard Executivo)
+Filtro por recorte, 4 indicadores (casos 2024, crescimento 2013–2024, novos casos por ano, projeção 2034), gráfico do histórico com a projeção tracejada e uma nota explicando como ler o modelo.
+
+![Tela 1 — Visão Geral](assets/prints/tela1-visao-geral.png)
+
+### 2. Regiões e Perfil
+Filtro por ano (2013–2024), casos por macrorregião, distribuição por sexo e destaques de São Paulo e Rio de Janeiro.
+
+![Tela 2 — Regiões e Perfil](assets/prints/tela2-regioes-perfil.png)
+
+### 3. Alertas e Projeções Preditivas
+Alerta de tendência crítica, ranking de risco com selos *Crítico / Atenção / Moderado* (filtrável por regiões, estados e sexo), regra de cálculo e transparência sobre a qualidade dos dados.
+
+![Tela 3 — Alertas](assets/prints/tela3-alertas.png)
 
 ---
 
 ## ▶️ Como executar
 
-> ⚠️ **Em construção:** os comandos abaixo serão confirmados quando o código for adicionado.
+### Opção 1: online (mais fácil)
+Acesse **https://mateusmellomaia12-cloud.github.io/alertatb/**. Não precisa instalar nada.
 
+### Opção 2: no seu computador
 ```bash
 # 1. Clonar o repositório
 git clone https://github.com/mateusmellomaia12-cloud/alertatb.git
 cd alertatb
 
-# 2. Análise de dados (Python 3.10+): gera data/processed/dados_painel.json
+# 2. Abrir o painel: basta dar dois cliques em web/index.html
+#    (precisa de internet para carregar as fontes e a biblioteca de gráficos)
+```
+
+### Opção 3: recalcular os dados (Python 3.10+)
+Só é necessário se a base em `data/processed/tuberculose_2013_2024.csv` for alterada.
+```bash
 pip install -r analysis/requirements.txt
 python analysis/regressao.py
-
-# 3. Portal web
-# Abrir web/index.html no navegador (ou usar a extensão Live Server do VS Code)
+# gera data/processed/dados_painel.json e web/js/dados.js
+# depois é só recarregar o web/index.html no navegador
 ```
 
 🎥 **Vídeo de demonstração (até 3 min):** _link a ser adicionado_
@@ -140,7 +179,8 @@ python analysis/regressao.py
 │   ├── checkpoint3/   # Material do pitch / banca
 │   └── divisao_de_tarefas.md
 ├── powerbi/           # Arquivo .pbix e exportações do Power BI
-└── web/               # Portal HTML/CSS/JS do AlertaTB
+├── web/               # Painel AlertaTB (index.html, css/, js/, img/)
+└── index.html         # Redireciona o GitHub Pages para web/
 ```
 
 ---

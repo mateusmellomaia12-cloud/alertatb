@@ -8,6 +8,15 @@ Baixa os dados externos e salva em `../data/raw/` (só precisa rodar para atuali
 ## `gerar_mapa.py`
 Converte a malha dos estados do IBGE (`../data/raw/ibge_malha_uf.geojson`) em caminhos SVG → **`../web/js/mapa-uf.js`**, usado no mapa da Tela 2. Só precisa rodar se a malha mudar.
 
+## `baixar_dados_abandono.py`
+Faz 64 consultas ao TABNET (sexo × situação de rua × drogas × álcool × HIV, nos períodos de treino 2015–2019 e teste 2021–2023), com faixa etária × desfecho do tratamento → `../data/raw/tabnet/abandono_perfis.csv`.
+
+## `modelagem.py`
+Usado pelo `regressao.py`. Gera o bloco `modelagem` do JSON (Tela 5):
+- **Modelo de risco de abandono:** regressão logística ponderada (abandono × cura), validação fora do tempo, curva ROC/AUC, estatística KS + teste KS de duas amostras, ponto de corte, matriz de confusão, odds ratios com IC 95% e faixas de risco.
+- **Teste KS de normalidade dos resíduos** da regressão de projeção (correção de Lilliefors por simulação).
+- **Teste que não funcionou:** classificar o crescimento dos estados no ano seguinte (AUC ≈ 0,5).
+
 ## `fatores.py`
 Usado pelo `regressao.py`. Monta o bloco `fatores` do JSON (Tela 4): variação de cada fator, % dos casos, desfecho do tratamento e incidência de casos novos por 100 mil, comparada à meta de 2035.
 

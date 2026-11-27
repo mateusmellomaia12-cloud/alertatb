@@ -25,6 +25,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 
 from fatores import montar_fatores
+from modelagem import montar_modelagem
 
 # --------------------------------------------------------------------------
 # Configuração
@@ -209,6 +210,7 @@ def main() -> None:
                      for nome, (col, grupo) in recortes.items()},
         "fatores": montar_fatores(pop["Brasil"]),
     }
+    resultado["modelagem"] = montar_modelagem(resultado["recortes"], ANOS_ATIPICOS)
     for nome, sigla in sigla_de.items():
         resultado["recortes"][nome]["sigla"] = sigla
         resultado["recortes"][nome]["regiao"] = REGIAO_DA_UF[sigla]

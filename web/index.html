@@ -23,6 +23,7 @@
         <a href="#regioes" data-tela="regioes">Regiões e Perfil</a>
         <a href="#alertas" data-tela="alertas">Alertas</a>
         <a href="#fatores" data-tela="fatores">Por que cresce?</a>
+        <a href="#modelagem" data-tela="modelagem">Modelagem</a>
       </nav>
     </div>
   </header>
@@ -277,6 +278,67 @@
       </div>
 
       <aside class="nota" id="nota-fatores-leitura"></aside>
+    </section>
+
+    <!-- ============ TELA 5 — MODELAGEM ============ -->
+    <section id="tela-modelagem" class="tela" aria-labelledby="t5" hidden>
+      <div class="tela-cabecalho">
+        <div>
+          <p class="sobretitulo">Tela 5 · Modelagem e validação estatística</p>
+          <h1 id="t5">Como validamos os modelos</h1>
+        </div>
+      </div>
+
+      <div class="insight" id="insight-modelagem"></div>
+
+      <h2 class="secao-titulo">1. Modelo de risco de abandono do tratamento</h2>
+      <p class="secao-texto" id="texto-modelo-abandono"></p>
+      <div class="kpis" id="kpis-modelagem"></div>
+
+      <div class="grade-2">
+        <div class="painel">
+          <div class="painel-cabecalho"><h2>Curva ROC</h2><span class="dica" id="dica-roc"></span></div>
+          <div class="grafico grafico-quadrado"><canvas id="grafico-roc" aria-label="Curva ROC do modelo de abandono no período de teste"></canvas></div>
+          <p class="pequeno" id="nota-roc"></p>
+        </div>
+        <div class="painel">
+          <div class="painel-cabecalho"><h2>Teste KS</h2><span class="dica" id="dica-ks"></span></div>
+          <div class="grafico grafico-quadrado"><canvas id="grafico-ks" aria-label="Distribuições acumuladas do score para quem abandonou e quem se curou"></canvas></div>
+          <p class="pequeno" id="nota-ks"></p>
+        </div>
+      </div>
+
+      <div class="grade-2">
+        <div class="painel">
+          <div class="painel-cabecalho"><h2>O que aumenta o risco</h2><span class="dica">Razão de chances (odds ratio)</span></div>
+          <div class="grafico grafico-odds"><canvas id="grafico-odds" aria-label="Razão de chances de abandono para cada característica"></canvas></div>
+          <p class="pequeno">Acima de 1 aumenta a chance de abandonar; abaixo de 1 diminui. Ex.: 3,9 = quase 4 vezes a chance. Intervalo de confiança de 95% no detalhe ao passar o mouse.</p>
+        </div>
+        <div class="painel">
+          <div class="painel-cabecalho"><h2>Abandono por faixa de risco</h2><span class="dica" id="dica-faixas"></span></div>
+          <div class="grafico grafico-odds"><canvas id="grafico-faixas" aria-label="Taxa real de abandono em cada faixa de risco prevista"></canvas></div>
+          <p class="pequeno" id="nota-faixas"></p>
+        </div>
+      </div>
+
+      <div class="painel">
+        <div class="painel-cabecalho"><h2>Matriz de confusão no ponto de corte do KS</h2><span class="dica" id="dica-matriz"></span></div>
+        <div class="matriz-grade">
+          <table class="tabela matriz" id="tabela-matriz"></table>
+          <div class="matriz-texto" id="texto-matriz"></div>
+        </div>
+      </div>
+
+      <h2 class="secao-titulo">2. Modelo de projeção: teste KS dos resíduos</h2>
+      <p class="secao-texto">A regressão linear supõe que os erros (resíduos) seguem uma distribuição normal. O teste de Kolmogorov-Smirnov, com correção de Lilliefors, verifica isso em cada recorte. <strong>p ≥ 0,05</strong> = não há evidência contra a normalidade.</p>
+      <div class="painel">
+        <div class="painel-cabecalho"><h2>Aderência à normal</h2><span class="dica" id="dica-residuos"></span></div>
+        <div class="tabela-rolagem"><table class="tabela" id="tabela-residuos"></table></div>
+        <p class="pequeno" id="nota-residuos"></p>
+      </div>
+
+      <h2 class="secao-titulo">3. O que testamos e não funcionou</h2>
+      <aside class="nota" id="nota-nao-funcionou"></aside>
     </section>
 
   </main>

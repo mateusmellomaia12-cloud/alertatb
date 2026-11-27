@@ -111,7 +111,7 @@ Regressão linear sem 2020 (ano atípico da pandemia, com subnotificação). Com
 | Camada | Tecnologias | Papel |
 |---|---|---|
 | Tratamento e modelagem estatística | Python (Pandas, NumPy, Scikit-learn) | Regressão linear por recorte, backtest, projeção 2025–2034 e selos de alerta ([`analysis/regressao.py`](analysis/regressao.py)) |
-| Interface web (painel) | HTML5, CSS3, JavaScript + [Chart.js](https://www.chartjs.org/) | As 4 telas do AlertaTB, com filtros, gráficos e ranking de risco ([`web/`](web/)) |
+| Interface web (painel) | HTML5, CSS3, JavaScript + [Chart.js](https://www.chartjs.org/) | As 5 telas do AlertaTB, com filtros, gráficos e ranking de risco ([`web/`](web/)) |
 | Hospedagem | GitHub Pages | Painel publicado online, acessível de qualquer navegador |
 | Visualização (BI) | Microsoft Power BI | Painéis complementares *(em avaliação pelo grupo)* |
 | Versionamento e prototipação | Git, GitHub, Draw.io / Canva | Controle de versão, documentação e wireframes |
@@ -133,7 +133,7 @@ data/raw/tabnet/*.csv                     (TABNET) ◄─┘
 data/processed/dados_painel.json  +  web/js/dados.js
         │
         ▼  lido pelo navegador
-web/index.html  →  Visão Geral · Regiões e Perfil · Alertas · Por que cresce?
+web/index.html  →  Visão Geral · Regiões e Perfil · Alertas · Por que cresce? · Modelagem
 ```
 
 ---
@@ -162,6 +162,14 @@ Responde à pergunta que a banca e os gestores vão fazer. Mostra o que cresceu 
 
 ![Tela 4 — Por que cresce?](assets/prints/tela4-por-que-cresce.png)
 
+### 5. Modelagem e validação estatística
+Mostra como os modelos foram testados:
+- **Modelo de risco de abandono do tratamento** (regressão logística com sexo, idade, situação de rua, drogas, álcool e HIV), treinado com 369 mil pacientes de 2015–2019 e testado com 242 mil de 2021–2023: **curva ROC (AUC 0,69)**, **teste KS (KS 27,7; p < 0,001)**, matriz de confusão, razões de chance (situação de rua = 3,9× a chance de abandonar) e faixas de risco (de 9,5% a 42% de abandono).
+- **Teste KS de normalidade** (com correção de Lilliefors) nos resíduos da regressão de projeção: 34 de 35 recortes aderentes.
+- **O que não funcionou:** prever quais estados vão crescer mais que o Brasil no ano seguinte (AUC 0,46), registrado por transparência.
+
+![Tela 5 — Modelagem](assets/prints/tela5-modelagem.png)
+
 ---
 
 ## ▶️ Como executar
@@ -184,6 +192,7 @@ Só é necessário para atualizar os dados com uma nova consulta ao DATASUS/IBGE
 ```bash
 pip install -r analysis/requirements.txt
 python analysis/baixar_dados_externos.py   # opcional: baixa de novo TABNET (casos e fatores) e IBGE (população)
+python analysis/baixar_dados_abandono.py   # opcional: perfis de pacientes × desfecho (modelo de abandono)
 python analysis/regressao.py
 # gera data/processed/dados_painel.json e web/js/dados.js
 # depois é só recarregar o web/index.html no navegador

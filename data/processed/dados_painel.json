@@ -7690,5 +7690,1501 @@
       }
     ],
     "meta_incidencia_2035": 10.0
+  },
+  "modelagem": {
+    "abandono": {
+      "periodos": {
+        "treino": "2015–2019",
+        "teste": "2021–2023"
+      },
+      "n_treino": 368865,
+      "n_teste": 242325,
+      "taxa_abandono_treino": 16.5,
+      "taxa_abandono_teste": 21.9,
+      "n_perfis": 435,
+      "auc_treino": 0.687,
+      "auc_teste": 0.69,
+      "ks": 0.277,
+      "ks_estatistica_teste": 0.277,
+      "ks_p_valor": 0.0,
+      "corte": 0.152,
+      "sensibilidade": 51.9,
+      "especificidade": 75.9,
+      "pct_sinalizados": 30.2,
+      "precisao": 37.6,
+      "matriz": {
+        "vp": 27562,
+        "fp": 45657,
+        "fn": 25583,
+        "vn": 143523
+      },
+      "roc": [
+        {
+          "fpr": 0.0,
+          "tpr": 0.0
+        },
+        {
+          "fpr": 0.0004,
+          "tpr": 0.0036
+        },
+        {
+          "fpr": 0.0009,
+          "tpr": 0.008
+        },
+        {
+          "fpr": 0.001,
+          "tpr": 0.0094
+        },
+        {
+          "fpr": 0.0015,
+          "tpr": 0.0136
+        },
+        {
+          "fpr": 0.0016,
+          "tpr": 0.0156
+        },
+        {
+          "fpr": 0.0019,
+          "tpr": 0.0181
+        },
+        {
+          "fpr": 0.0019,
+          "tpr": 0.0181
+        },
+        {
+          "fpr": 0.002,
+          "tpr": 0.0206
+        },
+        {
+          "fpr": 0.0033,
+          "tpr": 0.0316
+        },
+        {
+          "fpr": 0.0035,
+          "tpr": 0.0331
+        },
+        {
+          "fpr": 0.0058,
+          "tpr": 0.0456
+        },
+        {
+          "fpr": 0.0058,
+          "tpr": 0.0456
+        },
+        {
+          "fpr": 0.0059,
+          "tpr": 0.0466
+        },
+        {
+          "fpr": 0.0061,
+          "tpr": 0.0481
+        },
+        {
+          "fpr": 0.0064,
+          "tpr": 0.0506
+        },
+        {
+          "fpr": 0.0069,
+          "tpr": 0.0534
+        },
+        {
+          "fpr": 0.0069,
+          "tpr": 0.0535
+        },
+        {
+          "fpr": 0.0069,
+          "tpr": 0.054
+        },
+        {
+          "fpr": 0.0085,
+          "tpr": 0.0609
+        },
+        {
+          "fpr": 0.0088,
+          "tpr": 0.0632
+        },
+        {
+          "fpr": 0.0096,
+          "tpr": 0.0687
+        },
+        {
+          "fpr": 0.0097,
+          "tpr": 0.0691
+        },
+        {
+          "fpr": 0.0105,
+          "tpr": 0.0744
+        },
+        {
+          "fpr": 0.0107,
+          "tpr": 0.0752
+        },
+        {
+          "fpr": 0.0109,
+          "tpr": 0.0768
+        },
+        {
+          "fpr": 0.011,
+          "tpr": 0.0777
+        },
+        {
+          "fpr": 0.0113,
+          "tpr": 0.0796
+        },
+        {
+          "fpr": 0.0113,
+          "tpr": 0.0797
+        },
+        {
+          "fpr": 0.0118,
+          "tpr": 0.0834
+        },
+        {
+          "fpr": 0.0124,
+          "tpr": 0.0856
+        },
+        {
+          "fpr": 0.0125,
+          "tpr": 0.0857
+        },
+        {
+          "fpr": 0.0144,
+          "tpr": 0.0918
+        },
+        {
+          "fpr": 0.0147,
+          "tpr": 0.0936
+        },
+        {
+          "fpr": 0.0151,
+          "tpr": 0.0968
+        },
+        {
+          "fpr": 0.017,
+          "tpr": 0.1025
+        },
+        {
+          "fpr": 0.017,
+          "tpr": 0.1027
+        },
+        {
+          "fpr": 0.0178,
+          "tpr": 0.1065
+        },
+        {
+          "fpr": 0.0179,
+          "tpr": 0.1066
+        },
+        {
+          "fpr": 0.0179,
+          "tpr": 0.1066
+        },
+        {
+          "fpr": 0.0184,
+          "tpr": 0.1095
+        },
+        {
+          "fpr": 0.0186,
+          "tpr": 0.1103
+        },
+        {
+          "fpr": 0.019,
+          "tpr": 0.1138
+        },
+        {
+          "fpr": 0.0191,
+          "tpr": 0.1141
+        },
+        {
+          "fpr": 0.0192,
+          "tpr": 0.1143
+        },
+        {
+          "fpr": 0.0201,
+          "tpr": 0.1173
+        },
+        {
+          "fpr": 0.0215,
+          "tpr": 0.1224
+        },
+        {
+          "fpr": 0.0218,
+          "tpr": 0.1243
+        },
+        {
+          "fpr": 0.0234,
+          "tpr": 0.1293
+        },
+        {
+          "fpr": 0.0234,
+          "tpr": 0.1294
+        },
+        {
+          "fpr": 0.0254,
+          "tpr": 0.1374
+        },
+        {
+          "fpr": 0.0258,
+          "tpr": 0.1385
+        },
+        {
+          "fpr": 0.0265,
+          "tpr": 0.1432
+        },
+        {
+          "fpr": 0.0266,
+          "tpr": 0.1438
+        },
+        {
+          "fpr": 0.0267,
+          "tpr": 0.1442
+        },
+        {
+          "fpr": 0.0267,
+          "tpr": 0.1443
+        },
+        {
+          "fpr": 0.035,
+          "tpr": 0.1611
+        },
+        {
+          "fpr": 0.0354,
+          "tpr": 0.1633
+        },
+        {
+          "fpr": 0.0355,
+          "tpr": 0.1641
+        },
+        {
+          "fpr": 0.0539,
+          "tpr": 0.2019
+        },
+        {
+          "fpr": 0.0542,
+          "tpr": 0.2025
+        },
+        {
+          "fpr": 0.0544,
+          "tpr": 0.203
+        },
+        {
+          "fpr": 0.0546,
+          "tpr": 0.2036
+        },
+        {
+          "fpr": 0.069,
+          "tpr": 0.2351
+        },
+        {
+          "fpr": 0.0701,
+          "tpr": 0.2377
+        },
+        {
+          "fpr": 0.0714,
+          "tpr": 0.242
+        },
+        {
+          "fpr": 0.073,
+          "tpr": 0.2477
+        },
+        {
+          "fpr": 0.0744,
+          "tpr": 0.2503
+        },
+        {
+          "fpr": 0.076,
+          "tpr": 0.2558
+        },
+        {
+          "fpr": 0.0776,
+          "tpr": 0.261
+        },
+        {
+          "fpr": 0.0779,
+          "tpr": 0.2619
+        },
+        {
+          "fpr": 0.0779,
+          "tpr": 0.2619
+        },
+        {
+          "fpr": 0.0781,
+          "tpr": 0.2628
+        },
+        {
+          "fpr": 0.0785,
+          "tpr": 0.2639
+        },
+        {
+          "fpr": 0.0852,
+          "tpr": 0.2767
+        },
+        {
+          "fpr": 0.0997,
+          "tpr": 0.3047
+        },
+        {
+          "fpr": 0.1212,
+          "tpr": 0.34
+        },
+        {
+          "fpr": 0.1242,
+          "tpr": 0.3455
+        },
+        {
+          "fpr": 0.134,
+          "tpr": 0.3631
+        },
+        {
+          "fpr": 0.1347,
+          "tpr": 0.3649
+        },
+        {
+          "fpr": 0.1354,
+          "tpr": 0.3668
+        },
+        {
+          "fpr": 0.1356,
+          "tpr": 0.367
+        },
+        {
+          "fpr": 0.1472,
+          "tpr": 0.3855
+        },
+        {
+          "fpr": 0.157,
+          "tpr": 0.3979
+        },
+        {
+          "fpr": 0.1593,
+          "tpr": 0.4046
+        },
+        {
+          "fpr": 0.1593,
+          "tpr": 0.4047
+        },
+        {
+          "fpr": 0.1604,
+          "tpr": 0.4073
+        },
+        {
+          "fpr": 0.1617,
+          "tpr": 0.4113
+        },
+        {
+          "fpr": 0.1639,
+          "tpr": 0.4148
+        },
+        {
+          "fpr": 0.1684,
+          "tpr": 0.4215
+        },
+        {
+          "fpr": 0.1712,
+          "tpr": 0.4269
+        },
+        {
+          "fpr": 0.1716,
+          "tpr": 0.4276
+        },
+        {
+          "fpr": 0.185,
+          "tpr": 0.449
+        },
+        {
+          "fpr": 0.189,
+          "tpr": 0.4563
+        },
+        {
+          "fpr": 0.2045,
+          "tpr": 0.4773
+        },
+        {
+          "fpr": 0.2049,
+          "tpr": 0.4778
+        },
+        {
+          "fpr": 0.2127,
+          "tpr": 0.4867
+        },
+        {
+          "fpr": 0.2148,
+          "tpr": 0.4891
+        },
+        {
+          "fpr": 0.2155,
+          "tpr": 0.4903
+        },
+        {
+          "fpr": 0.2158,
+          "tpr": 0.4905
+        },
+        {
+          "fpr": 0.2179,
+          "tpr": 0.4928
+        },
+        {
+          "fpr": 0.2215,
+          "tpr": 0.4973
+        },
+        {
+          "fpr": 0.2413,
+          "tpr": 0.5186
+        },
+        {
+          "fpr": 0.3218,
+          "tpr": 0.5939
+        },
+        {
+          "fpr": 0.3222,
+          "tpr": 0.5945
+        },
+        {
+          "fpr": 0.4298,
+          "tpr": 0.6963
+        },
+        {
+          "fpr": 0.5056,
+          "tpr": 0.7574
+        },
+        {
+          "fpr": 0.5089,
+          "tpr": 0.7602
+        },
+        {
+          "fpr": 0.509,
+          "tpr": 0.7604
+        },
+        {
+          "fpr": 0.5613,
+          "tpr": 0.7961
+        },
+        {
+          "fpr": 0.6144,
+          "tpr": 0.8282
+        },
+        {
+          "fpr": 0.6618,
+          "tpr": 0.8504
+        },
+        {
+          "fpr": 0.6774,
+          "tpr": 0.8624
+        },
+        {
+          "fpr": 0.6774,
+          "tpr": 0.8625
+        },
+        {
+          "fpr": 0.747,
+          "tpr": 0.9051
+        },
+        {
+          "fpr": 0.7494,
+          "tpr": 0.9067
+        },
+        {
+          "fpr": 0.8055,
+          "tpr": 0.9286
+        },
+        {
+          "fpr": 0.8632,
+          "tpr": 0.9529
+        },
+        {
+          "fpr": 0.9299,
+          "tpr": 0.9775
+        },
+        {
+          "fpr": 1.0,
+          "tpr": 1.0
+        }
+      ],
+      "ks_curvas": [
+        {
+          "score": 0.0651,
+          "abandono": 0.0119,
+          "cura": 0.0348
+        },
+        {
+          "score": 0.0762,
+          "abandono": 0.0403,
+          "cura": 0.1211
+        },
+        {
+          "score": 0.0794,
+          "abandono": 0.0714,
+          "cura": 0.1945
+        },
+        {
+          "score": 0.0911,
+          "abandono": 0.0787,
+          "cura": 0.2104
+        },
+        {
+          "score": 0.0963,
+          "abandono": 0.0938,
+          "cura": 0.2515
+        },
+        {
+          "score": 0.1079,
+          "abandono": 0.1337,
+          "cura": 0.3157
+        },
+        {
+          "score": 0.1147,
+          "abandono": 0.1376,
+          "cura": 0.3226
+        },
+        {
+          "score": 0.1166,
+          "abandono": 0.1492,
+          "cura": 0.3377
+        },
+        {
+          "score": 0.118,
+          "abandono": 0.1708,
+          "cura": 0.3838
+        },
+        {
+          "score": 0.1238,
+          "abandono": 0.2038,
+          "cura": 0.4386
+        },
+        {
+          "score": 0.1314,
+          "abandono": 0.2392,
+          "cura": 0.4908
+        },
+        {
+          "score": 0.133,
+          "abandono": 0.2398,
+          "cura": 0.4911
+        },
+        {
+          "score": 0.1351,
+          "abandono": 0.242,
+          "cura": 0.4934
+        },
+        {
+          "score": 0.1368,
+          "abandono": 0.3034,
+          "cura": 0.57
+        },
+        {
+          "score": 0.1412,
+          "abandono": 0.3063,
+          "cura": 0.5736
+        },
+        {
+          "score": 0.1476,
+          "abandono": 0.4058,
+          "cura": 0.6782
+        },
+        {
+          "score": 0.151,
+          "abandono": 0.4061,
+          "cura": 0.6782
+        },
+        {
+          "score": 0.1534,
+          "abandono": 0.4826,
+          "cura": 0.7597
+        },
+        {
+          "score": 0.1605,
+          "abandono": 0.5029,
+          "cura": 0.7788
+        },
+        {
+          "score": 0.1689,
+          "abandono": 0.5072,
+          "cura": 0.7821
+        },
+        {
+          "score": 0.17,
+          "abandono": 0.5095,
+          "cura": 0.7842
+        },
+        {
+          "score": 0.1753,
+          "abandono": 0.5098,
+          "cura": 0.7846
+        },
+        {
+          "score": 0.1777,
+          "abandono": 0.5133,
+          "cura": 0.7872
+        },
+        {
+          "score": 0.1873,
+          "abandono": 0.5201,
+          "cura": 0.7937
+        },
+        {
+          "score": 0.1897,
+          "abandono": 0.5226,
+          "cura": 0.7953
+        },
+        {
+          "score": 0.1939,
+          "abandono": 0.5227,
+          "cura": 0.7955
+        },
+        {
+          "score": 0.201,
+          "abandono": 0.5445,
+          "cura": 0.8117
+        },
+        {
+          "score": 0.2033,
+          "abandono": 0.5571,
+          "cura": 0.8187
+        },
+        {
+          "score": 0.2095,
+          "abandono": 0.573,
+          "cura": 0.8288
+        },
+        {
+          "score": 0.2116,
+          "abandono": 0.5731,
+          "cura": 0.8288
+        },
+        {
+          "score": 0.214,
+          "abandono": 0.5786,
+          "cura": 0.8316
+        },
+        {
+          "score": 0.2171,
+          "abandono": 0.5887,
+          "cura": 0.8383
+        },
+        {
+          "score": 0.2192,
+          "abandono": 0.5889,
+          "cura": 0.8383
+        },
+        {
+          "score": 0.2239,
+          "abandono": 0.5952,
+          "cura": 0.8406
+        },
+        {
+          "score": 0.2258,
+          "abandono": 0.5953,
+          "cura": 0.8407
+        },
+        {
+          "score": 0.2288,
+          "abandono": 0.6016,
+          "cura": 0.8427
+        },
+        {
+          "score": 0.232,
+          "abandono": 0.6139,
+          "cura": 0.8525
+        },
+        {
+          "score": 0.2412,
+          "abandono": 0.6194,
+          "cura": 0.8544
+        },
+        {
+          "score": 0.2418,
+          "abandono": 0.633,
+          "cura": 0.8644
+        },
+        {
+          "score": 0.2462,
+          "abandono": 0.6332,
+          "cura": 0.8646
+        },
+        {
+          "score": 0.2482,
+          "abandono": 0.6351,
+          "cura": 0.8653
+        },
+        {
+          "score": 0.2497,
+          "abandono": 0.6545,
+          "cura": 0.8758
+        },
+        {
+          "score": 0.2533,
+          "abandono": 0.6545,
+          "cura": 0.8758
+        },
+        {
+          "score": 0.2567,
+          "abandono": 0.66,
+          "cura": 0.8788
+        },
+        {
+          "score": 0.2608,
+          "abandono": 0.6972,
+          "cura": 0.9015
+        },
+        {
+          "score": 0.2788,
+          "abandono": 0.7234,
+          "cura": 0.9149
+        },
+        {
+          "score": 0.2808,
+          "abandono": 0.7368,
+          "cura": 0.9218
+        },
+        {
+          "score": 0.2825,
+          "abandono": 0.7372,
+          "cura": 0.9219
+        },
+        {
+          "score": 0.2903,
+          "abandono": 0.7381,
+          "cura": 0.9221
+        },
+        {
+          "score": 0.2919,
+          "abandono": 0.7389,
+          "cura": 0.9224
+        },
+        {
+          "score": 0.3008,
+          "abandono": 0.7439,
+          "cura": 0.9239
+        },
+        {
+          "score": 0.3063,
+          "abandono": 0.7442,
+          "cura": 0.924
+        },
+        {
+          "score": 0.3123,
+          "abandono": 0.7497,
+          "cura": 0.9256
+        },
+        {
+          "score": 0.318,
+          "abandono": 0.7565,
+          "cura": 0.928
+        },
+        {
+          "score": 0.3273,
+          "abandono": 0.7585,
+          "cura": 0.9288
+        },
+        {
+          "score": 0.328,
+          "abandono": 0.7648,
+          "cura": 0.931
+        },
+        {
+          "score": 0.3357,
+          "abandono": 0.7649,
+          "cura": 0.931
+        },
+        {
+          "score": 0.3375,
+          "abandono": 0.7964,
+          "cura": 0.9454
+        },
+        {
+          "score": 0.3417,
+          "abandono": 0.797,
+          "cura": 0.9456
+        },
+        {
+          "score": 0.3458,
+          "abandono": 0.798,
+          "cura": 0.9461
+        },
+        {
+          "score": 0.3487,
+          "abandono": 0.7981,
+          "cura": 0.9461
+        },
+        {
+          "score": 0.3497,
+          "abandono": 0.8359,
+          "cura": 0.9645
+        },
+        {
+          "score": 0.3606,
+          "abandono": 0.8367,
+          "cura": 0.9646
+        },
+        {
+          "score": 0.3655,
+          "abandono": 0.8555,
+          "cura": 0.9732
+        },
+        {
+          "score": 0.3685,
+          "abandono": 0.8557,
+          "cura": 0.9733
+        },
+        {
+          "score": 0.3717,
+          "abandono": 0.8558,
+          "cura": 0.9733
+        },
+        {
+          "score": 0.3774,
+          "abandono": 0.8562,
+          "cura": 0.9734
+        },
+        {
+          "score": 0.3792,
+          "abandono": 0.8615,
+          "cura": 0.9742
+        },
+        {
+          "score": 0.385,
+          "abandono": 0.8624,
+          "cura": 0.9745
+        },
+        {
+          "score": 0.388,
+          "abandono": 0.8626,
+          "cura": 0.9746
+        },
+        {
+          "score": 0.3921,
+          "abandono": 0.8706,
+          "cura": 0.9766
+        },
+        {
+          "score": 0.4012,
+          "abandono": 0.8757,
+          "cura": 0.9782
+        },
+        {
+          "score": 0.4086,
+          "abandono": 0.877,
+          "cura": 0.9784
+        },
+        {
+          "score": 0.4113,
+          "abandono": 0.8776,
+          "cura": 0.9785
+        },
+        {
+          "score": 0.4178,
+          "abandono": 0.8827,
+          "cura": 0.9799
+        },
+        {
+          "score": 0.4257,
+          "abandono": 0.8857,
+          "cura": 0.9808
+        },
+        {
+          "score": 0.4412,
+          "abandono": 0.8861,
+          "cura": 0.9809
+        },
+        {
+          "score": 0.4504,
+          "abandono": 0.8862,
+          "cura": 0.981
+        },
+        {
+          "score": 0.4506,
+          "abandono": 0.8897,
+          "cura": 0.9814
+        },
+        {
+          "score": 0.4546,
+          "abandono": 0.8905,
+          "cura": 0.9816
+        },
+        {
+          "score": 0.4706,
+          "abandono": 0.8934,
+          "cura": 0.9821
+        },
+        {
+          "score": 0.4745,
+          "abandono": 0.8935,
+          "cura": 0.9822
+        },
+        {
+          "score": 0.4812,
+          "abandono": 0.8935,
+          "cura": 0.9822
+        },
+        {
+          "score": 0.4832,
+          "abandono": 0.8973,
+          "cura": 0.983
+        },
+        {
+          "score": 0.4924,
+          "abandono": 0.8975,
+          "cura": 0.983
+        },
+        {
+          "score": 0.4948,
+          "abandono": 0.9058,
+          "cura": 0.9853
+        },
+        {
+          "score": 0.4959,
+          "abandono": 0.9064,
+          "cura": 0.9853
+        },
+        {
+          "score": 0.5054,
+          "abandono": 0.9082,
+          "cura": 0.9856
+        },
+        {
+          "score": 0.5094,
+          "abandono": 0.9143,
+          "cura": 0.9875
+        },
+        {
+          "score": 0.5139,
+          "abandono": 0.9144,
+          "cura": 0.9876
+        },
+        {
+          "score": 0.5201,
+          "abandono": 0.9183,
+          "cura": 0.9883
+        },
+        {
+          "score": 0.5234,
+          "abandono": 0.9203,
+          "cura": 0.9887
+        },
+        {
+          "score": 0.5294,
+          "abandono": 0.9204,
+          "cura": 0.9887
+        },
+        {
+          "score": 0.5346,
+          "abandono": 0.9223,
+          "cura": 0.989
+        },
+        {
+          "score": 0.5507,
+          "abandono": 0.9238,
+          "cura": 0.9892
+        },
+        {
+          "score": 0.5515,
+          "abandono": 0.9248,
+          "cura": 0.9893
+        },
+        {
+          "score": 0.5586,
+          "abandono": 0.9256,
+          "cura": 0.9895
+        },
+        {
+          "score": 0.5621,
+          "abandono": 0.9309,
+          "cura": 0.9903
+        },
+        {
+          "score": 0.5711,
+          "abandono": 0.9313,
+          "cura": 0.9904
+        },
+        {
+          "score": 0.5763,
+          "abandono": 0.9372,
+          "cura": 0.9913
+        },
+        {
+          "score": 0.5921,
+          "abandono": 0.9391,
+          "cura": 0.9915
+        },
+        {
+          "score": 0.6009,
+          "abandono": 0.946,
+          "cura": 0.9931
+        },
+        {
+          "score": 0.6119,
+          "abandono": 0.9465,
+          "cura": 0.9931
+        },
+        {
+          "score": 0.6239,
+          "abandono": 0.9494,
+          "cura": 0.9936
+        },
+        {
+          "score": 0.63,
+          "abandono": 0.9494,
+          "cura": 0.9936
+        },
+        {
+          "score": 0.6365,
+          "abandono": 0.9519,
+          "cura": 0.9939
+        },
+        {
+          "score": 0.6512,
+          "abandono": 0.9534,
+          "cura": 0.9941
+        },
+        {
+          "score": 0.653,
+          "abandono": 0.9544,
+          "cura": 0.9942
+        },
+        {
+          "score": 0.6608,
+          "abandono": 0.9544,
+          "cura": 0.9942
+        },
+        {
+          "score": 0.6684,
+          "abandono": 0.9669,
+          "cura": 0.9965
+        },
+        {
+          "score": 0.6739,
+          "abandono": 0.9684,
+          "cura": 0.9967
+        },
+        {
+          "score": 0.6857,
+          "abandono": 0.9794,
+          "cura": 0.998
+        },
+        {
+          "score": 0.7003,
+          "abandono": 0.9819,
+          "cura": 0.9981
+        },
+        {
+          "score": 0.7033,
+          "abandono": 0.9819,
+          "cura": 0.9981
+        },
+        {
+          "score": 0.7099,
+          "abandono": 0.9844,
+          "cura": 0.9984
+        },
+        {
+          "score": 0.7345,
+          "abandono": 0.9864,
+          "cura": 0.9985
+        },
+        {
+          "score": 0.7598,
+          "abandono": 0.9906,
+          "cura": 0.999
+        },
+        {
+          "score": 0.7695,
+          "abandono": 0.992,
+          "cura": 0.9991
+        },
+        {
+          "score": 0.7892,
+          "abandono": 0.9964,
+          "cura": 0.9996
+        },
+        {
+          "score": 0.809,
+          "abandono": 1.0,
+          "cura": 1.0
+        }
+      ],
+      "odds_ratios": [
+        {
+          "variavel": "Sexo masculino",
+          "or": 1.18,
+          "ic_inf": 1.16,
+          "ic_sup": 1.21
+        },
+        {
+          "variavel": "Situação de rua",
+          "or": 3.86,
+          "ic_inf": 3.7,
+          "ic_sup": 4.01
+        },
+        {
+          "variavel": "Uso de drogas ilícitas",
+          "or": 2.1,
+          "ic_inf": 2.05,
+          "ic_sup": 2.15
+        },
+        {
+          "variavel": "Alcoolismo",
+          "or": 1.53,
+          "ic_inf": 1.49,
+          "ic_sup": 1.57
+        },
+        {
+          "variavel": "HIV positivo",
+          "or": 1.91,
+          "ic_inf": 1.85,
+          "ic_sup": 1.96
+        },
+        {
+          "variavel": "Idade 0 a 14 anos (vs 35 a 44 anos)",
+          "or": 0.63,
+          "ic_inf": 0.59,
+          "ic_sup": 0.68
+        },
+        {
+          "variavel": "Idade 15 a 24 anos (vs 35 a 44 anos)",
+          "or": 1.13,
+          "ic_inf": 1.1,
+          "ic_sup": 1.16
+        },
+        {
+          "variavel": "Idade 25 a 34 anos (vs 35 a 44 anos)",
+          "or": 1.06,
+          "ic_inf": 1.03,
+          "ic_sup": 1.08
+        },
+        {
+          "variavel": "Idade 45 a 54 anos (vs 35 a 44 anos)",
+          "or": 0.76,
+          "ic_inf": 0.74,
+          "ic_sup": 0.79
+        },
+        {
+          "variavel": "Idade 55 a 64 anos (vs 35 a 44 anos)",
+          "or": 0.54,
+          "ic_inf": 0.52,
+          "ic_sup": 0.57
+        },
+        {
+          "variavel": "Idade 65 ou + (vs 35 a 44 anos)",
+          "or": 0.52,
+          "ic_inf": 0.5,
+          "ic_sup": 0.55
+        }
+      ],
+      "faixas_risco": [
+        {
+          "faixa": "Muito baixo",
+          "pacientes": 52369,
+          "taxa_abandono": 9.5
+        },
+        {
+          "faixa": "Baixo",
+          "pacientes": 53189,
+          "taxa_abandono": 14.6
+        },
+        {
+          "faixa": "Médio",
+          "pacientes": 44222,
+          "taxa_abandono": 20.0
+        },
+        {
+          "faixa": "Alto",
+          "pacientes": 44124,
+          "taxa_abandono": 25.1
+        },
+        {
+          "faixa": "Muito alto",
+          "pacientes": 48421,
+          "taxa_abandono": 42.4
+        }
+      ]
+    },
+    "residuos_ks": [
+      {
+        "recorte": "Brasil",
+        "grupo": "Brasil",
+        "n": 11,
+        "ks": 0.212,
+        "p_valor": 0.176,
+        "normal": true
+      },
+      {
+        "recorte": "Norte",
+        "grupo": "Região",
+        "n": 11,
+        "ks": 0.17,
+        "p_valor": 0.482,
+        "normal": true
+      },
+      {
+        "recorte": "Nordeste",
+        "grupo": "Região",
+        "n": 11,
+        "ks": 0.173,
+        "p_valor": 0.455,
+        "normal": true
+      },
+      {
+        "recorte": "Centro-Oeste",
+        "grupo": "Região",
+        "n": 11,
+        "ks": 0.141,
+        "p_valor": 0.781,
+        "normal": true
+      },
+      {
+        "recorte": "Sul",
+        "grupo": "Região",
+        "n": 11,
+        "ks": 0.16,
+        "p_valor": 0.594,
+        "normal": true
+      },
+      {
+        "recorte": "Sudeste",
+        "grupo": "Região",
+        "n": 11,
+        "ks": 0.26,
+        "p_valor": 0.039,
+        "normal": false
+      },
+      {
+        "recorte": "Acre",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.117,
+        "p_valor": 0.951,
+        "normal": true
+      },
+      {
+        "recorte": "Alagoas",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.213,
+        "p_valor": 0.171,
+        "normal": true
+      },
+      {
+        "recorte": "Amapá",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.116,
+        "p_valor": 0.955,
+        "normal": true
+      },
+      {
+        "recorte": "Amazonas",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.152,
+        "p_valor": 0.668,
+        "normal": true
+      },
+      {
+        "recorte": "Bahia",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.199,
+        "p_valor": 0.254,
+        "normal": true
+      },
+      {
+        "recorte": "Ceará",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.155,
+        "p_valor": 0.638,
+        "normal": true
+      },
+      {
+        "recorte": "Distrito Federal",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.172,
+        "p_valor": 0.462,
+        "normal": true
+      },
+      {
+        "recorte": "Espírito Santo",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.188,
+        "p_valor": 0.333,
+        "normal": true
+      },
+      {
+        "recorte": "Goiás",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.159,
+        "p_valor": 0.6,
+        "normal": true
+      },
+      {
+        "recorte": "Maranhão",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.154,
+        "p_valor": 0.658,
+        "normal": true
+      },
+      {
+        "recorte": "Mato Grosso",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.197,
+        "p_valor": 0.264,
+        "normal": true
+      },
+      {
+        "recorte": "Mato Grosso do Sul",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.219,
+        "p_valor": 0.144,
+        "normal": true
+      },
+      {
+        "recorte": "Minas Gerais",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.165,
+        "p_valor": 0.531,
+        "normal": true
+      },
+      {
+        "recorte": "Paraná",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.146,
+        "p_valor": 0.733,
+        "normal": true
+      },
+      {
+        "recorte": "Paraíba",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.115,
+        "p_valor": 0.958,
+        "normal": true
+      },
+      {
+        "recorte": "Pará",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.196,
+        "p_valor": 0.269,
+        "normal": true
+      },
+      {
+        "recorte": "Pernambuco",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.207,
+        "p_valor": 0.206,
+        "normal": true
+      },
+      {
+        "recorte": "Piauí",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.203,
+        "p_valor": 0.228,
+        "normal": true
+      },
+      {
+        "recorte": "Rio Grande do Norte",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.185,
+        "p_valor": 0.354,
+        "normal": true
+      },
+      {
+        "recorte": "Rio Grande do Sul",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.172,
+        "p_valor": 0.468,
+        "normal": true
+      },
+      {
+        "recorte": "Rio de Janeiro",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.123,
+        "p_valor": 0.924,
+        "normal": true
+      },
+      {
+        "recorte": "Rondônia",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.18,
+        "p_valor": 0.399,
+        "normal": true
+      },
+      {
+        "recorte": "Roraima",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.171,
+        "p_valor": 0.47,
+        "normal": true
+      },
+      {
+        "recorte": "Santa Catarina",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.152,
+        "p_valor": 0.672,
+        "normal": true
+      },
+      {
+        "recorte": "Sergipe",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.139,
+        "p_valor": 0.799,
+        "normal": true
+      },
+      {
+        "recorte": "São Paulo",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.227,
+        "p_valor": 0.114,
+        "normal": true
+      },
+      {
+        "recorte": "Tocantins",
+        "grupo": "Estado",
+        "n": 11,
+        "ks": 0.186,
+        "p_valor": 0.341,
+        "normal": true
+      },
+      {
+        "recorte": "Masculino",
+        "grupo": "Sexo",
+        "n": 11,
+        "ks": 0.236,
+        "p_valor": 0.081,
+        "normal": true
+      },
+      {
+        "recorte": "Feminino",
+        "grupo": "Sexo",
+        "n": 11,
+        "ks": 0.134,
+        "p_valor": 0.844,
+        "normal": true
+      }
+    ],
+    "teste_crescimento_estados": {
+      "pergunta": "O estado vai crescer mais que o Brasil no ano seguinte?",
+      "n_treino": 108,
+      "n_teste": 81,
+      "auc_teste": 0.459
+    }
   }
 }

@@ -52,7 +52,7 @@
   // =========================================================
   // Navegação entre telas (#visao-geral, #regioes, #alertas, #fatores)
   // =========================================================
-  const TELAS = ['visao-geral', 'regioes', 'alertas', 'fatores'];
+  const TELAS = ['visao-geral', 'regioes', 'alertas', 'fatores', 'modelagem'];
   let telaAtual = 'visao-geral';
   function mostrarTela() {
     const hash = location.hash.slice(1);
@@ -774,6 +774,224 @@
   }
 
   // =========================================================
+  // TELA 5 — Modelagem (ROC, KS, odds ratios, resíduos)
+  // =========================================================
+  function renderModelagem() {
+    const M = DADOS.modelagem;
+    if (!M) return;
+    const A = M.abandono;
+    const pct = (v, c = 1) => dec(v, c) + '%';
+    const mil = (v) => dec(v / 1000, 0) + ' mil';
+
+    // ---------- resumo ----------
+    const res = M.residuos_ks, okRes = res.filter(r => r.normal).length;
+    document.getElementById('insight-modelagem').innerHTML = A
+      ? `Além da projeção, o AlertaTB tem um <strong>modelo de risco de abandono do tratamento</strong>, validado em pacientes de ${A.periodos.teste} que o modelo nunca viu: ` +
+        `<strong>AUC ${dec(A.auc_teste, 2)}</strong> e <strong>KS ${dec(A.ks * 100, 1)}</strong>. Os pacientes da faixa de risco mais alta abandonam ` +
+        `<strong>${pct(A.faixas_risco[A.faixas_risco.length - 1].taxa_abandono, 0)}</strong> das vezes, contra ${pct(A.faixas_risco[0].taxa_abandono, 0)} na mais baixa. ` +
+        `Na projeção de casos, os resíduos passaram no teste KS de normalidade em <strong>${okRes} de ${res.length}</strong> recortes.`
+      : 'Rode analysis/baixar_dados_abandono.py e analysis/regressao.py para gerar a modelagem.';
+
+    if (A) {
+      document.getElementById('texto-modelo-abandono').innerHTML =
+        `Abandonar o tratamento é o que mais alimenta a transmissão (Tela 4). Este modelo de <strong>regressão logística</strong> estima, para cada perfil de paciente, ` +
+        `a chance de abandonar em vez de se curar, a partir de <strong>sexo, faixa etária, situação de rua, uso de drogas, alcoolismo e HIV</strong>. ` +
+        `Treinado com ${mil(A.n_treino)} pacientes diagnosticados em ${A.periodos.treino} e testado com ${mil(A.n_teste)} pacientes de ${A.periodos.teste} ` +
+        `(2020 fica fora por causa da pandemia). Uso prático: a equipe de saúde prioriza o <strong>tratamento diretamente observado</strong> para quem tem risco alto.`;
+
+      const kpi = (rotulo, valor, sub, classe = '') =>
+        `<div class="kpi ${classe}"><span class="kpi-rotulo">${rotulo}</span><span class="kpi-valor">${valor}</span><span class="kpi-sub">${sub}</span></div>`;
+      document.getElementById('kpis-modelagem').innerHTML = [
+        kpi('AUC (teste)', dec(A.auc_teste, 2), `treino ${dec(A.auc_treino, 2)}: desempenho estável, sem sobreajuste`, 'kpi-ok'),
+        kpi('KS (teste)', dec(A.ks * 100, 1), `máxima separação entre quem abandona e quem se cura · p ${A.ks_p_valor < 0.001 ? '< 0,001' : '= ' + dec(A.ks_p_valor, 3)}`, 'kpi-ok'),
+        kpi('Sensibilidade', pct(A.sensibilidade), `dos abandonos ficam na faixa sinalizada · especificidade ${pct(A.especificidade)}`),
+        kpi('Pacientes avaliados', mil(A.n_teste), `no teste (${A.periodos.teste}) · ${pct(A.taxa_abandono_teste)} abandonaram`),
+      ].join('');
+
+      document.getElementById('dica-roc').textContent = `Teste: ${A.periodos.teste}`;
+      document.getElementById('nota-roc').innerHTML =
+        `Cada ponto mostra quanto dos abandonos o modelo encontra (eixo vertical) ao custo de sinalizar pacientes que se curariam (eixo horizontal). ` +
+        `A diagonal é o acaso (AUC 0,5). Área sob a curva: <strong>${dec(A.auc_teste, 2)}</strong>, poder de discriminação moderado.`;
+      document.getElementById('dica-ks').textContent = `KS = ${dec(A.ks * 100, 1)}`;
+      document.getElementById('nota-ks').innerHTML =
+        `Distribuição acumulada do score de risco para quem <strong>abandonou</strong> e para quem <strong>se curou</strong>. ` +
+        `A maior distância entre as curvas é o KS (${dec(A.ks * 100, 1)} pontos), no score ${dec(A.corte * 100, 1)}%. ` +
+        `O teste KS de duas amostras confirma que as distribuições são diferentes (p ${A.ks_p_valor < 0.001 ? '< 0,001' : '= ' + dec(A.ks_p_valor, 3)}).`;
+
+      if (window.Chart) {
+        // ROC
+        const roc = A.roc.map(p => ({ x: p.fpr * 100, y: p.tpr * 100 }));
+        if (graficos.roc) graficos.roc.destroy();
+        graficos.roc = new Chart(document.getElementById('grafico-roc'), {
+          type: 'scatter',
+          data: { datasets: [
+            { label: `Modelo (AUC ${dec(A.auc_teste, 2)})`, data: roc, showLine: true, borderColor: COR.roxoProfundo,
+              backgroundColor: 'rgba(59,30,109,0.10)', fill: true, borderWidth: 3, pointRadius: 0, tension: 0 },
+            { label: 'Acaso (AUC 0,5)', data: [{ x: 0, y: 0 }, { x: 100, y: 100 }], showLine: true, borderColor: COR.cinza,
+              borderDash: [5, 4], borderWidth: 1.5, pointRadius: 0 },
+          ] },
+          options: {
+            scales: {
+              x: { min: 0, max: 100, title: { display: true, text: 'Falsos positivos (% dos curados sinalizados)' }, grid: { color: COR.linha } },
+              y: { min: 0, max: 100, title: { display: true, text: 'Verdadeiros positivos (% dos abandonos)' }, grid: { color: COR.linha } },
+            },
+            plugins: {
+              legend: { display: true, position: 'bottom', labels: { usePointStyle: true, pointStyle: 'line', boxWidth: 22 } },
+              tooltip: { callbacks: { label: c => ` encontra ${dec(c.parsed.y, 0)}% dos abandonos sinalizando ${dec(c.parsed.x, 0)}% dos curados` } },
+            },
+          },
+        });
+
+        // KS
+        const ks = A.ks_curvas;
+        const linhaKs = {
+          id: 'linhaKs',
+          afterDatasetsDraw(chart) {
+            const x = chart.scales.x.getPixelForValue(A.corte * 100);
+            const pto = ks.reduce((m, p) => (Math.abs(p.score - A.corte) < Math.abs(m.score - A.corte) ? p : m), ks[0]);
+            const y1 = chart.scales.y.getPixelForValue(pto.abandono * 100), y2 = chart.scales.y.getPixelForValue(pto.cura * 100);
+            const ctx = chart.ctx; ctx.save();
+            ctx.strokeStyle = '#C0392B'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(x, y1); ctx.lineTo(x, y2); ctx.stroke();
+            ctx.font = "700 12px 'Inter', sans-serif"; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+            const rot = `KS = ${dec(A.ks * 100, 1)}`, lx = x + 10, ly = (y1 + y2) / 2, lw = ctx.measureText(rot).width;
+            ctx.fillStyle = 'rgba(255,255,255,0.92)'; ctx.fillRect(lx - 4, ly - 10, lw + 8, 20);
+            ctx.fillStyle = '#C0392B'; ctx.fillText(rot, lx, ly);
+            ctx.restore();
+          },
+        };
+        if (graficos.ks) graficos.ks.destroy();
+        graficos.ks = new Chart(document.getElementById('grafico-ks'), {
+          type: 'scatter',
+          data: { datasets: [
+            { label: 'Curaram', data: ks.map(p => ({ x: p.score * 100, y: p.cura * 100 })), showLine: true, stepped: true,
+              borderColor: COR.verdeAzulado, borderWidth: 2.5, pointRadius: 0 },
+            { label: 'Abandonaram', data: ks.map(p => ({ x: p.score * 100, y: p.abandono * 100 })), showLine: true, stepped: true,
+              borderColor: COR.roxoProfundo, borderWidth: 2.5, pointRadius: 0 },
+          ] },
+          options: {
+            scales: {
+              x: { title: { display: true, text: 'Score de risco previsto (%)' }, grid: { color: COR.linha }, ticks: { callback: v => dec(v, 0) } },
+              y: { min: 0, max: 100, title: { display: true, text: '% acumulado de pacientes' }, grid: { color: COR.linha }, ticks: { callback: v => v + '%' } },
+            },
+            plugins: {
+              legend: { display: true, position: 'bottom', labels: { usePointStyle: true, pointStyle: 'line', boxWidth: 22 } },
+              tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${dec(c.parsed.y, 0)}% com score até ${dec(c.parsed.x, 1)}%` } },
+            },
+          },
+          plugins: [linhaKs],
+        });
+
+        // Odds ratios (barras que partem de 1, escala log)
+        const odds = A.odds_ratios.slice().sort((a, b) => b.or - a.or);
+        if (graficos.odds) graficos.odds.destroy();
+        graficos.odds = new Chart(document.getElementById('grafico-odds'), {
+          type: 'bar',
+          data: {
+            labels: odds.map(o => o.variavel.replace(' (vs 35 a 44 anos)', '')),
+            datasets: [{ data: odds.map(o => [Math.min(1, o.or), Math.max(1, o.or)]),
+              backgroundColor: odds.map(o => (o.or >= 1 ? '#C0392B' : COR.verdeAzulado)), borderRadius: 4, maxBarThickness: 18 }],
+          },
+          options: {
+            indexAxis: 'y',
+            scales: {
+              x: { type: 'logarithmic', min: 0.4, max: 5, grid: { color: COR.linha },
+                   ticks: { callback: v => ([0.5, 1, 2, 3, 4, 5].includes(Number(v.toFixed(1))) ? dec(v, v < 1 ? 1 : 0) + '×' : '') } },
+              y: { grid: { display: false }, ticks: { font: { size: 11.5 } } },
+            },
+            plugins: {
+              tooltip: { callbacks: { label: c => { const o = odds[c.dataIndex];
+                return ` ${dec(o.or, 2)}× a chance (IC 95%: ${dec(o.ic_inf, 2)} a ${dec(o.ic_sup, 2)})`; } } },
+            },
+          },
+          plugins: [{
+            id: 'rotulosOdds',
+            afterDatasetsDraw(chart) {
+              const ctx = chart.ctx, meta = chart.getDatasetMeta(0);
+              ctx.save(); ctx.font = "600 11.5px 'Inter', sans-serif"; ctx.fillStyle = COR.roxoProfundo; ctx.textBaseline = 'middle';
+              meta.data.forEach((bar, i) => {
+                const o = odds[i], dir = o.or >= 1;
+                ctx.textAlign = dir ? 'left' : 'right';
+                ctx.fillText(dec(o.or, 2) + '×', dir ? Math.max(bar.x, bar.base) + 5 : Math.min(bar.x, bar.base) - 5, bar.y);
+              });
+              ctx.restore();
+            },
+          }],
+        });
+
+        // Faixas de risco
+        const fx = A.faixas_risco;
+        document.getElementById('dica-faixas').textContent = `Teste: ${A.periodos.teste}`;
+        document.getElementById('nota-faixas').innerHTML =
+          `Pacientes do teste divididos em 5 grupos pelo score previsto. A taxa real de abandono sobe a cada faixa: de ${pct(fx[0].taxa_abandono)} ` +
+          `para <strong>${pct(fx[fx.length - 1].taxa_abandono)}</strong>. Linha tracejada: média (${pct(A.taxa_abandono_teste)}).`;
+        const media = A.taxa_abandono_teste;
+        if (graficos.faixas) graficos.faixas.destroy();
+        graficos.faixas = new Chart(document.getElementById('grafico-faixas'), {
+          type: 'bar',
+          data: { labels: fx.map(f => f.faixa), datasets: [{ data: fx.map(f => f.taxa_abandono),
+            backgroundColor: fx.map((_, i) => misturar('#E7DDF7', '#C0392B', i / (fx.length - 1))), borderRadius: 6, maxBarThickness: 60 }] },
+          options: {
+            scales: { y: { beginAtZero: true, grid: { color: COR.linha }, ticks: { callback: v => v + '%' } }, x: { grid: { display: false } } },
+            plugins: { tooltip: { callbacks: { label: c => ` ${pct(c.raw)} abandonaram (${num(fx[c.dataIndex].pacientes)} pacientes)` } } },
+          },
+          plugins: [{
+            id: 'mediaFaixas',
+            afterDatasetsDraw(chart) {
+              const y = chart.scales.y.getPixelForValue(media), { left, right } = chart.chartArea, ctx = chart.ctx;
+              ctx.save(); ctx.strokeStyle = COR.cinza; ctx.setLineDash([5, 4]); ctx.beginPath(); ctx.moveTo(left, y); ctx.lineTo(right, y); ctx.stroke();
+              ctx.setLineDash([]); ctx.fillStyle = COR.roxoProfundo; ctx.font = "600 12px 'Inter', sans-serif"; ctx.textAlign = 'center';
+              chart.getDatasetMeta(0).data.forEach((bar, i) => ctx.fillText(pct(fx[i].taxa_abandono), bar.x, bar.y - 8));
+              ctx.restore();
+            },
+          }],
+        });
+      }
+
+      // Matriz de confusão
+      const mz = A.matriz, tot = mz.vp + mz.fp + mz.fn + mz.vn, p100 = v => pct(v / tot * 100);
+      document.getElementById('dica-matriz').textContent = `Corte: score acima de ${dec(A.corte * 100, 1)}%`;
+      document.getElementById('tabela-matriz').innerHTML = `
+        <thead><tr><th></th><th>Previsto: risco alto</th><th>Previsto: risco baixo</th></tr></thead>
+        <tbody>
+          <tr><th>Abandonou</th><td class="acerto">${num(mz.vp)}<small>verdadeiro positivo · ${p100(mz.vp)}</small></td><td class="erro">${num(mz.fn)}<small>falso negativo · ${p100(mz.fn)}</small></td></tr>
+          <tr><th>Curou</th><td class="erro">${num(mz.fp)}<small>falso positivo · ${p100(mz.fp)}</small></td><td class="acerto">${num(mz.vn)}<small>verdadeiro negativo · ${p100(mz.vn)}</small></td></tr>
+        </tbody>`;
+      document.getElementById('texto-matriz').innerHTML = `
+        <p>No ponto de corte do KS, o modelo sinaliza <strong>${pct(A.pct_sinalizados)}</strong> dos pacientes como risco alto e, nesse grupo, encontra
+        <strong>${pct(A.sensibilidade)}</strong> de todos os abandonos (sensibilidade). Entre os que não foram sinalizados, ${pct(A.especificidade)} dos que se curaram ficaram de fora corretamente (especificidade).</p>
+        <p>Na prática: concentrar o acompanhamento em cerca de 1 a cada 3 pacientes alcança mais da metade dos abandonos. Precisão no grupo sinalizado: ${pct(A.precisao)} abandonaram, contra ${pct(A.taxa_abandono_teste)} na média.</p>
+        <p class="pequeno">O modelo prioriza; não substitui a avaliação da equipe. Com dados mais detalhados (escolaridade, renda, município), o desempenho tende a melhorar.</p>`;
+    }
+
+    // ---------- resíduos ----------
+    const nomeGrupo = { Brasil: 'País', 'Região': 'Região', Sexo: 'Sexo' };
+    const principais = res.filter(r => r.grupo !== 'Estado');
+    const ufs = res.filter(r => r.grupo === 'Estado'), ufsOk = ufs.filter(r => r.normal).length;
+    document.getElementById('dica-residuos').textContent = `${okRes} de ${res.length} recortes aderentes`;
+    document.getElementById('tabela-residuos').innerHTML = `
+      <thead><tr><th>Recorte</th><th class="num">Anos no ajuste</th><th class="num">Estatística KS (D)</th><th class="num">p-valor</th><th>Resultado (5%)</th></tr></thead>
+      <tbody>${principais.map(r => `<tr><td><strong>${r.recorte}</strong><span class="grupo">${nomeGrupo[r.grupo] || r.grupo}</span></td>
+        <td class="num">${r.n}</td><td class="num">${dec(r.ks, 3)}</td><td class="num">${dec(r.p_valor, 3)}</td>
+        <td>${r.normal ? '<span class="res-ok">✔ Normal</span>' : '<span class="res-nao">⚠ Rejeita normalidade</span>'}</td></tr>`).join('')}
+        <tr><td><strong>27 estados</strong><span class="grupo">Estado</span></td><td class="num">11 cada</td><td class="num">${dec(Math.min(...ufs.map(r => r.ks)), 2)} a ${dec(Math.max(...ufs.map(r => r.ks)), 2)}</td>
+        <td class="num">—</td><td><span class="${ufsOk === ufs.length ? 'res-ok' : 'res-nao'}">${ufsOk} de ${ufs.length} normais</span></td></tr>
+      </tbody>`;
+    const falhas = res.filter(r => !r.normal).map(r => r.recorte);
+    document.getElementById('nota-residuos').innerHTML =
+      `${falhas.length ? `${falhas.join(', ')} ficou no limite (p < 0,05): os erros não são perfeitamente normais, então o intervalo de confiança da projeção ali deve ser lido com cautela. ` : ''}` +
+      `Com só 11 anos por recorte, o teste tem pouco poder; por isso usamos também o backtest (Tela 1) para validar a projeção. P-valores por simulação (2.000 amostras, correção de Lilliefors).`;
+
+    // ---------- o que não funcionou ----------
+    const C = M.teste_crescimento_estados;
+    document.getElementById('nota-nao-funcionou').innerHTML = C
+      ? `<strong>Prever quais estados vão crescer mais que o Brasil no ano seguinte.</strong> Treinamos uma regressão logística com a variação e a tendência recentes de cada estado ` +
+        `(${C.n_treino} casos de treino, ${C.n_teste} de teste). Resultado: <strong>AUC ${dec(C.auc_teste, 2)}</strong>, igual a sortear (0,5). ` +
+        `A variação de um ano para o outro em cada estado é, na prática, ruído. Por isso o AlertaTB usa a <strong>tendência de 12 anos</strong> (selos da Tela 3) ` +
+        `em vez de prever o ano seguinte. Registramos o teste por transparência: saber o que o dado <em>não</em> consegue responder também é resultado.`
+      : '';
+  }
+
+  // =========================================================
   // Início
   // =========================================================
   // espera as fontes carregarem para os gráficos medirem os rótulos certo
@@ -783,6 +1001,7 @@
     renderMapa();
     renderAlertas();
     renderFatores();
+    renderModelagem();
     mostrarTela();
   }
   let iniciado = false;

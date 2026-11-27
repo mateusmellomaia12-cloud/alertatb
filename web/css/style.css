@@ -261,6 +261,28 @@ p { margin: 0; }
 .mapa-ranking strong { text-align: right; font-variant-numeric: tabular-nums; }
 @media (max-width: 860px) { .mapa-grade { grid-template-columns: 1fr; } }
 
+/* ---------- Tela 5: modelagem ---------- */
+.secao-titulo { font-family: var(--fonte-titulo); font-size: 20px; color: var(--roxo-profundo); margin: 12px 0 -6px; }
+.secao-texto { margin: 0; color: var(--grafite); font-size: 14.5px; line-height: 1.6; max-width: 900px; }
+.grafico-quadrado { height: 320px; }
+.grafico-odds { height: 330px; }
+.kpi-ok { border-left: 4px solid var(--moderado); }
+.matriz-grade { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 24px; align-items: center; }
+.tabela.matriz { min-width: 0; table-layout: fixed; }
+.matriz tbody tr { cursor: default; }
+#tabela-residuos tbody tr { cursor: default; }
+.matriz th, .matriz td { text-align: center; padding: 10px 8px; white-space: normal; overflow-wrap: anywhere; }
+.matriz thead th { letter-spacing: .3px; }
+@media (max-width: 640px) { .matriz td { font-size: 13.5px; } .matriz th { font-size: 10.5px; } }
+.matriz td { font-variant-numeric: tabular-nums; font-size: 15px; }
+.matriz td small { display: block; font-size: 11.5px; color: var(--cinza); }
+.matriz .acerto { background: #E8F4EE; }
+.matriz .erro { background: #FBEDEB; }
+.matriz-texto p { margin: 0 0 10px; font-size: 14px; line-height: 1.55; }
+.res-ok { color: var(--moderado); font-weight: 600; }
+.res-nao { color: var(--atencao, #D9822B); font-weight: 600; }
+@media (max-width: 860px) { .matriz-grade { grid-template-columns: 1fr; } }
+
 /* ---------- Fontes e metodologia ---------- */
 .fontes { border-top: 1px solid var(--linha); background: var(--nevoa); }
 .fontes-conteudo { max-width: 1200px; margin: 0 auto; padding: 24px 20px 20px; }

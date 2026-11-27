@@ -257,9 +257,42 @@
 
   </main>
 
+  <section class="fontes" id="fontes" aria-labelledby="titulo-fontes">
+    <div class="fontes-conteudo">
+      <h2 id="titulo-fontes">Fontes e metodologia</h2>
+      <div class="fontes-grade">
+        <div>
+          <h3>Casos de tuberculose</h3>
+          <p><a href="http://tabnet.datasus.gov.br/cgi/deftohtm.exe?sinannet/cnv/tubercbr.def" target="_blank" rel="noopener">SINAN — TABNET/DATASUS, Ministério da Saúde</a>.
+          Casos confirmados por <strong>ano de diagnóstico</strong> e <strong>local de notificação</strong>, 2013–2024. Consulta em 27/11/2026; os anos mais recentes ainda podem ser revisados.</p>
+        </div>
+        <div>
+          <h3>População (taxa por 100 mil)</h3>
+          <p><a href="https://ftp.ibge.gov.br/Projecao_da_Populacao/Projecao_da_Populacao_2024/" target="_blank" rel="noopener">IBGE — Projeções da População, Revisão 2024</a>.
+          População por ano, região, UF e sexo. Taxa = casos ÷ população × 100 mil.</p>
+        </div>
+        <div>
+          <h3>Fatores e desfecho (Tela 4)</h3>
+          <p><a href="http://tabnet.datasus.gov.br/cgi/deftohtm.exe?sinannet/cnv/tubercbr.def" target="_blank" rel="noopener">SINAN — TABNET/DATASUS</a>: situação de encerramento, tipo de entrada, HIV, PPL, situação de rua, drogas e alcoolismo.
+          Percentuais calculados sobre todos os casos confirmados do ano.</p>
+        </div>
+        <div>
+          <h3>Metas de referência</h3>
+          <p><a href="https://bvsms.saude.gov.br/bvs/publicacoes/brasil_livre_tuberculose_plano_nacional.pdf" target="_blank" rel="noopener">Brasil Livre da Tuberculose — Plano Nacional pelo Fim da Tuberculose (Ministério da Saúde, 2017)</a>:
+          menos de 10 casos por 100 mil hab. até 2035; cura ≥ 85% e abandono &lt; 5% (OMS, citadas no plano).</p>
+        </div>
+        <div>
+          <h3>Modelo preditivo</h3>
+          <p>Regressão linear (Python, Scikit-learn) por recorte, com 2020 fora do ajuste (subnotificação na pandemia). Backtest: treino até 2021 e teste em 2022–2024.
+          Código aberto: <a href="https://github.com/mateusmellomaia12-cloud/alertatb/tree/main/analysis" target="_blank" rel="noopener">analysis/ no GitHub</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer class="rodape">
     <div class="rodape-conteudo">
-      <span>Fontes: SINAN/DATASUS — Ministério da Saúde · IBGE, Projeções da População 2024 · Série 2013–2024</span>
+      <span>Fontes: SINAN/DATASUS (TABNET, consulta em 27/11/2026) · IBGE, Projeções da População 2024 · <a href="#fontes" class="link-fontes">ver detalhes</a></span>
       <span>Equipe TechCare Analytics · FMU TECH Inovação 2026.2 · ODS 3 Saúde e Bem-Estar</span>
     </div>
   </footer>

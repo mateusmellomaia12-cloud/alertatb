@@ -53,8 +53,12 @@
   // Navegação entre telas (#visao-geral, #regioes, #alertas, #fatores)
   // =========================================================
   const TELAS = ['visao-geral', 'regioes', 'alertas', 'fatores'];
+  let telaAtual = 'visao-geral';
   function mostrarTela() {
-    const atual = TELAS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'visao-geral';
+    const hash = location.hash.slice(1);
+    if (hash === 'fontes' && document.querySelector('.tela:not([hidden])')) return;   // só rola até as fontes
+    const atual = TELAS.includes(hash) ? hash : telaAtual;
+    telaAtual = atual;
     TELAS.forEach(t => { document.getElementById('tela-' + t).hidden = t !== atual; });
     document.querySelectorAll('.abas a').forEach(a => {
       const ativa = a.dataset.tela === atual;

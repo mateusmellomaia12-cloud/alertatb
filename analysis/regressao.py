@@ -24,6 +24,8 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 
+from fatores import montar_fatores
+
 # --------------------------------------------------------------------------
 # Configuração
 # --------------------------------------------------------------------------
@@ -31,6 +33,7 @@ RAIZ = Path(__file__).resolve().parent.parent
 ENTRADA = RAIZ / "data" / "processed" / "tuberculose_2013_2024.csv"
 SAIDA = RAIZ / "data" / "processed" / "dados_painel.json"
 SAIDA_WEB = RAIZ / "web" / "js" / "dados.js"   # mesmo conteúdo, para o site abrir sem servidor
+POPULACAO = RAIZ / "data" / "raw" / "ibge_populacao_2013_2034.csv"   # gerado por baixar_dados_externos.py
 
 ANOS_ATIPICOS = [2020]            # excluídos do ajuste
 ANO_CORTE_BACKTEST = 2021         # treina até este ano, testa os seguintes
@@ -52,6 +55,11 @@ RECORTES = {
     "Masculino": ("Masculino", "Sexo"),
     "Feminino": ("Feminino", "Sexo"),
 }
+# nome exibido no painel -> (local, sexo) na tabela de população do IBGE
+POP_RECORTE = {nome: (nome, "Ambos") for nome in RECORTES}
+POP_RECORTE["Brasil"] = ("Brasil", "Ambos")
+POP_RECORTE["Masculino"] = ("Brasil", "Homens")
+POP_RECORTE["Feminino"] = ("Brasil", "Mulheres")
 
 # Regra dos selos (SUGESTÃO — o grupo pode ajustar os limites):
 #   crescimento % ao ano = coeficiente anual / casos do último ano real
@@ -99,7 +107,12 @@ def verificar_consistencia(df: pd.DataFrame) -> list[dict]:
     return avisos
 
 
-def analisar_recorte(df: pd.DataFrame, coluna: str, grupo: str) -> dict:
+def taxa(casos: float, pop: int) -> float:
+    """Casos por 100 mil habitantes."""
+    return round(casos / pop * 100_000, 1)
+
+
+def analisar_recorte(df: pd.DataFrame, coluna: str, grupo: str, pop: dict[int, int]) -> dict:
     anos = df["Ano"].to_numpy()
     casos = df[coluna].to_numpy(dtype=float)
     mascara = ~np.isin(anos, ANOS_ATIPICOS)
@@ -117,12 +130,19 @@ def analisar_recorte(df: pd.DataFrame, coluna: str, grupo: str) -> dict:
     ultimo_real = casos[-1]
     cresc_pct = coef / ultimo_real * 100
     primeiro_real = casos[0]
+    projecao = [(a, float(p)) for a, p in zip(ANOS_PROJECAO, prever(modelo, ANOS_PROJECAO))]
+    taxa_ini, taxa_fim = taxa(primeiro_real, pop[int(anos[0])]), taxa(ultimo_real, pop[int(anos[-1])])
 
     return {
         "grupo": grupo,
         "historico": [{"ano": int(a), "casos": int(c)} for a, c in zip(anos, casos)],
-        "projecao": [{"ano": a, "casos": round(float(p))}
-                     for a, p in zip(ANOS_PROJECAO, prever(modelo, ANOS_PROJECAO))],
+        "projecao": [{"ano": a, "casos": round(p)} for a, p in projecao],
+        # taxa por 100 mil habitantes (população IBGE, Projeções 2024)
+        "taxa_historico": [{"ano": int(a), "taxa": taxa(c, pop[int(a)])} for a, c in zip(anos, casos)],
+        "taxa_projecao": [{"ano": a, "taxa": taxa(p, pop[a])} for a, p in projecao],
+        "taxa_ultimo_ano": taxa_fim,
+        "variacao_taxa_pct": round((taxa_fim / taxa_ini - 1) * 100, 1),
+        "populacao_ultimo_ano": pop[int(anos[-1])],
         "coeficiente_anual": round(coef, 1),
         "intercepto": round(float(modelo.intercept_), 1),
         "r2": round(float(r2), 3),
@@ -137,12 +157,23 @@ def analisar_recorte(df: pd.DataFrame, coluna: str, grupo: str) -> dict:
 # --------------------------------------------------------------------------
 # Execução
 # --------------------------------------------------------------------------
+def ler_populacao() -> dict[str, dict[int, int]]:
+    pop = pd.read_csv(POPULACAO)
+    resultado = {}
+    for nome, (local, sexo) in POP_RECORTE.items():
+        sel = pop[(pop["local"] == local) & (pop["sexo"] == sexo)]
+        resultado[nome] = dict(zip(sel["ano"].astype(int), sel["populacao"].astype(int)))
+    return resultado
+
+
 def main() -> None:
     df = pd.read_csv(ENTRADA, encoding="utf-8")
+    pop = ler_populacao()
 
     avisos = verificar_consistencia(df)
     resultado = {
         "fonte": "SINAN/DATASUS — Ministério da Saúde",
+        "fonte_populacao": "IBGE — Projeções da População, Revisão 2024",
         "periodo_historico": [int(df["Ano"].min()), int(df["Ano"].max())],
         "anos_excluidos_do_ajuste": ANOS_ATIPICOS,
         "regra_status": {
@@ -151,7 +182,9 @@ def main() -> None:
             "Moderado": "demais casos",
         },
         "avisos_consistencia": avisos,
-        "recortes": {nome: analisar_recorte(df, col, grupo) for nome, (col, grupo) in RECORTES.items()},
+        "recortes": {nome: analisar_recorte(df, col, grupo, pop[nome])
+                     for nome, (col, grupo) in RECORTES.items()},
+        "fatores": montar_fatores(pop["Brasil"]),
     }
 
     texto = json.dumps(resultado, ensure_ascii=False, indent=2)
@@ -162,11 +195,12 @@ def main() -> None:
 
     # Resumo no terminal
     print(f"{'Recorte':<14}{'Casos 2024':>11}{'Cresc/ano':>11}{'%/ano':>7}{'R²':>7}"
-          f"{'Proj 2025':>11}{'Proj 2034':>11}  Status")
+          f"{'Proj 2025':>11}{'Proj 2034':>11}{'Taxa':>7}{'Δtaxa':>8}  Status")
     for nome, r in resultado["recortes"].items():
         p = {x["ano"]: x["casos"] for x in r["projecao"]}
         print(f"{nome:<14}{r['casos_ultimo_ano']:>11,}{r['coeficiente_anual']:>+11,.0f}"
               f"{r['crescimento_pct_ano']:>7.1f}{r['r2']:>7.2f}{p[2025]:>11,}{p[2034]:>11,}"
+              f"{r['taxa_ultimo_ano']:>7.1f}{r['variacao_taxa_pct']:>+7.1f}%"
               f"  {r['status']}".replace(",", "."))
 
     if avisos:

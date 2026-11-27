@@ -1,6 +1,7 @@
 // Gerado por analysis/regressao.py — não editar à mão
 window.DADOS = {
   "fonte": "SINAN/DATASUS — Ministério da Saúde",
+  "fonte_populacao": "IBGE — Projeções da População, Revisão 2024",
   "periodo_historico": [
     2013,
     2024
@@ -145,6 +146,101 @@ window.DADOS = {
           "casos": 132164
         }
       ],
+      "taxa_historico": [
+        {
+          "ano": 2013,
+          "taxa": 42.8
+        },
+        {
+          "ano": 2014,
+          "taxa": 42.4
+        },
+        {
+          "ano": 2015,
+          "taxa": 42.2
+        },
+        {
+          "ano": 2016,
+          "taxa": 42.3
+        },
+        {
+          "ano": 2017,
+          "taxa": 44.0
+        },
+        {
+          "ano": 2018,
+          "taxa": 45.9
+        },
+        {
+          "ano": 2019,
+          "taxa": 46.5
+        },
+        {
+          "ano": 2020,
+          "taxa": 41.2
+        },
+        {
+          "ano": 2021,
+          "taxa": 43.5
+        },
+        {
+          "ano": 2022,
+          "taxa": 49.0
+        },
+        {
+          "ano": 2023,
+          "taxa": 51.9
+        },
+        {
+          "ano": 2024,
+          "taxa": 52.5
+        }
+      ],
+      "taxa_projecao": [
+        {
+          "ano": 2025,
+          "taxa": 51.8
+        },
+        {
+          "ano": 2026,
+          "taxa": 52.7
+        },
+        {
+          "ano": 2027,
+          "taxa": 53.6
+        },
+        {
+          "ano": 2028,
+          "taxa": 54.6
+        },
+        {
+          "ano": 2029,
+          "taxa": 55.5
+        },
+        {
+          "ano": 2030,
+          "taxa": 56.5
+        },
+        {
+          "ano": 2031,
+          "taxa": 57.4
+        },
+        {
+          "ano": 2032,
+          "taxa": 58.4
+        },
+        {
+          "ano": 2033,
+          "taxa": 59.4
+        },
+        {
+          "ano": 2034,
+          "taxa": 60.3
+        }
+      ],
+      "taxa_ultimo_ano": 52.5,
+      "variacao_taxa_pct": 22.7,
+      "populacao_ultimo_ano": 212583750,
       "coeficiente_anual": 2407.0,
       "intercepto": -4763652.7,
       "r2": 0.85,
@@ -252,6 +348,101 @@ window.DADOS = {
           "casos": 19919
         }
       ],
+      "taxa_historico": [
+        {
+          "ano": 2013,
+          "taxa": 52.9
+        },
+        {
+          "ano": 2014,
+          "taxa": 51.5
+        },
+        {
+          "ano": 2015,
+          "taxa": 52.3
+        },
+        {
+          "ano": 2016,
+          "taxa": 53.7
+        },
+        {
+          "ano": 2017,
+          "taxa": 57.7
+        },
+        {
+          "ano": 2018,
+          "taxa": 58.6
+        },
+        {
+          "ano": 2019,
+          "taxa": 65.5
+        },
+        {
+          "ano": 2020,
+          "taxa": 57.9
+        },
+        {
+          "ano": 2021,
+          "taxa": 63.2
+        },
+        {
+          "ano": 2022,
+          "taxa": 71.5
+        },
+        {
+          "ano": 2023,
+          "taxa": 75.2
+        },
+        {
+          "ano": 2024,
+          "taxa": 80.7
+        }
+      ],
+      "taxa_projecao": [
+        {
+          "ano": 2025,
+          "taxa": 78.9
+        },
+        {
+          "ano": 2026,
+          "taxa": 81.4
+        },
+        {
+          "ano": 2027,
+          "taxa": 83.8
+        },
+        {
+          "ano": 2028,
+          "taxa": 86.2
+        },
+        {
+          "ano": 2029,
+          "taxa": 88.6
+        },
+        {
+          "ano": 2030,
+          "taxa": 91.0
+        },
+        {
+          "ano": 2031,
+          "taxa": 93.4
+        },
+        {
+          "ano": 2032,
+          "taxa": 95.7
+        },
+        {
+          "ano": 2033,
+          "taxa": 98.1
+        },
+        {
+          "ano": 2034,
+          "taxa": 100.5
+        }
+      ],
+      "taxa_ultimo_ano": 80.7,
+      "variacao_taxa_pct": 52.6,
+      "populacao_ultimo_ano": 18669345,
       "coeficiente_anual": 564.1,
       "intercepto": -1127480.3,
       "r2": 0.938,
@@ -359,6 +550,101 @@ window.DADOS = {
           "casos": 32611
         }
       ],
+      "taxa_historico": [
+        {
+          "ano": 2013,
+          "taxa": 42.3
+        },
+        {
+          "ano": 2014,
+          "taxa": 40.8
+        },
+        {
+          "ano": 2015,
+          "taxa": 40.2
+        },
+        {
+          "ano": 2016,
+          "taxa": 40.6
+        },
+        {
+          "ano": 2017,
+          "taxa": 42.7
+        },
+        {
+          "ano": 2018,
+          "taxa": 45.1
+        },
+        {
+          "ano": 2019,
+          "taxa": 45.1
+        },
+        {
+          "ano": 2020,
+          "taxa": 39.5
+        },
+        {
+          "ano": 2021,
+          "taxa": 42.0
+        },
+        {
+          "ano": 2022,
+          "taxa": 47.9
+        },
+        {
+          "ano": 2023,
+          "taxa": 49.0
+        },
+        {
+          "ano": 2024,
+          "taxa": 48.3
+        }
+      ],
+      "taxa_projecao": [
+        {
+          "ano": 2025,
+          "taxa": 49.0
+        },
+        {
+          "ano": 2026,
+          "taxa": 49.7
+        },
+        {
+          "ano": 2027,
+          "taxa": 50.5
+        },
+        {
+          "ano": 2028,
+          "taxa": 51.3
+        },
+        {
+          "ano": 2029,
+          "taxa": 52.1
+        },
+        {
+          "ano": 2030,
+          "taxa": 52.9
+        },
+        {
+          "ano": 2031,
+          "taxa": 53.7
+        },
+        {
+          "ano": 2032,
+          "taxa": 54.5
+        },
+        {
+          "ano": 2033,
+          "taxa": 55.4
+        },
+        {
+          "ano": 2034,
+          "taxa": 56.2
+        }
+      ],
+      "taxa_ultimo_ano": 48.3,
+      "variacao_taxa_pct": 14.2,
+      "populacao_ultimo_ano": 57112096,
       "coeficiente_anual": 509.1,
       "intercepto": -1002879.0,
       "r2": 0.794,
@@ -466,6 +752,101 @@ window.DADOS = {
           "casos": 6468
         }
       ],
+      "taxa_historico": [
+        {
+          "ano": 2013,
+          "taxa": 30.2
+        },
+        {
+          "ano": 2014,
+          "taxa": 28.3
+        },
+        {
+          "ano": 2015,
+          "taxa": 26.1
+        },
+        {
+          "ano": 2016,
+          "taxa": 26.1
+        },
+        {
+          "ano": 2017,
+          "taxa": 26.3
+        },
+        {
+          "ano": 2018,
+          "taxa": 28.7
+        },
+        {
+          "ano": 2019,
+          "taxa": 29.1
+        },
+        {
+          "ano": 2020,
+          "taxa": 25.6
+        },
+        {
+          "ano": 2021,
+          "taxa": 26.3
+        },
+        {
+          "ano": 2022,
+          "taxa": 30.1
+        },
+        {
+          "ano": 2023,
+          "taxa": 33.6
+        },
+        {
+          "ano": 2024,
+          "taxa": 32.2
+        }
+      ],
+      "taxa_projecao": [
+        {
+          "ano": 2025,
+          "taxa": 31.4
+        },
+        {
+          "ano": 2026,
+          "taxa": 31.8
+        },
+        {
+          "ano": 2027,
+          "taxa": 32.1
+        },
+        {
+          "ano": 2028,
+          "taxa": 32.5
+        },
+        {
+          "ano": 2029,
+          "taxa": 32.9
+        },
+        {
+          "ano": 2030,
+          "taxa": 33.3
+        },
+        {
+          "ano": 2031,
+          "taxa": 33.7
+        },
+        {
+          "ano": 2032,
+          "taxa": 34.1
+        },
+        {
+          "ano": 2033,
+          "taxa": 34.5
+        },
+        {
+          "ano": 2034,
+          "taxa": 34.9
+        }
+      ],
+      "taxa_ultimo_ano": 32.2,
+      "variacao_taxa_pct": 6.6,
+      "populacao_ultimo_ano": 17071595,
       "coeficiente_anual": 117.5,
       "intercepto": -232528.6,
       "r2": 0.628,
@@ -573,6 +954,101 @@ window.DADOS = {
           "casos": 14351
         }
       ],
+      "taxa_historico": [
+        {
+          "ano": 2013,
+          "taxa": 39.5
+        },
+        {
+          "ano": 2014,
+          "taxa": 38.8
+        },
+        {
+          "ano": 2015,
+          "taxa": 37.9
+        },
+        {
+          "ano": 2016,
+          "taxa": 36.4
+        },
+        {
+          "ano": 2017,
+          "taxa": 36.9
+        },
+        {
+          "ano": 2018,
+          "taxa": 38.5
+        },
+        {
+          "ano": 2019,
+          "taxa": 40.1
+        },
+        {
+          "ano": 2020,
+          "taxa": 34.7
+        },
+        {
+          "ano": 2021,
+          "taxa": 35.6
+        },
+        {
+          "ano": 2022,
+          "taxa": 39.3
+        },
+        {
+          "ano": 2023,
+          "taxa": 42.5
+        },
+        {
+          "ano": 2024,
+          "taxa": 42.2
+        }
+      ],
+      "taxa_projecao": [
+        {
+          "ano": 2025,
+          "taxa": 40.8
+        },
+        {
+          "ano": 2026,
+          "taxa": 41.1
+        },
+        {
+          "ano": 2027,
+          "taxa": 41.4
+        },
+        {
+          "ano": 2028,
+          "taxa": 41.8
+        },
+        {
+          "ano": 2029,
+          "taxa": 42.1
+        },
+        {
+          "ano": 2030,
+          "taxa": 42.5
+        },
+        {
+          "ano": 2031,
+          "taxa": 42.8
+        },
+        {
+          "ano": 2032,
+          "taxa": 43.2
+        },
+        {
+          "ano": 2033,
+          "taxa": 43.6
+        },
+        {
+          "ano": 2034,
+          "taxa": 44.0
+        }
+      ],
+      "taxa_ultimo_ano": 42.2,
+      "variacao_taxa_pct": 6.8,
+      "populacao_ultimo_ano": 31113021,
       "coeficiente_anual": 174.7,
       "intercepto": -341053.0,
       "r2": 0.562,
@@ -680,6 +1156,101 @@ window.DADOS = {
           "casos": 59190
         }
       ],
+      "taxa_historico": [
+        {
+          "ano": 2013,
+          "taxa": 43.3
+        },
+        {
+          "ano": 2014,
+          "taxa": 45.4
+        },
+        {
+          "ano": 2015,
+          "taxa": 45.9
+        },
+        {
+          "ano": 2016,
+          "taxa": 46.0
+        },
+        {
+          "ano": 2017,
+          "taxa": 47.7
+        },
+        {
+          "ano": 2018,
+          "taxa": 49.5
+        },
+        {
+          "ano": 2019,
+          "taxa": 48.9
+        },
+        {
+          "ano": 2020,
+          "taxa": 44.1
+        },
+        {
+          "ano": 2021,
+          "taxa": 46.3
+        },
+        {
+          "ano": 2022,
+          "taxa": 51.8
+        },
+        {
+          "ano": 2023,
+          "taxa": 55.6
+        },
+        {
+          "ano": 2024,
+          "taxa": 56.7
+        }
+      ],
+      "taxa_projecao": [
+        {
+          "ano": 2025,
+          "taxa": 55.8
+        },
+        {
+          "ano": 2026,
+          "taxa": 56.9
+        },
+        {
+          "ano": 2027,
+          "taxa": 57.9
+        },
+        {
+          "ano": 2028,
+          "taxa": 59.0
+        },
+        {
+          "ano": 2029,
+          "taxa": 60.1
+        },
+        {
+          "ano": 2030,
+          "taxa": 61.3
+        },
+        {
+          "ano": 2031,
+          "taxa": 62.4
+        },
+        {
+          "ano": 2032,
+          "taxa": 63.5
+        },
+        {
+          "ano": 2033,
+          "taxa": 64.6
+        },
+        {
+          "ano": 2034,
+          "taxa": 65.8
+        }
+      ],
+      "taxa_ultimo_ano": 56.7,
+      "variacao_taxa_pct": 30.9,
+      "populacao_ultimo_ano": 88617693,
       "coeficiente_anual": 1072.4,
       "intercepto": -2122076.7,
       "r2": 0.846,
@@ -787,6 +1358,101 @@ window.DADOS = {
           "casos": 28488
         }
       ],
+      "taxa_historico": [
+        {
+          "ano": 2013,
+          "taxa": 44.9
+        },
+        {
+          "ano": 2014,
+          "taxa": 45.5
+        },
+        {
+          "ano": 2015,
+          "taxa": 46.1
+        },
+        {
+          "ano": 2016,
+          "taxa": 46.2
+        },
+        {
+          "ano": 2017,
+          "taxa": 48.8
+        },
+        {
+          "ano": 2018,
+          "taxa": 49.8
+        },
+        {
+          "ano": 2019,
+          "taxa": 48.1
+        },
+        {
+          "ano": 2020,
+          "taxa": 42.9
+        },
+        {
+          "ano": 2021,
+          "taxa": 43.7
+        },
+        {
+          "ano": 2022,
+          "taxa": 50.0
+        },
+        {
+          "ano": 2023,
+          "taxa": 54.1
+        },
+        {
+          "ano": 2024,
+          "taxa": 55.1
+        }
+      ],
+      "taxa_projecao": [
+        {
+          "ano": 2025,
+          "taxa": 53.4
+        },
+        {
+          "ano": 2026,
+          "taxa": 54.3
+        },
+        {
+          "ano": 2027,
+          "taxa": 55.1
+        },
+        {
+          "ano": 2028,
+          "taxa": 55.9
+        },
+        {
+          "ano": 2029,
+          "taxa": 56.8
+        },
+        {
+          "ano": 2030,
+          "taxa": 57.6
+        },
+        {
+          "ano": 2031,
+          "taxa": 58.5
+        },
+        {
+          "ano": 2032,
+          "taxa": 59.3
+        },
+        {
+          "ano": 2033,
+          "taxa": 60.2
+        },
+        {
+          "ano": 2034,
+          "taxa": 61.1
+        }
+      ],
+      "taxa_ultimo_ano": 55.1,
+      "variacao_taxa_pct": 22.7,
+      "populacao_ultimo_ano": 45973194,
       "coeficiente_anual": 429.0,
       "intercepto": -844070.9,
       "r2": 0.675,
@@ -894,6 +1560,101 @@ window.DADOS = {
           "casos": 20721
         }
       ],
+      "taxa_historico": [
+        {
+          "ano": 2013,
+          "taxa": 79.5
+        },
+        {
+          "ano": 2014,
+          "taxa": 77.5
+        },
+        {
+          "ano": 2015,
+          "taxa": 78.8
+        },
+        {
+          "ano": 2016,
+          "taxa": 80.1
+        },
+        {
+          "ano": 2017,
+          "taxa": 81.5
+        },
+        {
+          "ano": 2018,
+          "taxa": 86.6
+        },
+        {
+          "ano": 2019,
+          "taxa": 87.8
+        },
+        {
+          "ano": 2020,
+          "taxa": 79.6
+        },
+        {
+          "ano": 2021,
+          "taxa": 87.6
+        },
+        {
+          "ano": 2022,
+          "taxa": 93.5
+        },
+        {
+          "ano": 2023,
+          "taxa": 98.5
+        },
+        {
+          "ano": 2024,
+          "taxa": 100.0
+        }
+      ],
+      "taxa_projecao": [
+        {
+          "ano": 2025,
+          "taxa": 100.5
+        },
+        {
+          "ano": 2026,
+          "taxa": 102.7
+        },
+        {
+          "ano": 2027,
+          "taxa": 104.9
+        },
+        {
+          "ano": 2028,
+          "taxa": 107.1
+        },
+        {
+          "ano": 2029,
+          "taxa": 109.3
+        },
+        {
+          "ano": 2030,
+          "taxa": 111.5
+        },
+        {
+          "ano": 2031,
+          "taxa": 113.8
+        },
+        {
+          "ano": 2032,
+          "taxa": 116.0
+        },
+        {
+          "ano": 2033,
+          "taxa": 118.3
+        },
+        {
+          "ano": 2034,
+          "taxa": 120.6
+        }
+      ],
+      "taxa_ultimo_ano": 100.0,
+      "variacao_taxa_pct": 25.8,
+      "populacao_ultimo_ano": 17219679,
       "coeficiente_anual": 379.2,
       "intercepto": -750573.8,
       "r2": 0.937,
@@ -1001,6 +1762,101 @@ window.DADOS = {
           "casos": 94942
         }
       ],
+      "taxa_historico": [
+        {
+          "ano": 2013,
+          "taxa": 59.8
+        },
+        {
+          "ano": 2014,
+          "taxa": 59.2
+        },
+        {
+          "ano": 2015,
+          "taxa": 59.7
+        },
+        {
+          "ano": 2016,
+          "taxa": 59.9
+        },
+        {
+          "ano": 2017,
+          "taxa": 63.2
+        },
+        {
+          "ano": 2018,
+          "taxa": 65.7
+        },
+        {
+          "ano": 2019,
+          "taxa": 66.7
+        },
+        {
+          "ano": 2020,
+          "taxa": 59.5
+        },
+        {
+          "ano": 2021,
+          "taxa": 62.6
+        },
+        {
+          "ano": 2022,
+          "taxa": 70.6
+        },
+        {
+          "ano": 2023,
+          "taxa": 75.2
+        },
+        {
+          "ano": 2024,
+          "taxa": 75.4
+        }
+      ],
+      "taxa_projecao": [
+        {
+          "ano": 2025,
+          "taxa": 75.2
+        },
+        {
+          "ano": 2026,
+          "taxa": 76.7
+        },
+        {
+          "ano": 2027,
+          "taxa": 78.2
+        },
+        {
+          "ano": 2028,
+          "taxa": 79.8
+        },
+        {
+          "ano": 2029,
+          "taxa": 81.3
+        },
+        {
+          "ano": 2030,
+          "taxa": 82.8
+        },
+        {
+          "ano": 2031,
+          "taxa": 84.4
+        },
+        {
+          "ano": 2032,
+          "taxa": 85.9
+        },
+        {
+          "ano": 2033,
+          "taxa": 87.5
+        },
+        {
+          "ano": 2034,
+          "taxa": 89.1
+        }
+      ],
+      "taxa_ultimo_ano": 75.4,
+      "variacao_taxa_pct": 26.1,
+      "populacao_ultimo_ano": 103662286,
       "coeficiente_anual": 1856.5,
       "intercepto": -3681243.3,
       "r2": 0.878,
@@ -1108,6 +1964,101 @@ window.DADOS = {
           "casos": 37129
         }
       ],
+      "taxa_historico": [
+        {
+          "ano": 2013,
+          "taxa": 26.5
+        },
+        {
+          "ano": 2014,
+          "taxa": 26.4
+        },
+        {
+          "ano": 2015,
+          "taxa": 25.7
+        },
+        {
+          "ano": 2016,
+          "taxa": 25.5
+        },
+        {
+          "ano": 2017,
+          "taxa": 25.7
+        },
+        {
+          "ano": 2018,
+          "taxa": 26.9
+        },
+        {
+          "ano": 2019,
+          "taxa": 27.3
+        },
+        {
+          "ano": 2020,
+          "taxa": 23.8
+        },
+        {
+          "ano": 2021,
+          "taxa": 25.2
+        },
+        {
+          "ano": 2022,
+          "taxa": 28.4
+        },
+        {
+          "ano": 2023,
+          "taxa": 29.7
+        },
+        {
+          "ano": 2024,
+          "taxa": 30.6
+        }
+      ],
+      "taxa_projecao": [
+        {
+          "ano": 2025,
+          "taxa": 29.5
+        },
+        {
+          "ano": 2026,
+          "taxa": 29.9
+        },
+        {
+          "ano": 2027,
+          "taxa": 30.2
+        },
+        {
+          "ano": 2028,
+          "taxa": 30.6
+        },
+        {
+          "ano": 2029,
+          "taxa": 31.0
+        },
+        {
+          "ano": 2030,
+          "taxa": 31.4
+        },
+        {
+          "ano": 2031,
+          "taxa": 31.8
+        },
+        {
+          "ano": 2032,
+          "taxa": 32.2
+        },
+        {
+          "ano": 2033,
+          "taxa": 32.6
+        },
+        {
+          "ano": 2034,
+          "taxa": 33.0
+        }
+      ],
+      "taxa_ultimo_ano": 30.6,
+      "variacao_taxa_pct": 15.5,
+      "populacao_ultimo_ano": 108921464,
       "coeficiente_anual": 543.4,
       "intercepto": -1068155.4,
       "r2": 0.721,
@@ -1121,5 +2072,556 @@ window.DADOS = {
       },
       "status": "Atenção"
     }
+  },
+  "fatores": {
+    "fonte": "SINAN/TABNET (DATASUS) — casos confirmados por ano de diagnóstico; população: IBGE, Projeções 2024",
+    "anos": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "total_casos": [
+      86212,
+      85216,
+      85462,
+      86210,
+      90295,
+      94735,
+      95849,
+      86160,
+      91415,
+      103382,
+      109919,
+      113012
+    ],
+    "indicadores": [
+      {
+        "id": "abandono",
+        "nome": "Abandono do tratamento",
+        "descricao": "Pacientes que pararam o tratamento antes do fim (inclui abandono primário)",
+        "tipo": "tratamento",
+        "ano_inicial": 2013,
+        "casos": [
+          11661,
+          11397,
+          10742,
+          11032,
+          11939,
+          13205,
+          13989,
+          13808,
+          15297,
+          17773,
+          20100,
+          21339
+        ],
+        "pct_dos_casos": [
+          13.53,
+          13.37,
+          12.57,
+          12.8,
+          13.22,
+          13.94,
+          14.59,
+          16.03,
+          16.73,
+          17.19,
+          18.29,
+          18.88
+        ],
+        "pct_ignorado": [
+          1.9,
+          1.8,
+          3.9,
+          2.8,
+          2.9,
+          2.6,
+          2.6,
+          2.8,
+          2.6,
+          2.7,
+          3.2,
+          5.2
+        ]
+      },
+      {
+        "id": "reingresso",
+        "nome": "Retorno após abandono",
+        "descricao": "Pessoas que voltam ao sistema depois de abandonar",
+        "tipo": "tratamento",
+        "ano_inicial": 2013,
+        "casos": [
+          6342,
+          6593,
+          6537,
+          6513,
+          6460,
+          7003,
+          7340,
+          7662,
+          9476,
+          12251,
+          15029,
+          16752
+        ],
+        "pct_dos_casos": [
+          7.36,
+          7.74,
+          7.65,
+          7.55,
+          7.15,
+          7.39,
+          7.66,
+          8.89,
+          10.37,
+          11.85,
+          13.67,
+          14.82
+        ],
+        "pct_ignorado": null
+      },
+      {
+        "id": "obito_tb",
+        "nome": "Óbitos por tuberculose",
+        "descricao": "Casos notificados que terminaram em óbito pela doença",
+        "tipo": "tratamento",
+        "ano_inicial": 2013,
+        "casos": [
+          3100,
+          3117,
+          3112,
+          2987,
+          3319,
+          3518,
+          3395,
+          3352,
+          3948,
+          4549,
+          4913,
+          5092
+        ],
+        "pct_dos_casos": [
+          3.6,
+          3.66,
+          3.64,
+          3.46,
+          3.68,
+          3.71,
+          3.54,
+          3.89,
+          4.32,
+          4.4,
+          4.47,
+          4.51
+        ],
+        "pct_ignorado": [
+          1.9,
+          1.8,
+          3.9,
+          2.8,
+          2.9,
+          2.6,
+          2.6,
+          2.8,
+          2.6,
+          2.7,
+          3.2,
+          5.2
+        ]
+      },
+      {
+        "id": "situacao_rua",
+        "nome": "Pessoas em situação de rua",
+        "descricao": "Casos em pessoas vivendo nas ruas",
+        "tipo": "vulnerabilidade",
+        "ano_inicial": 2015,
+        "casos": [
+          720,
+          1628,
+          2961,
+          2986,
+          3156,
+          3523,
+          3622,
+          3489,
+          3703,
+          4650,
+          5774,
+          6370
+        ],
+        "pct_dos_casos": [
+          0.84,
+          1.91,
+          3.46,
+          3.46,
+          3.5,
+          3.72,
+          3.78,
+          4.05,
+          4.05,
+          4.5,
+          5.25,
+          5.64
+        ],
+        "pct_ignorado": [
+          74.1,
+          53.6,
+          11.6,
+          6.5,
+          6.0,
+          5.0,
+          5.1,
+          5.4,
+          5.7,
+          4.4,
+          3.9,
+          4.1
+        ]
+      },
+      {
+        "id": "drogas",
+        "nome": "Uso de drogas ilícitas",
+        "descricao": "Casos com uso de drogas registrado",
+        "tipo": "vulnerabilidade",
+        "ano_inicial": 2015,
+        "casos": [
+          3230,
+          5554,
+          10244,
+          11364,
+          13344,
+          15219,
+          15555,
+          13744,
+          14859,
+          18402,
+          21903,
+          22335
+        ],
+        "pct_dos_casos": [
+          3.75,
+          6.52,
+          11.99,
+          13.18,
+          14.78,
+          16.06,
+          16.23,
+          15.95,
+          16.25,
+          17.8,
+          19.93,
+          19.76
+        ],
+        "pct_ignorado": [
+          74.0,
+          52.0,
+          10.6,
+          8.6,
+          7.8,
+          7.4,
+          8.0,
+          8.1,
+          8.4,
+          7.0,
+          5.6,
+          5.8
+        ]
+      },
+      {
+        "id": "alcool",
+        "nome": "Alcoolismo",
+        "descricao": "Casos com alcoolismo registrado",
+        "tipo": "vulnerabilidade",
+        "ano_inicial": 2013,
+        "casos": [
+          13886,
+          14003,
+          14986,
+          15373,
+          16660,
+          18079,
+          18077,
+          16343,
+          17369,
+          20731,
+          23275,
+          23892
+        ],
+        "pct_dos_casos": [
+          16.11,
+          16.43,
+          17.54,
+          17.83,
+          18.45,
+          19.08,
+          18.86,
+          18.97,
+          19.0,
+          20.05,
+          21.17,
+          21.14
+        ],
+        "pct_ignorado": [
+          8.9,
+          8.8,
+          7.6,
+          6.9,
+          6.4,
+          6.1,
+          7.0,
+          7.4,
+          7.7,
+          6.3,
+          5.0,
+          5.1
+        ]
+      },
+      {
+        "id": "hiv",
+        "nome": "Coinfecção TB-HIV",
+        "descricao": "Casos com teste de HIV positivo",
+        "tipo": "vulnerabilidade",
+        "ano_inicial": 2013,
+        "casos": [
+          9858,
+          10123,
+          9867,
+          9543,
+          9851,
+          9833,
+          9712,
+          8589,
+          9233,
+          10407,
+          12377,
+          14891
+        ],
+        "pct_dos_casos": [
+          11.43,
+          11.88,
+          11.55,
+          11.07,
+          10.91,
+          10.38,
+          10.13,
+          9.97,
+          10.1,
+          10.07,
+          11.26,
+          13.18
+        ],
+        "pct_ignorado": [
+          0.3,
+          0.3,
+          0.4,
+          0.3,
+          0.3,
+          0.5,
+          0.4,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.2
+        ]
+      },
+      {
+        "id": "ppl",
+        "nome": "Pessoas privadas de liberdade",
+        "descricao": "Casos no sistema prisional",
+        "tipo": "vulnerabilidade",
+        "ano_inicial": 2015,
+        "casos": [
+          2486,
+          4196,
+          7648,
+          8542,
+          10387,
+          10963,
+          11625,
+          10316,
+          9809,
+          10699,
+          11100,
+          10460
+        ],
+        "pct_dos_casos": [
+          2.88,
+          4.92,
+          8.95,
+          9.91,
+          11.5,
+          11.57,
+          12.13,
+          11.97,
+          10.73,
+          10.35,
+          10.1,
+          9.26
+        ],
+        "pct_ignorado": [
+          74.0,
+          53.3,
+          10.9,
+          6.2,
+          5.5,
+          4.5,
+          4.0,
+          4.2,
+          4.3,
+          3.7,
+          3.4,
+          3.7
+        ]
+      }
+    ],
+    "desfecho": {
+      "cura": [
+        70.4,
+        69.8,
+        67.9,
+        69.1,
+        68.5,
+        67.7,
+        67.3,
+        64.8,
+        63.0,
+        62.6,
+        60.9,
+        58.0
+      ],
+      "abandono": [
+        13.5,
+        13.4,
+        12.6,
+        12.8,
+        13.2,
+        13.9,
+        14.6,
+        16.0,
+        16.7,
+        17.2,
+        18.3,
+        18.9
+      ],
+      "obito_tb": [
+        3.6,
+        3.7,
+        3.6,
+        3.5,
+        3.7,
+        3.7,
+        3.5,
+        3.9,
+        4.3,
+        4.4,
+        4.5,
+        4.5
+      ],
+      "outros": [
+        10.5,
+        11.3,
+        12.0,
+        11.8,
+        11.7,
+        12.1,
+        12.0,
+        12.5,
+        13.3,
+        13.1,
+        13.2,
+        13.4
+      ],
+      "sem_informacao": [
+        1.9,
+        1.8,
+        3.9,
+        2.8,
+        2.9,
+        2.6,
+        2.6,
+        2.8,
+        2.6,
+        2.7,
+        3.2,
+        5.2
+      ],
+      "metas_oms": {
+        "cura": 85,
+        "abandono": 5
+      }
+    },
+    "incidencia_casos_novos": [
+      {
+        "ano": 2013,
+        "casos_novos": 70690,
+        "taxa": 35.5
+      },
+      {
+        "ano": 2014,
+        "casos_novos": 69494,
+        "taxa": 34.6
+      },
+      {
+        "ano": 2015,
+        "casos_novos": 69002,
+        "taxa": 34.1
+      },
+      {
+        "ano": 2016,
+        "casos_novos": 69554,
+        "taxa": 34.1
+      },
+      {
+        "ano": 2017,
+        "casos_novos": 72771,
+        "taxa": 35.5
+      },
+      {
+        "ano": 2018,
+        "casos_novos": 76327,
+        "taxa": 37.0
+      },
+      {
+        "ano": 2019,
+        "casos_novos": 77210,
+        "taxa": 37.1
+      },
+      {
+        "ano": 2020,
+        "casos_novos": 68514,
+        "taxa": 32.8
+      },
+      {
+        "ano": 2021,
+        "casos_novos": 71895,
+        "taxa": 34.2
+      },
+      {
+        "ano": 2022,
+        "casos_novos": 79980,
+        "taxa": 37.9
+      },
+      {
+        "ano": 2023,
+        "casos_novos": 83518,
+        "taxa": 39.5
+      },
+      {
+        "ano": 2024,
+        "casos_novos": 84704,
+        "taxa": 39.8
+      }
+    ],
+    "meta_incidencia_2035": 10.0
   }
 };

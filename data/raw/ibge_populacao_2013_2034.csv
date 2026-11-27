@@ -1,0 +1,529 @@
+ano,local,sexo,populacao
+2013,Brasil,Ambos,199226702
+2014,Brasil,Ambos,200811131
+2015,Brasil,Ambos,202403642
+2016,Brasil,Ambos,203871925
+2017,Brasil,Ambos,205211557
+2018,Brasil,Ambos,206529038
+2019,Brasil,Ambos,207900099
+2020,Brasil,Ambos,209164889
+2021,Brasil,Ambos,210103642
+2022,Brasil,Ambos,210862983
+2023,Brasil,Ambos,211695158
+2024,Brasil,Ambos,212583750
+2025,Brasil,Ambos,213421037
+2026,Brasil,Ambos,214211951
+2027,Brasil,Ambos,214959713
+2028,Brasil,Ambos,215667282
+2029,Brasil,Ambos,216337693
+2030,Brasil,Ambos,216973093
+2031,Brasil,Ambos,217562970
+2032,Brasil,Ambos,218096284
+2033,Brasil,Ambos,218574144
+2034,Brasil,Ambos,218997707
+2013,Brasil,Homens,97392749
+2014,Brasil,Homens,98158110
+2015,Brasil,Homens,98927365
+2016,Brasil,Homens,99630921
+2017,Brasil,Homens,100267821
+2018,Brasil,Homens,100895555
+2019,Brasil,Homens,101551234
+2020,Brasil,Homens,102140954
+2021,Brasil,Homens,102550853
+2022,Brasil,Homens,102875114
+2023,Brasil,Homens,103251553
+2024,Brasil,Homens,103662286
+2025,Brasil,Homens,104046624
+2026,Brasil,Homens,104407312
+2027,Brasil,Homens,104746113
+2028,Brasil,Homens,105064770
+2029,Brasil,Homens,105364951
+2030,Brasil,Homens,105648021
+2031,Brasil,Homens,105909034
+2032,Brasil,Homens,106142763
+2033,Brasil,Homens,106349934
+2034,Brasil,Homens,106531317
+2013,Brasil,Mulheres,101833953
+2014,Brasil,Mulheres,102653021
+2015,Brasil,Mulheres,103476277
+2016,Brasil,Mulheres,104241004
+2017,Brasil,Mulheres,104943736
+2018,Brasil,Mulheres,105633483
+2019,Brasil,Mulheres,106348865
+2020,Brasil,Mulheres,107023935
+2021,Brasil,Mulheres,107552789
+2022,Brasil,Mulheres,107987869
+2023,Brasil,Mulheres,108443605
+2024,Brasil,Mulheres,108921464
+2025,Brasil,Mulheres,109374413
+2026,Brasil,Mulheres,109804639
+2027,Brasil,Mulheres,110213600
+2028,Brasil,Mulheres,110602512
+2029,Brasil,Mulheres,110972742
+2030,Brasil,Mulheres,111325072
+2031,Brasil,Mulheres,111653936
+2032,Brasil,Mulheres,111953521
+2033,Brasil,Mulheres,112224210
+2034,Brasil,Mulheres,112466390
+2013,Centro-Oeste,Ambos,14984338
+2014,Centro-Oeste,Ambos,15193306
+2015,Centro-Oeste,Ambos,15405701
+2016,Centro-Oeste,Ambos,15608920
+2017,Centro-Oeste,Ambos,15804681
+2018,Centro-Oeste,Ambos,16000668
+2019,Centro-Oeste,Ambos,16203468
+2020,Centro-Oeste,Ambos,16400560
+2021,Centro-Oeste,Ambos,16570591
+2022,Centro-Oeste,Ambos,16729024
+2023,Centro-Oeste,Ambos,16898404
+2024,Centro-Oeste,Ambos,17071595
+2025,Centro-Oeste,Ambos,17238818
+2026,Centro-Oeste,Ambos,17401676
+2027,Centro-Oeste,Ambos,17560394
+2028,Centro-Oeste,Ambos,17715117
+2029,Centro-Oeste,Ambos,17866096
+2030,Centro-Oeste,Ambos,18013516
+2031,Centro-Oeste,Ambos,18156543
+2032,Centro-Oeste,Ambos,18294222
+2033,Centro-Oeste,Ambos,18426606
+2034,Centro-Oeste,Ambos,18553808
+2013,Centro-Oeste,Homens,7426362
+2014,Centro-Oeste,Homens,7528411
+2015,Centro-Oeste,Homens,7631913
+2016,Centro-Oeste,Homens,7730364
+2017,Centro-Oeste,Homens,7824865
+2018,Centro-Oeste,Homens,7919508
+2019,Centro-Oeste,Homens,8017313
+2020,Centro-Oeste,Homens,8110812
+2021,Centro-Oeste,Homens,8188877
+2022,Centro-Oeste,Homens,8261456
+2023,Centro-Oeste,Homens,8341132
+2024,Centro-Oeste,Homens,8423286
+2025,Centro-Oeste,Homens,8502395
+2026,Centro-Oeste,Homens,8579269
+2027,Centro-Oeste,Homens,8654018
+2028,Centro-Oeste,Homens,8726743
+2029,Centro-Oeste,Homens,8797575
+2030,Centro-Oeste,Homens,8866605
+2031,Centro-Oeste,Homens,8933480
+2032,Centro-Oeste,Homens,8997781
+2033,Centro-Oeste,Homens,9059538
+2034,Centro-Oeste,Homens,9118829
+2013,Centro-Oeste,Mulheres,7557976
+2014,Centro-Oeste,Mulheres,7664895
+2015,Centro-Oeste,Mulheres,7773788
+2016,Centro-Oeste,Mulheres,7878556
+2017,Centro-Oeste,Mulheres,7979816
+2018,Centro-Oeste,Mulheres,8081160
+2019,Centro-Oeste,Mulheres,8186155
+2020,Centro-Oeste,Mulheres,8289748
+2021,Centro-Oeste,Mulheres,8381714
+2022,Centro-Oeste,Mulheres,8467568
+2023,Centro-Oeste,Mulheres,8557272
+2024,Centro-Oeste,Mulheres,8648309
+2025,Centro-Oeste,Mulheres,8736423
+2026,Centro-Oeste,Mulheres,8822407
+2027,Centro-Oeste,Mulheres,8906376
+2028,Centro-Oeste,Mulheres,8988374
+2029,Centro-Oeste,Mulheres,9068521
+2030,Centro-Oeste,Mulheres,9146911
+2031,Centro-Oeste,Mulheres,9223063
+2032,Centro-Oeste,Mulheres,9296441
+2033,Centro-Oeste,Mulheres,9367068
+2034,Centro-Oeste,Mulheres,9434979
+2013,Nordeste,Ambos,54593052
+2014,Nordeste,Ambos,54895712
+2015,Nordeste,Ambos,55204481
+2016,Nordeste,Ambos,55483846
+2017,Nordeste,Ambos,55729786
+2018,Nordeste,Ambos,55987936
+2019,Nordeste,Ambos,56272587
+2020,Nordeste,Ambos,56524887
+2021,Nordeste,Ambos,56713897
+2022,Nordeste,Ambos,56848401
+2023,Nordeste,Ambos,56970423
+2024,Nordeste,Ambos,57112096
+2025,Nordeste,Ambos,57244485
+2026,Nordeste,Ambos,57366981
+2027,Nordeste,Ambos,57480567
+2028,Nordeste,Ambos,57586115
+2029,Nordeste,Ambos,57684426
+2030,Nordeste,Ambos,57776130
+2031,Nordeste,Ambos,57858209
+2032,Nordeste,Ambos,57927552
+2033,Nordeste,Ambos,57984557
+2034,Nordeste,Ambos,58029645
+2013,Nordeste,Homens,26597407
+2014,Nordeste,Homens,26736814
+2015,Nordeste,Homens,26879961
+2016,Nordeste,Homens,27008081
+2017,Nordeste,Homens,27119525
+2018,Nordeste,Homens,27239200
+2019,Nordeste,Homens,27373585
+2020,Nordeste,Homens,27488102
+2021,Nordeste,Homens,27567488
+2022,Nordeste,Homens,27621113
+2023,Nordeste,Homens,27671600
+2024,Nordeste,Homens,27733300
+2025,Nordeste,Homens,27790161
+2026,Nordeste,Homens,27841967
+2027,Nordeste,Homens,27889264
+2028,Nordeste,Homens,27932538
+2029,Nordeste,Homens,27972233
+2030,Nordeste,Homens,28008730
+2031,Nordeste,Homens,28040591
+2032,Nordeste,Homens,28066383
+2033,Nordeste,Homens,28086325
+2034,Nordeste,Homens,28100657
+2013,Nordeste,Mulheres,27995645
+2014,Nordeste,Mulheres,28158898
+2015,Nordeste,Mulheres,28324520
+2016,Nordeste,Mulheres,28475765
+2017,Nordeste,Mulheres,28610261
+2018,Nordeste,Mulheres,28748736
+2019,Nordeste,Mulheres,28899002
+2020,Nordeste,Mulheres,29036785
+2021,Nordeste,Mulheres,29146409
+2022,Nordeste,Mulheres,29227288
+2023,Nordeste,Mulheres,29298823
+2024,Nordeste,Mulheres,29378796
+2025,Nordeste,Mulheres,29454324
+2026,Nordeste,Mulheres,29525014
+2027,Nordeste,Mulheres,29591303
+2028,Nordeste,Mulheres,29653577
+2029,Nordeste,Mulheres,29712193
+2030,Nordeste,Mulheres,29767400
+2031,Nordeste,Mulheres,29817618
+2032,Nordeste,Mulheres,29861169
+2033,Nordeste,Mulheres,29898232
+2034,Nordeste,Mulheres,29928988
+2013,Norte,Ambos,16808083
+2014,Norte,Ambos,17025334
+2015,Norte,Ambos,17236948
+2016,Norte,Ambos,17429371
+2017,Norte,Ambos,17606346
+2018,Norte,Ambos,17783329
+2019,Norte,Ambos,17970930
+2020,Norte,Ambos,18137222
+2021,Norte,Ambos,18272491
+2022,Norte,Ambos,18403491
+2023,Norte,Ambos,18535113
+2024,Norte,Ambos,18669345
+2025,Norte,Ambos,18801282
+2026,Norte,Ambos,18929341
+2027,Norte,Ambos,19053881
+2028,Norte,Ambos,19175267
+2029,Norte,Ambos,19293882
+2030,Norte,Ambos,19409992
+2031,Norte,Ambos,19521320
+2032,Norte,Ambos,19625458
+2033,Norte,Ambos,19722458
+2034,Norte,Ambos,19812493
+2013,Norte,Homens,8462636
+2014,Norte,Homens,8571918
+2015,Norte,Homens,8678076
+2016,Norte,Homens,8774015
+2017,Norte,Homens,8862092
+2018,Norte,Homens,8950880
+2019,Norte,Homens,9044928
+2020,Norte,Homens,9125488
+2021,Norte,Homens,9188438
+2022,Norte,Homens,9250937
+2023,Norte,Homens,9315523
+2024,Norte,Homens,9381605
+2025,Norte,Homens,9446328
+2026,Norte,Homens,9508896
+2027,Norte,Homens,9569483
+2028,Norte,Homens,9628302
+2029,Norte,Homens,9685539
+2030,Norte,Homens,9741362
+2031,Norte,Homens,9794620
+2032,Norte,Homens,9844082
+2033,Norte,Homens,9889777
+2034,Norte,Homens,9931802
+2013,Norte,Mulheres,8345447
+2014,Norte,Mulheres,8453416
+2015,Norte,Mulheres,8558872
+2016,Norte,Mulheres,8655356
+2017,Norte,Mulheres,8744254
+2018,Norte,Mulheres,8832449
+2019,Norte,Mulheres,8926002
+2020,Norte,Mulheres,9011734
+2021,Norte,Mulheres,9084053
+2022,Norte,Mulheres,9152554
+2023,Norte,Mulheres,9219590
+2024,Norte,Mulheres,9287740
+2025,Norte,Mulheres,9354954
+2026,Norte,Mulheres,9420445
+2027,Norte,Mulheres,9484398
+2028,Norte,Mulheres,9546965
+2029,Norte,Mulheres,9608343
+2030,Norte,Mulheres,9668630
+2031,Norte,Mulheres,9726700
+2032,Norte,Mulheres,9781376
+2033,Norte,Mulheres,9832681
+2034,Norte,Mulheres,9880691
+2013,Rio de Janeiro,Ambos,16800610
+2014,Rio de Janeiro,Ambos,16885883
+2015,Rio de Janeiro,Ambos,16971856
+2016,Rio de Janeiro,Ambos,17043727
+2017,Rio de Janeiro,Ambos,17100398
+2018,Rio de Janeiro,Ambos,17148943
+2019,Rio de Janeiro,Ambos,17193919
+2020,Rio de Janeiro,Ambos,17222305
+2021,Rio de Janeiro,Ambos,17220455
+2022,Rio de Janeiro,Ambos,17211760
+2023,Rio de Janeiro,Ambos,17213813
+2024,Rio de Janeiro,Ambos,17219679
+2025,Rio de Janeiro,Ambos,17223547
+2026,Rio de Janeiro,Ambos,17225410
+2027,Rio de Janeiro,Ambos,17225576
+2028,Rio de Janeiro,Ambos,17224268
+2029,Rio de Janeiro,Ambos,17221632
+2030,Rio de Janeiro,Ambos,17217772
+2031,Rio de Janeiro,Ambos,17211753
+2032,Rio de Janeiro,Ambos,17202600
+2033,Rio de Janeiro,Ambos,17190320
+2034,Rio de Janeiro,Ambos,17174885
+2013,Rio de Janeiro,Homens,7998891
+2014,Rio de Janeiro,Homens,8040198
+2015,Rio de Janeiro,Homens,8081878
+2016,Rio de Janeiro,Homens,8116164
+2017,Rio de Janeiro,Homens,8142490
+2018,Rio de Janeiro,Homens,8164621
+2019,Rio de Janeiro,Homens,8184696
+2020,Rio de Janeiro,Homens,8195346
+2021,Rio de Janeiro,Homens,8190415
+2022,Rio de Janeiro,Homens,8183327
+2023,Rio de Janeiro,Homens,8182857
+2024,Rio de Janeiro,Homens,8184617
+2025,Rio de Janeiro,Homens,8185275
+2026,Rio de Janeiro,Homens,8184844
+2027,Rio de Janeiro,Homens,8183507
+2028,Rio de Janeiro,Homens,8181400
+2029,Rio de Janeiro,Homens,8178626
+2030,Rio de Janeiro,Homens,8175277
+2031,Rio de Janeiro,Homens,8170959
+2032,Rio de Janeiro,Homens,8165246
+2033,Rio de Janeiro,Homens,8158160
+2034,Rio de Janeiro,Homens,8149706
+2013,Rio de Janeiro,Mulheres,8801719
+2014,Rio de Janeiro,Mulheres,8845685
+2015,Rio de Janeiro,Mulheres,8889978
+2016,Rio de Janeiro,Mulheres,8927563
+2017,Rio de Janeiro,Mulheres,8957908
+2018,Rio de Janeiro,Mulheres,8984322
+2019,Rio de Janeiro,Mulheres,9009223
+2020,Rio de Janeiro,Mulheres,9026959
+2021,Rio de Janeiro,Mulheres,9030040
+2022,Rio de Janeiro,Mulheres,9028433
+2023,Rio de Janeiro,Mulheres,9030956
+2024,Rio de Janeiro,Mulheres,9035062
+2025,Rio de Janeiro,Mulheres,9038272
+2026,Rio de Janeiro,Mulheres,9040566
+2027,Rio de Janeiro,Mulheres,9042069
+2028,Rio de Janeiro,Mulheres,9042868
+2029,Rio de Janeiro,Mulheres,9043006
+2030,Rio de Janeiro,Mulheres,9042495
+2031,Rio de Janeiro,Mulheres,9040794
+2032,Rio de Janeiro,Mulheres,9037354
+2033,Rio de Janeiro,Mulheres,9032160
+2034,Rio de Janeiro,Mulheres,9025179
+2013,Sudeste,Ambos,84289393
+2014,Sudeste,Ambos,84893919
+2015,Sudeste,Ambos,85494023
+2016,Sudeste,Ambos,86032875
+2017,Sudeste,Ambos,86509018
+2018,Sudeste,Ambos,86949467
+2019,Sudeste,Ambos,87386818
+2020,Sudeste,Ambos,87778972
+2021,Sudeste,Ambos,88016928
+2022,Sudeste,Ambos,88178052
+2023,Sudeste,Ambos,88387852
+2024,Sudeste,Ambos,88617693
+2025,Sudeste,Ambos,88825643
+2026,Sudeste,Ambos,89015421
+2027,Sudeste,Ambos,89188478
+2028,Sudeste,Ambos,89346200
+2029,Sudeste,Ambos,89489886
+2030,Sudeste,Ambos,89620404
+2031,Sudeste,Ambos,89734008
+2032,Sudeste,Ambos,89826776
+2033,Sudeste,Ambos,89899108
+2034,Sudeste,Ambos,89951281
+2013,Sudeste,Homens,40909719
+2014,Sudeste,Homens,41202892
+2015,Sudeste,Homens,41493531
+2016,Sudeste,Homens,41751800
+2017,Sudeste,Homens,41977261
+2018,Sudeste,Homens,42184002
+2019,Sudeste,Homens,42388677
+2020,Sudeste,Homens,42566835
+2021,Sudeste,Homens,42661599
+2022,Sudeste,Homens,42718842
+2023,Sudeste,Homens,42807125
+2024,Sudeste,Homens,42908349
+2025,Sudeste,Homens,42998432
+2026,Sudeste,Homens,43079394
+2027,Sudeste,Homens,43152057
+2028,Sudeste,Homens,43217220
+2029,Sudeste,Homens,43275634
+2030,Sudeste,Homens,43327882
+2031,Sudeste,Homens,43372204
+2032,Sudeste,Homens,43406726
+2033,Sudeste,Homens,43431756
+2034,Sudeste,Homens,43447531
+2013,Sudeste,Mulheres,43379674
+2014,Sudeste,Mulheres,43691027
+2015,Sudeste,Mulheres,44000492
+2016,Sudeste,Mulheres,44281075
+2017,Sudeste,Mulheres,44531757
+2018,Sudeste,Mulheres,44765465
+2019,Sudeste,Mulheres,44998141
+2020,Sudeste,Mulheres,45212137
+2021,Sudeste,Mulheres,45355329
+2022,Sudeste,Mulheres,45459210
+2023,Sudeste,Mulheres,45580727
+2024,Sudeste,Mulheres,45709344
+2025,Sudeste,Mulheres,45827211
+2026,Sudeste,Mulheres,45936027
+2027,Sudeste,Mulheres,46036421
+2028,Sudeste,Mulheres,46128980
+2029,Sudeste,Mulheres,46214252
+2030,Sudeste,Mulheres,46292522
+2031,Sudeste,Mulheres,46361804
+2032,Sudeste,Mulheres,46420050
+2033,Sudeste,Mulheres,46467352
+2034,Sudeste,Mulheres,46503750
+2013,Sul,Ambos,28551836
+2014,Sul,Ambos,28802860
+2015,Sul,Ambos,29062489
+2016,Sul,Ambos,29316913
+2017,Sul,Ambos,29561726
+2018,Sul,Ambos,29807638
+2019,Sul,Ambos,30066296
+2020,Sul,Ambos,30323248
+2021,Sul,Ambos,30529735
+2022,Sul,Ambos,30704015
+2023,Sul,Ambos,30903366
+2024,Sul,Ambos,31113021
+2025,Sul,Ambos,31310809
+2026,Sul,Ambos,31498532
+2027,Sul,Ambos,31676393
+2028,Sul,Ambos,31844583
+2029,Sul,Ambos,32003403
+2030,Sul,Ambos,32153051
+2031,Sul,Ambos,32292890
+2032,Sul,Ambos,32422276
+2033,Sul,Ambos,32541415
+2034,Sul,Ambos,32650480
+2013,Sul,Homens,13996625
+2014,Sul,Homens,14118075
+2015,Sul,Homens,14243884
+2016,Sul,Homens,14366661
+2017,Sul,Homens,14484078
+2018,Sul,Homens,14601965
+2019,Sul,Homens,14726731
+2020,Sul,Homens,14849717
+2021,Sul,Homens,14944451
+2022,Sul,Homens,15022766
+2023,Sul,Homens,15116173
+2024,Sul,Homens,15215746
+2025,Sul,Homens,15309308
+2026,Sul,Homens,15397786
+2027,Sul,Homens,15481291
+2028,Sul,Homens,15559967
+2029,Sul,Homens,15633970
+2030,Sul,Homens,15703442
+2031,Sul,Homens,15768139
+2032,Sul,Homens,15827791
+2033,Sul,Homens,15882538
+2034,Sul,Homens,15932498
+2013,Sul,Mulheres,14555211
+2014,Sul,Mulheres,14684785
+2015,Sul,Mulheres,14818605
+2016,Sul,Mulheres,14950252
+2017,Sul,Mulheres,15077648
+2018,Sul,Mulheres,15205673
+2019,Sul,Mulheres,15339565
+2020,Sul,Mulheres,15473531
+2021,Sul,Mulheres,15585284
+2022,Sul,Mulheres,15681249
+2023,Sul,Mulheres,15787193
+2024,Sul,Mulheres,15897275
+2025,Sul,Mulheres,16001501
+2026,Sul,Mulheres,16100746
+2027,Sul,Mulheres,16195102
+2028,Sul,Mulheres,16284616
+2029,Sul,Mulheres,16369433
+2030,Sul,Mulheres,16449609
+2031,Sul,Mulheres,16524751
+2032,Sul,Mulheres,16594485
+2033,Sul,Mulheres,16658877
+2034,Sul,Mulheres,16717982
+2013,São Paulo,Ambos,43520300
+2014,São Paulo,Ambos,43873200
+2015,São Paulo,Ambos,44217931
+2016,São Paulo,Ambos,44530110
+2017,São Paulo,Ambos,44809066
+2018,São Paulo,Ambos,45062167
+2019,São Paulo,Ambos,45306139
+2020,São Paulo,Ambos,45523191
+2021,São Paulo,Ambos,45651915
+2022,São Paulo,Ambos,45736978
+2023,São Paulo,Ambos,45850570
+2024,São Paulo,Ambos,45973194
+2025,São Paulo,Ambos,46081801
+2026,São Paulo,Ambos,46179008
+2027,São Paulo,Ambos,46265834
+2028,São Paulo,Ambos,46343257
+2029,São Paulo,Ambos,46412204
+2030,São Paulo,Ambos,46473352
+2031,São Paulo,Ambos,46525604
+2032,São Paulo,Ambos,46567763
+2033,São Paulo,Ambos,46600148
+2034,São Paulo,Ambos,46622954
+2013,São Paulo,Homens,21126680
+2014,São Paulo,Homens,21298034
+2015,São Paulo,Homens,21465198
+2016,São Paulo,Homens,21615376
+2017,São Paulo,Homens,21748394
+2018,São Paulo,Homens,21867909
+2019,São Paulo,Homens,21982415
+2020,São Paulo,Homens,22080913
+2021,São Paulo,Homens,22130418
+2022,São Paulo,Homens,22158315
+2023,São Paulo,Homens,22205066
+2024,São Paulo,Homens,22258143
+2025,São Paulo,Homens,22304147
+2026,São Paulo,Homens,22344480
+2027,São Paulo,Homens,22379708
+2028,São Paulo,Homens,22410379
+2029,São Paulo,Homens,22437020
+2030,São Paulo,Homens,22460045
+2031,São Paulo,Homens,22478968
+2032,São Paulo,Homens,22493236
+2033,São Paulo,Homens,22503069
+2034,São Paulo,Homens,22508620
+2013,São Paulo,Mulheres,22393620
+2014,São Paulo,Mulheres,22575166
+2015,São Paulo,Mulheres,22752733
+2016,São Paulo,Mulheres,22914734
+2017,São Paulo,Mulheres,23060672
+2018,São Paulo,Mulheres,23194258
+2019,São Paulo,Mulheres,23323724
+2020,São Paulo,Mulheres,23442278
+2021,São Paulo,Mulheres,23521497
+2022,São Paulo,Mulheres,23578663
+2023,São Paulo,Mulheres,23645504
+2024,São Paulo,Mulheres,23715051
+2025,São Paulo,Mulheres,23777654
+2026,São Paulo,Mulheres,23834528
+2027,São Paulo,Mulheres,23886126
+2028,São Paulo,Mulheres,23932878
+2029,São Paulo,Mulheres,23975184
+2030,São Paulo,Mulheres,24013307
+2031,São Paulo,Mulheres,24046636
+2032,São Paulo,Mulheres,24074527
+2033,São Paulo,Mulheres,24097079
+2034,São Paulo,Mulheres,24114334

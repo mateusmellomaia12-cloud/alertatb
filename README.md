@@ -57,12 +57,31 @@ Meta **3.3** da ONU: acabar com epidemias de doenças transmissíveis como a tub
 | Fonte | **SINAN** (Sistema de Informação de Agravos de Notificação) via **DATASUS** — Ministério da Saúde |
 | Período | 2013 a 2024 (12 anos) |
 | Recortes | Brasil · 5 macrorregiões · São Paulo · Rio de Janeiro · Sexo (M/F) |
+| População | **IBGE**, Projeções da População (Revisão 2024), para calcular a **taxa por 100 mil habitantes** |
+| Fatores associados | **TABNET/DATASUS** (SINAN): desfecho do tratamento, abandono, HIV, situação de rua, drogas, alcoolismo, PPL, casos novos |
 
 Arquivos em [`data/`](data/):
 - [`data/raw/Analise_Tuberculose.xlsx`](data/raw/Analise_Tuberculose.xlsx): planilha original com estatística descritiva, correlação, regressões e projeções.
 - [`data/processed/tuberculose_2013_2024.csv`](data/processed/tuberculose_2013_2024.csv): série histórica limpa.
 - [`data/processed/projecao_2025_2034.csv`](data/processed/projecao_2025_2034.csv): projeção linear original da planilha.
+- [`data/raw/ibge_populacao_2013_2034.csv`](data/raw/ibge_populacao_2013_2034.csv) e [`data/raw/tabnet/`](data/raw/tabnet/): baixados por [`analysis/baixar_dados_externos.py`](analysis/baixar_dados_externos.py).
 - [`data/processed/dados_painel.json`](data/processed/dados_painel.json): gerado por [`analysis/regressao.py`](analysis/regressao.py), usado pelo portal web.
+
+### Taxa por 100 mil habitantes (2024)
+Mostra que a alta **não é só efeito do crescimento da população**: a taxa do Brasil subiu **+22,7%** desde 2013.
+
+| Recorte | Taxa 2013 | Taxa 2024 | Variação |
+|---|---:|---:|---:|
+| **Brasil** | 42,8 | **52,5** | +22,7% |
+| Rio de Janeiro | 79,5 | **100,0** | +25,8% |
+| Norte | 52,9 | **80,7** | +52,6% |
+| Homens | 59,8 | **75,4** | +26,1% |
+
+### Por que está crescendo? (TABNET, 2013 → 2024)
+- **Cura caiu** de 70,4% para 58,0% (meta da OMS: 85%) e o **abandono subiu** de 13,5% para 18,9% (aceitável: até 5%).
+- **Retornos após abandono: +164%.** Quem interrompe o tratamento continua transmitindo e volta depois ao sistema.
+- Cresceram mais que o total de casos: **situação de rua (+115%)** e **uso de drogas (+118%)** desde 2015, **alcoolismo (+72%)**, **óbitos por TB (+64%)** e **coinfecção TB-HIV (+51%)**.
+- Incidência de casos novos: **39,8 por 100 mil** em 2024. A meta nacional é **menos de 10 até 2035**, o que exigiria queda de ~12% ao ano.
 
 📋 **Avaliação da base, problemas encontrados e próximos passos:** [docs/avaliacao_da_base.md](docs/avaliacao_da_base.md)
 
@@ -88,7 +107,7 @@ Arquivos em [`data/`](data/):
 | Camada | Tecnologias | Papel |
 |---|---|---|
 | Tratamento e modelagem estatística | Python (Pandas, NumPy, Scikit-learn) | Regressão linear por recorte, backtest, projeção 2025–2034 e selos de alerta ([`analysis/regressao.py`](analysis/regressao.py)) |
-| Interface web (painel) | HTML5, CSS3, JavaScript + [Chart.js](https://www.chartjs.org/) | As 3 telas do AlertaTB, com filtros, gráficos e ranking de risco ([`web/`](web/)) |
+| Interface web (painel) | HTML5, CSS3, JavaScript + [Chart.js](https://www.chartjs.org/) | As 4 telas do AlertaTB, com filtros, gráficos e ranking de risco ([`web/`](web/)) |
 | Hospedagem | GitHub Pages | Painel publicado online, acessível de qualquer navegador |
 | Visualização (BI) | Microsoft Power BI | Painéis complementares *(em avaliação pelo grupo)* |
 | Versionamento e prototipação | Git, GitHub, Draw.io / Canva | Controle de versão, documentação e wireframes |
@@ -103,12 +122,14 @@ Arquivos em [`data/`](data/):
 **Como os dados chegam ao painel:**
 ```
 data/processed/tuberculose_2013_2024.csv  (SINAN/DATASUS)
+data/raw/ibge_populacao_2013_2034.csv     (IBGE)   ◄─ python analysis/baixar_dados_externos.py
+data/raw/tabnet/*.csv                     (TABNET) ◄─┘
         │
         ▼  python analysis/regressao.py
 data/processed/dados_painel.json  +  web/js/dados.js
         │
         ▼  lido pelo navegador
-web/index.html  →  Visão Geral · Regiões e Perfil · Alertas
+web/index.html  →  Visão Geral · Regiões e Perfil · Alertas · Por que cresce?
 ```
 
 ---
@@ -118,7 +139,7 @@ web/index.html  →  Visão Geral · Regiões e Perfil · Alertas
 **Fluxo principal:** o gestor abre o painel, vê os indicadores do Brasil, filtra por região, estado ou sexo e vê o gráfico atualizar. Na tela de Alertas, encontra as regiões que exigem ação e, com um clique, abre o gráfico daquela região.
 
 ### 1. Visão Geral (Dashboard Executivo)
-Filtro por recorte, 4 indicadores (casos 2024, crescimento 2013–2024, novos casos por ano, projeção 2034), gráfico do histórico com a projeção tracejada e uma nota explicando como ler o modelo.
+Filtro por recorte, 5 indicadores (casos 2024, crescimento 2013–2024, novos casos por ano, projeção 2034 e **taxa por 100 mil habitantes**), gráfico do histórico com a projeção tracejada (alterna entre **casos** e **por 100 mil hab.**) e uma nota explicando como ler o modelo.
 
 ![Tela 1 — Visão Geral](assets/prints/tela1-visao-geral.png)
 
@@ -131,6 +152,11 @@ Compara dois anos à escolha (ex.: 2013 → 2024) e mostra **quanto cada região
 Alerta de tendência crítica, ranking de risco com selos *Crítico / Atenção / Moderado* (filtrável por regiões, estados e sexo), regra de cálculo e transparência sobre a qualidade dos dados.
 
 ![Tela 3 — Alertas](assets/prints/tela3-alertas.png)
+
+### 4. Por que cresce? (fatores associados)
+Responde à pergunta que a banca e os gestores vão fazer. Mostra o que cresceu mais rápido que o total de casos (abandono, retorno após abandono, situação de rua, drogas, alcoolismo, óbitos, HIV, sistema prisional), a queda da cura e a alta do abandono comparadas às metas da OMS, e a distância da **meta nacional de 2035** (menos de 10 casos novos por 100 mil). Deixa claro que é **associação, não causa**, e que parte da alta vem de diagnosticar melhor.
+
+![Tela 4 — Por que cresce?](assets/prints/tela4-por-que-cresce.png)
 
 ---
 
@@ -153,6 +179,7 @@ cd alertatb
 Só é necessário se a base em `data/processed/tuberculose_2013_2024.csv` for alterada.
 ```bash
 pip install -r analysis/requirements.txt
+python analysis/baixar_dados_externos.py   # opcional: atualiza população (IBGE) e fatores (TABNET)
 python analysis/regressao.py
 # gera data/processed/dados_painel.json e web/js/dados.js
 # depois é só recarregar o web/index.html no navegador
@@ -170,7 +197,7 @@ python analysis/regressao.py
 │   ├── identidade-visual/   # Logo, paleta de cores, tipografia
 │   └── prints/              # Capturas de tela do protótipo
 ├── data/
-│   ├── raw/           # Dados originais (SINAN/DATASUS)
+│   ├── raw/           # Dados originais (SINAN/DATASUS, IBGE, TABNET)
 │   └── processed/     # Dados tratados usados pelo painel
 ├── docs/
 │   ├── edital/        # Regulamento do FMU TECH Inovação

@@ -33,6 +33,8 @@
   const selo = (status) => `<span class="selo ${CLASSE_SELO[status]}">${status}</span>`;
   const casosNoAno = (nome, ano) => RECORTES[nome].historico.find(h => h.ano === ano).casos;
   const valorEm = (lista, ano) => (lista.find(p => p.ano === ano) || {}).casos;
+  const taxaEm = (lista, ano) => (lista.find(p => p.ano === ano) || {}).taxa;
+  const taxaNoAno = (nome, ano) => taxaEm(RECORTES[nome].taxa_historico, ano);
 
   // ---------- Chart.js: padrões ----------
   if (window.Chart) {
@@ -48,9 +50,9 @@
   const graficos = {};
 
   // =========================================================
-  // Navegação entre telas (#visao-geral, #regioes, #alertas)
+  // Navegação entre telas (#visao-geral, #regioes, #alertas, #fatores)
   // =========================================================
-  const TELAS = ['visao-geral', 'regioes', 'alertas'];
+  const TELAS = ['visao-geral', 'regioes', 'alertas', 'fatores'];
   function mostrarTela() {
     const atual = TELAS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'visao-geral';
     TELAS.forEach(t => { document.getElementById('tela-' + t).hidden = t !== atual; });
@@ -94,8 +96,14 @@
     document.getElementById('kpi-proj').textContent = num(proj2034);
     document.getElementById('kpi-proj-sub').textContent =
       `${sinal(proj2034 - r.casos_ultimo_ano)} em relação a ${ANO_FINAL}`;
+    const taxaIni = r.taxa_historico[0].taxa;
+    document.getElementById('kpi-taxa').textContent = dec(r.taxa_ultimo_ano);
+    document.getElementById('kpi-taxa-sub').textContent =
+      `${r.variacao_taxa_pct >= 0 ? '+' : '−'}${dec(Math.abs(r.variacao_taxa_pct))}% desde ${primeiro.ano} (era ${dec(taxaIni)}), já descontado o aumento da população`;
 
-    document.getElementById('titulo-grafico').textContent = `${nome}: evolução histórica e projeção até 2034`;
+    document.getElementById('titulo-grafico').textContent = metrica === 'taxa'
+      ? `${nome}: casos por 100 mil habitantes até 2034`
+      : `${nome}: evolução histórica e projeção até 2034`;
     document.getElementById('selo-recorte').outerHTML =
       `<span class="selo ${CLASSE_SELO[r.status]}" id="selo-recorte">${r.status}</span>`;
 
@@ -116,13 +124,21 @@
     desenharLinha(r);
   }
 
+  let metrica = 'casos';   // 'casos' ou 'taxa' (por 100 mil habitantes)
+
   function desenharLinha(r) {
     if (!window.Chart) return;
-    const anosProj = r.projecao.map(p => p.ano);
+    const ehTaxa = metrica === 'taxa';
+    const serieHist = ehTaxa ? r.taxa_historico.map(h => ({ ano: h.ano, v: h.taxa })) : r.historico.map(h => ({ ano: h.ano, v: h.casos }));
+    const serieProj = ehTaxa ? r.taxa_projecao.map(h => ({ ano: h.ano, v: h.taxa })) : r.projecao.map(h => ({ ano: h.ano, v: h.casos }));
+    const ultimo = serieHist[serieHist.length - 1].v;
+    const fmt = ehTaxa ? (v => dec(v)) : num;
+    const unidade = ehTaxa ? ' por 100 mil hab.' : ' casos';
+    const anosProj = serieProj.map(p => p.ano);
     const rotulos = ANOS.concat(anosProj);
-    const hist = rotulos.map(a => { const h = r.historico.find(x => x.ano === a); return h ? h.casos : null; });
+    const hist = rotulos.map(a => { const h = serieHist.find(x => x.ano === a); return h ? h.v : null; });
     // a projeção começa no último ano real, para as linhas se encontrarem
-    const proj = rotulos.map(a => a === ANO_FINAL ? r.casos_ultimo_ano : (valorEm(r.projecao, a) ?? null));
+    const proj = rotulos.map(a => a === ANO_FINAL ? ultimo : ((serieProj.find(x => x.ano === a) || {}).v ?? null));
     const raioHist = rotulos.map(a => ANOS_ATIPICOS.includes(a) ? 6 : (a === ANO_FINAL ? 5 : 3));
     const corHist = rotulos.map(a => ANOS_ATIPICOS.includes(a) ? COR.atipico : COR.roxoProfundo);
 
@@ -140,7 +156,7 @@
       interaction: { mode: 'index', intersect: false },
       scales: {
         x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, autoSkipPadding: 12 } },
-        y: { grid: { color: COR.linha }, ticks: { callback: v => num(v) } },
+        y: { grid: { color: COR.linha }, ticks: { callback: v => fmt(v) } },
       },
       plugins: {
         tooltip: {
@@ -149,17 +165,22 @@
             label: (c) => {
               const ano = Number(c.label);
               const extra = c.datasetIndex === 0 && ANOS_ATIPICOS.includes(ano) ? ' (ano atípico)' : '';
-              return ` ${c.dataset.label}: ${num(c.raw)} casos${extra}`;
+              return ` ${c.dataset.label}: ${fmt(c.raw)}${unidade}${extra}`;
             },
           },
         },
       },
     };
-    if (graficos.linha) { graficos.linha.data = dados; graficos.linha.update(); }
+    if (graficos.linha) { graficos.linha.data = dados; graficos.linha.options = opcoes; graficos.linha.update(); }
     else graficos.linha = new Chart(document.getElementById('grafico-linha'), { type: 'line', data: dados, options: opcoes });
   }
 
   selRecorte.addEventListener('change', () => renderVisaoGeral(selRecorte.value));
+  document.querySelectorAll('.chip-metrica').forEach(btn => btn.addEventListener('click', () => {
+    metrica = btn.dataset.metrica;
+    document.querySelectorAll('.chip-metrica').forEach(b => b.classList.toggle('ativo', b === btn));
+    renderVisaoGeral(selRecorte.value);
+  }));
 
   // =========================================================
   // TELA 2 — Regiões e perfil (comparação entre dois anos)
@@ -315,6 +336,7 @@
         <div class="comp-var ${classe}">${v >= 0 ? '▲' : '▼'} ${pctSinal(v)}</div>
         <div class="comp-barra"><span class="${classe}" style="width:${largura.toFixed(1)}%"></span></div>
         <div class="comp-casos">${num(a)} → <strong>${num(b)}</strong> casos</div>
+        <div class="comp-casos">${dec(taxaNoAno(n, ini))} → <strong>${dec(taxaNoAno(n, fim))}</strong> por 100 mil hab.</div>
       </div>`;
     }).join('');
 
@@ -390,6 +412,7 @@
       return `<tr tabindex="0" data-recorte="${n}" aria-label="Ver gráfico de ${n}">
         <td><strong>${n}</strong><span class="grupo">${r.grupo}</span></td>
         <td class="num">${num(r.casos_ultimo_ano)}</td>
+        <td class="num">${dec(r.taxa_ultimo_ano)}</td>
         <td class="num">${sinal(r.coeficiente_anual)}</td>
         <td class="num">${dec(r.crescimento_pct_ano)}%</td>
         <td class="num">${dec(r.r2, 2)}</td>
@@ -412,9 +435,9 @@
     if (e.key === 'Enter' || e.key === ' ') { const tr = e.target.closest('tr'); if (tr) { e.preventDefault(); abrirRecorte(tr.dataset.recorte); } }
   });
 
-  document.querySelectorAll('.chip').forEach(btn => btn.addEventListener('click', () => {
+  document.querySelectorAll('.chip-grupo').forEach(btn => btn.addEventListener('click', () => {
     grupoAtivo = btn.dataset.grupo;
-    document.querySelectorAll('.chip').forEach(b => b.classList.toggle('ativo', b === btn));
+    document.querySelectorAll('.chip-grupo').forEach(b => b.classList.toggle('ativo', b === btn));
     renderAlertas();
   }));
 
@@ -427,6 +450,190 @@
     : '<li>Nenhuma inconsistência encontrada.</li>';
 
   // =========================================================
+  // TELA 4 — Por que cresce? (fatores associados, dados do TABNET)
+  // =========================================================
+  function renderFatores() {
+    const F = DADOS.fatores;
+    if (!F) return;
+    const anosF = F.anos, fimF = anosF[anosF.length - 1];
+    const idx = (ano) => anosF.indexOf(ano);
+    const varPct = (lista, a, b) => (lista[idx(b)] / lista[idx(a)] - 1) * 100;
+    const pctS = (v) => (v >= 0 ? '+' : '−') + dec(Math.abs(v), 0) + '%';
+    const ind = Object.fromEntries(F.indicadores.map(i => [i.id, i]));
+    const varInd = (i) => varPct(i.casos, i.ano_inicial, fimF);
+    const varTotal = (ano) => varPct(F.total_casos, ano, fimF);
+    const D = F.desfecho, ultDesf = D.cura.length - 1;
+    const inc = F.incidencia_casos_novos, incFim = inc[inc.length - 1];
+    const meta = F.meta_incidencia_2035;
+    const quedaNecessaria = (Math.pow(meta / incFim.taxa, 1 / (2035 - incFim.ano)) - 1) * 100;
+
+    // ---- frase-resumo ----
+    document.getElementById('insight-fatores').innerHTML =
+      `Os casos cresceram <strong>${pctS(varTotal(anosF[0]))}</strong> de ${anosF[0]} a ${fimF}, mas o ` +
+      `<strong>abandono do tratamento</strong> cresceu <strong>${pctS(varInd(ind.abandono))}</strong> e os ` +
+      `<strong>retornos após abandono</strong>, <strong>${pctS(varInd(ind.reingresso))}</strong>. ` +
+      `Quem interrompe o tratamento continua transmitindo e volta mais tarde ao sistema, o que alimenta a alta. ` +
+      `Ao mesmo tempo, a doença avança entre <strong>pessoas em situação de rua</strong> (${pctS(varInd(ind.situacao_rua))} desde ${ind.situacao_rua.ano_inicial}) ` +
+      `e <strong>pessoas que usam drogas</strong> (${pctS(varInd(ind.drogas))}), grupos com mais dificuldade de completar os 6 meses de remédio.`;
+
+    // ---- indicadores-chave ----
+    const kpi = (rotulo, valor, sub, classe = '') =>
+      `<div class="kpi ${classe}"><span class="kpi-rotulo">${rotulo}</span><span class="kpi-valor">${valor}</span><span class="kpi-sub">${sub}</span></div>`;
+    document.getElementById('kpis-fatores').innerHTML = [
+      kpi(`Incidência ${incFim.ano}`, dec(incFim.taxa), `casos novos por 100 mil hab. · meta para 2035: menos de ${dec(meta, 0)}`, 'kpi-alerta'),
+      kpi(`Cura (${anosF[ultDesf]})`, dec(D.cura[ultDesf]) + '%', `era ${dec(D.cura[0])}% em ${anosF[0]} · meta da OMS: ${D.metas_oms.cura}%`, 'kpi-alerta'),
+      kpi(`Abandono (${anosF[ultDesf]})`, dec(D.abandono[ultDesf]) + '%', `era ${dec(D.abandono[0])}% em ${anosF[0]} · aceitável: até ${D.metas_oms.abandono}%`, 'kpi-alerta'),
+      kpi(`Óbitos por TB (${fimF})`, num(ind.obito_tb.casos[idx(fimF)]), `${pctS(varInd(ind.obito_tb))} desde ${anosF[0]} entre os casos notificados`, 'kpi-alerta'),
+    ].join('');
+
+    // ---- gráfico: variação de cada fator × variação do total ----
+    const lista = F.indicadores.slice().sort((a, b) => varInd(b) - varInd(a));
+    const refTotal = varTotal(anosF[0]);
+    document.getElementById('nota-fatores').innerHTML =
+      `Linha tracejada: crescimento do total de casos (${pctS(refTotal)} desde ${anosF[0]}; ${pctS(varTotal(2015))} desde 2015). ` +
+      `Barras roxas cresceram mais que o total. Campos de vulnerabilidade só são bem preenchidos a partir de 2015, por isso comparamos a partir desse ano.`;
+    if (window.Chart) {
+      const vals = lista.map(varInd);
+      const cores = lista.map(i => (varInd(i) > varTotal(i.ano_inicial) ? (i.tipo === 'tratamento' ? COR.roxoProfundo : COR.roxoMedio) : COR.lavanda));
+      const linhaRef = {
+        id: 'linhaRef',
+        afterDatasetsDraw(chart) {
+          const x = chart.scales.x.getPixelForValue(refTotal);
+          const { top, bottom } = chart.chartArea, ctx = chart.ctx;
+          ctx.save(); ctx.strokeStyle = COR.cinza; ctx.setLineDash([5, 4]); ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, bottom); ctx.stroke();
+          ctx.setLineDash([]); ctx.fillStyle = COR.cinza; ctx.font = "600 11px 'Inter', sans-serif"; ctx.textAlign = 'left';
+          ctx.textAlign = 'center'; ctx.fillText('total de casos', x, top - 8);
+          ctx.restore();
+        },
+      };
+      const rotulos = {
+        id: 'rotulosFatores',
+        afterDatasetsDraw(chart) {
+          const ctx = chart.ctx, meta = chart.getDatasetMeta(0);
+          ctx.save(); ctx.font = "600 12px 'Inter', sans-serif"; ctx.fillStyle = COR.roxoProfundo; ctx.textBaseline = 'middle';
+          meta.data.forEach((bar, i) => {
+            const v = vals[i];
+            ctx.textAlign = v >= 0 ? 'left' : 'right';
+            const txt = chart.width < 520 ? pctS(v) : `${pctS(v)} desde ${lista[i].ano_inicial}`;
+            ctx.fillText(txt, bar.x + (v >= 0 ? 6 : -6), bar.y);
+          });
+          ctx.restore();
+        },
+      };
+      const dados = { labels: lista.map(i => i.nome), datasets: [{ data: vals, backgroundColor: cores, borderRadius: 6, maxBarThickness: 26 }] };
+      const opcoes = {
+        indexAxis: 'y',
+        layout: { padding: { right: 12, top: 18 } },
+        scales: {
+          x: { suggestedMin: Math.min(0, ...vals) * 1.2, suggestedMax: Math.max(...vals) * 1.45,
+               grid: { color: COR.linha }, ticks: { callback: v => dec(v, 0) + '%' } },
+          y: { grid: { display: false }, ticks: { callback(v) {
+            const nome = this.getLabelForValue(v);
+            if (this.chart.width >= 520 || nome.length <= 16) return nome;
+            const p = nome.split(' '), meio = Math.ceil(p.length / 2);   // quebra em 2 linhas no celular
+            return [p.slice(0, meio).join(' '), p.slice(meio).join(' ')];
+          } } },
+        },
+        plugins: {
+          tooltip: { callbacks: { label: c => { const i = lista[c.dataIndex];
+            return ` ${num(i.casos[idx(i.ano_inicial)])} casos em ${i.ano_inicial} → ${num(i.casos[idx(fimF)])} em ${fimF}`; } } },
+        },
+      };
+      if (graficos.fatores) graficos.fatores.destroy();
+      graficos.fatores = new Chart(document.getElementById('grafico-fatores'),
+        { type: 'bar', data: dados, options: opcoes, plugins: [linhaRef, rotulos] });
+    }
+
+    // ---- gráfico: desfecho do tratamento ----
+    document.getElementById('nota-desfecho').innerHTML =
+      `A cura caiu de ${dec(D.cura[0])}% para ${dec(D.cura[ultDesf])}% e o abandono subiu de ${dec(D.abandono[0])}% para ${dec(D.abandono[ultDesf])}%. ` +
+      `Linhas finas: metas (cura ≥ ${D.metas_oms.cura}%, abandono ≤ ${D.metas_oms.abandono}%). ${fimF} ainda tem ${dec(D.sem_informacao[ultDesf])}% de tratamentos sem desfecho registrado.`;
+    if (window.Chart) {
+      const serie = (label, data, cor, extra = {}) => ({ label, data, borderColor: cor, backgroundColor: cor, borderWidth: 3, tension: 0.25, pointRadius: 2.5, ...extra });
+      const metaLinha = (label, valor, cor) => ({ label, data: anosF.map(() => valor), borderColor: cor, borderWidth: 1.2, borderDash: [4, 4], pointRadius: 0, pointHitRadius: 0 });
+      const dados = {
+        labels: anosF,
+        datasets: [
+          serie('Cura', D.cura, COR.verdeAzulado),
+          serie('Abandono', D.abandono, '#C0392B'),
+          serie('Óbito por TB', D.obito_tb, COR.roxoProfundo),
+          metaLinha('Meta de cura', D.metas_oms.cura, COR.verdeAzulado),
+          metaLinha('Limite de abandono', D.metas_oms.abandono, '#C0392B'),
+        ],
+      };
+      const opcoes = {
+        interaction: { mode: 'index', intersect: false },
+        scales: {
+          x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, autoSkipPadding: 10 } },
+          y: { min: 0, max: 100, grid: { color: COR.linha }, ticks: { callback: v => v + '%' } },
+        },
+        plugins: {
+          legend: { display: true, position: 'bottom', labels: { usePointStyle: true, pointStyle: 'line', padding: 12, boxWidth: 22,
+            filter: (item) => item.datasetIndex < 3 } },
+          tooltip: { filter: (item) => item.datasetIndex < 3, callbacks: { label: c => ` ${c.dataset.label}: ${dec(c.raw)}%` } },
+        },
+      };
+      if (graficos.desfecho) graficos.desfecho.destroy();
+      graficos.desfecho = new Chart(document.getElementById('grafico-desfecho'), { type: 'line', data: dados, options: opcoes });
+    }
+
+    // ---- gráfico: incidência e caminho até a meta ----
+    document.getElementById('nota-meta').innerHTML =
+      `O Brasil quer chegar a menos de ${dec(meta, 0)} casos novos por 100 mil habitantes até 2035. Saindo de ${dec(incFim.taxa)} em ${incFim.ano}, ` +
+      `seria preciso <strong>cair ${dec(Math.abs(quedaNecessaria))}% ao ano</strong>, mas a taxa subiu nos últimos anos.`;
+    if (window.Chart) {
+      const anosMeta = anosF.concat(Array.from({ length: 2035 - fimF }, (_, k) => fimF + k + 1));
+      const real = anosMeta.map(a => (inc.find(x => x.ano === a) || {}).taxa ?? null);
+      const caminho = anosMeta.map(a => (a < incFim.ano ? null : incFim.taxa * Math.pow(1 + quedaNecessaria / 100, a - incFim.ano)));
+      const dados = {
+        labels: anosMeta,
+        datasets: [
+          { label: 'Incidência real', data: real, borderColor: COR.roxoProfundo, backgroundColor: 'rgba(59,30,109,0.08)', fill: true,
+            borderWidth: 3, tension: 0.25, pointRadius: anosMeta.map(a => (ANOS_ATIPICOS.includes(a) ? 5 : 2.5)),
+            pointBackgroundColor: anosMeta.map(a => (ANOS_ATIPICOS.includes(a) ? COR.atipico : COR.roxoProfundo)) },
+          { label: 'Caminho necessário até a meta', data: caminho, borderColor: COR.verdeAzulado, borderDash: [7, 5], borderWidth: 2.5,
+            pointRadius: anosMeta.map(a => (a === 2035 ? 5 : 0)), pointBackgroundColor: COR.verdeAzulado, fill: false },
+        ],
+      };
+      const opcoes = {
+        interaction: { mode: 'index', intersect: false },
+        scales: {
+          x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, autoSkipPadding: 10 } },
+          y: { min: 0, grid: { color: COR.linha }, ticks: { callback: v => dec(v, 0) } },
+        },
+        plugins: {
+          legend: { display: true, position: 'bottom', labels: { usePointStyle: true, pointStyle: 'line', padding: 12, boxWidth: 22 } },
+          tooltip: { filter: (item) => item.raw !== null && !(item.datasetIndex === 1 && Number(item.label) === incFim.ano),
+            callbacks: { label: c => ` ${c.dataset.label}: ${dec(c.raw)} por 100 mil` } },
+        },
+      };
+      if (graficos.meta) graficos.meta.destroy();
+      graficos.meta = new Chart(document.getElementById('grafico-meta'), { type: 'line', data: dados, options: opcoes });
+    }
+
+    // ---- cards: peso de cada grupo nos casos ----
+    const maxVar = Math.max(...F.indicadores.map(i => Math.abs(varInd(i))));
+    document.getElementById('cards-fatores').innerHTML = lista.map(i => {
+      const a = i.pct_dos_casos[idx(i.ano_inicial)], b = i.pct_dos_casos[idx(fimF)], v = varInd(i);
+      const classe = v > varTotal(i.ano_inicial) ? 'acima' : (v < 0 ? 'queda' : 'abaixo');
+      return `<div class="comp">
+        <div class="comp-topo"><span class="comp-nome">${i.nome}</span><span class="comp-grupo">${i.tipo === 'tratamento' ? 'Tratamento' : 'Vulnerabilidade'}</span></div>
+        <div class="comp-var ${classe}">${v >= 0 ? '▲' : '▼'} ${pctS(v)}</div>
+        <div class="comp-barra"><span class="${classe}" style="width:${(Math.abs(v) / maxVar * 100).toFixed(1)}%"></span></div>
+        <div class="comp-casos">${dec(a)}% → <strong>${dec(b)}%</strong> dos casos (${i.ano_inicial} → ${fimF})</div>
+        <div class="comp-casos">${i.descricao}</div>
+      </div>`;
+    }).join('');
+
+    // ---- cuidados de leitura ----
+    document.getElementById('nota-fatores-leitura').innerHTML =
+      `<strong>Como ler esta tela:</strong> os números mostram <strong>associação, não causa</strong>. Parte da alta também vem de ` +
+      `<strong>diagnosticar melhor</strong>: com mais testes (como o teste rápido molecular e o de HIV), aparecem casos que antes passavam despercebidos. ` +
+      `Fonte: ${F.fonte}. Os totais do TABNET são de uma consulta mais recente e podem diferir um pouco da base das outras telas.`;
+  }
+
+  // =========================================================
   // Início
   // =========================================================
   // espera as fontes carregarem para os gráficos medirem os rótulos certo
@@ -434,6 +641,7 @@
     renderVisaoGeral('Brasil');
     renderRegioes();
     renderAlertas();
+    renderFatores();
     mostrarTela();
   }
   let iniciado = false;

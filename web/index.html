@@ -22,6 +22,7 @@
         <a href="#visao-geral" data-tela="visao-geral">Visão Geral</a>
         <a href="#regioes" data-tela="regioes">Regiões e Perfil</a>
         <a href="#alertas" data-tela="alertas">Alertas</a>
+        <a href="#fatores" data-tela="fatores">Por que cresce?</a>
       </nav>
     </div>
   </header>
@@ -62,16 +63,27 @@
           <span class="kpi-valor" id="kpi-proj">—</span>
           <span class="kpi-sub" id="kpi-proj-sub"></span>
         </div>
+        <div class="kpi">
+          <span class="kpi-rotulo">Taxa por 100 mil hab.</span>
+          <span class="kpi-valor" id="kpi-taxa">—</span>
+          <span class="kpi-sub" id="kpi-taxa-sub"></span>
+        </div>
       </div>
 
       <div class="painel">
         <div class="painel-cabecalho">
           <h2 id="titulo-grafico">Evolução histórica e projeção</h2>
-          <span class="selo" id="selo-recorte"></span>
+          <div class="cabecalho-acoes">
+            <div class="chips" role="group" aria-label="Medida do gráfico">
+              <button type="button" class="chip chip-metrica ativo" data-metrica="casos">Casos</button>
+              <button type="button" class="chip chip-metrica" data-metrica="taxa">Por 100 mil hab.</button>
+            </div>
+            <span class="selo" id="selo-recorte"></span>
+          </div>
         </div>
         <div class="grafico grafico-linha"><canvas id="grafico-linha" aria-label="Gráfico de casos históricos e projeção"></canvas></div>
         <div class="legenda">
-          <span><i class="leg-linha"></i>Histórico (SINAN/DATASUS)</span>
+          <span id="leg-historico"><i class="leg-linha"></i>Histórico (SINAN/DATASUS)</span>
           <span><i class="leg-tracejada"></i>Projeção linear</span>
           <span><i class="leg-ponto"></i>2020: ano atípico (pandemia), fora do cálculo</span>
         </div>
@@ -150,10 +162,10 @@
           <h1 id="t3">Onde agir primeiro</h1>
         </div>
         <div class="chips" role="group" aria-label="Filtrar por tipo de recorte">
-          <button type="button" class="chip ativo" data-grupo="todos">Todos</button>
-          <button type="button" class="chip" data-grupo="Região">Regiões</button>
-          <button type="button" class="chip" data-grupo="Estado">Estados</button>
-          <button type="button" class="chip" data-grupo="Sexo">Sexo</button>
+          <button type="button" class="chip chip-grupo ativo" data-grupo="todos">Todos</button>
+          <button type="button" class="chip chip-grupo" data-grupo="Região">Regiões</button>
+          <button type="button" class="chip chip-grupo" data-grupo="Estado">Estados</button>
+          <button type="button" class="chip chip-grupo" data-grupo="Sexo">Sexo</button>
         </div>
       </div>
 
@@ -170,6 +182,7 @@
               <tr>
                 <th>Recorte</th>
                 <th class="num">Casos 2024</th>
+                <th class="num">Por 100 mil</th>
                 <th class="num">Novos casos/ano</th>
                 <th class="num">Cresc. %/ano</th>
                 <th class="num">R²</th>
@@ -196,11 +209,57 @@
       </div>
     </section>
 
+    <!-- ============ TELA 4 — POR QUE CRESCE? ============ -->
+    <section id="tela-fatores" class="tela" aria-labelledby="t4" hidden>
+      <div class="tela-cabecalho">
+        <div>
+          <p class="sobretitulo">Tela 4 · Fatores associados ao crescimento</p>
+          <h1 id="t4">Por que os casos estão crescendo?</h1>
+        </div>
+      </div>
+
+      <div class="insight" id="insight-fatores"></div>
+
+      <div class="kpis" id="kpis-fatores"></div>
+
+      <div class="painel">
+        <div class="painel-cabecalho">
+          <h2>O que cresceu mais rápido que os casos</h2>
+          <span class="dica">Variação até 2024</span>
+        </div>
+        <div class="grafico grafico-fatores"><canvas id="grafico-fatores" aria-label="Variação de cada fator comparada com a variação do total de casos"></canvas></div>
+        <p class="pequeno" id="nota-fatores"></p>
+      </div>
+
+      <div class="grade-2">
+        <div class="painel">
+          <div class="painel-cabecalho"><h2>Desfecho do tratamento</h2><span class="dica">% dos casos de cada ano</span></div>
+          <div class="grafico grafico-barras"><canvas id="grafico-desfecho" aria-label="Percentual de cura, abandono e óbito por ano"></canvas></div>
+          <p class="pequeno" id="nota-desfecho"></p>
+        </div>
+        <div class="painel">
+          <div class="painel-cabecalho"><h2>Incidência e a meta de 2035</h2><span class="dica">Casos novos por 100 mil hab.</span></div>
+          <div class="grafico grafico-barras"><canvas id="grafico-meta" aria-label="Taxa de incidência de casos novos e o caminho até a meta de 2035"></canvas></div>
+          <p class="pequeno" id="nota-meta"></p>
+        </div>
+      </div>
+
+      <div class="painel">
+        <div class="painel-cabecalho">
+          <h2>Peso de cada grupo nos casos</h2>
+          <span class="dica">% dos casos: ano inicial → 2024</span>
+        </div>
+        <div class="comparativo" id="cards-fatores"></div>
+      </div>
+
+      <aside class="nota" id="nota-fatores-leitura"></aside>
+    </section>
+
   </main>
 
   <footer class="rodape">
     <div class="rodape-conteudo">
-      <span>Fonte: SINAN/DATASUS — Ministério da Saúde · Série histórica 2013–2024</span>
+      <span>Fontes: SINAN/DATASUS — Ministério da Saúde · IBGE, Projeções da População 2024 · Série 2013–2024</span>
       <span>Equipe TechCare Analytics · FMU TECH Inovação 2026.2 · ODS 3 Saúde e Bem-Estar</span>
     </div>
   </footer>

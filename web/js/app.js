@@ -111,20 +111,6 @@
     document.getElementById('selo-recorte').outerHTML =
       `<span class="selo ${CLASSE_SELO[r.status]}" id="selo-recorte">${r.status}</span>`;
 
-    // Nota sobre o modelo (transparência)
-    const erros = Object.values(r.backtest_erro_pct);
-    const erroMedio = erros.reduce((a, b) => a + b, 0) / erros.length;
-    const anosBt = Object.keys(r.backtest_erro_pct);
-    let texto = `<strong>Como ler a projeção:</strong> regressão linear sobre ${ANOS[0]}–${ANO_FINAL}, sem ${ANOS_ATIPICOS.join(', ')} ` +
-      `(subnotificação na pandemia). R² = ${dec(r.r2, 2)}: quanto mais perto de 1, mais consistente é a tendência. `;
-    if (erroMedio < -3) {
-      texto += `Testando o modelo com dados até 2021, ele previu em média <strong>${dec(Math.abs(erroMedio))}% a menos</strong> ` +
-        `do que de fato aconteceu em ${anosBt[0]}–${anosBt[anosBt.length - 1]}. Ou seja, a projeção é <strong>conservadora</strong>: o cenário real tende a ser pior.`;
-    } else {
-      texto += `Testado com dados até 2021, o modelo errou em média ${dec(Math.abs(erroMedio))}% em ${anosBt[0]}–${anosBt[anosBt.length - 1]}.`;
-    }
-    document.getElementById('nota-modelo').innerHTML = texto;
-
     desenharLinha(r);
   }
 
@@ -590,7 +576,7 @@
     : '<li>✔ Todos os anos conferem: soma das regiões e soma por sexo = total do Brasil.</li>';
 
   // =========================================================
-  // TELA 4 — Por que cresce? (fatores associados, dados do TABNET)
+  // TELA 4 — Motivo do crescimento (fatores associados, dados do TABNET)
   // =========================================================
   function renderFatores() {
     const F = DADOS.fatores;
@@ -766,11 +752,6 @@
       </div>`;
     }).join('');
 
-    // ---- cuidados de leitura ----
-    document.getElementById('nota-fatores-leitura').innerHTML =
-      `<strong>Como ler esta tela:</strong> os números mostram <strong>associação, não causa</strong>. Parte da alta também vem de ` +
-      `<strong>diagnosticar melhor</strong>: com mais testes (como o teste rápido molecular e o de HIV), aparecem casos que antes passavam despercebidos. ` +
-      `Fonte: ${F.fonte}. Mesma consulta ao TABNET usada nas outras telas.`;
   }
 
   // =========================================================
@@ -979,16 +960,8 @@
     const falhas = res.filter(r => !r.normal).map(r => r.recorte);
     document.getElementById('nota-residuos').innerHTML =
       `${falhas.length ? `${falhas.join(', ')} ficou no limite (p < 0,05): os erros não são perfeitamente normais, então o intervalo de confiança da projeção ali deve ser lido com cautela. ` : ''}` +
-      `Com só 11 anos por recorte, o teste tem pouco poder; por isso usamos também o backtest (Tela 1) para validar a projeção. P-valores por simulação (2.000 amostras, correção de Lilliefors).`;
+      `Com só 11 anos por recorte, o teste tem pouco poder; por isso validamos a projeção também com backtest (treino até 2021, teste em 2022–2024). P-valores por simulação (2.000 amostras, correção de Lilliefors).`;
 
-    // ---------- o que não funcionou ----------
-    const C = M.teste_crescimento_estados;
-    document.getElementById('nota-nao-funcionou').innerHTML = C
-      ? `<strong>Prever quais estados vão crescer mais que o Brasil no ano seguinte.</strong> Treinamos uma regressão logística com a variação e a tendência recentes de cada estado ` +
-        `(${C.n_treino} casos de treino, ${C.n_teste} de teste). Resultado: <strong>AUC ${dec(C.auc_teste, 2)}</strong>, igual a sortear (0,5). ` +
-        `A variação de um ano para o outro em cada estado é, na prática, ruído. Por isso o AlertaTB usa a <strong>tendência de 12 anos</strong> (selos da Tela 3) ` +
-        `em vez de prever o ano seguinte. Registramos o teste por transparência: saber o que o dado <em>não</em> consegue responder também é resultado.`
-      : '';
   }
 
   // =========================================================

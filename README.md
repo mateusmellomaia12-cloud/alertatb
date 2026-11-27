@@ -133,7 +133,7 @@ data/raw/tabnet/*.csv                     (TABNET) ◄─┘
 data/processed/dados_painel.json  +  web/js/dados.js
         │
         ▼  lido pelo navegador
-web/index.html  →  Visão Geral · Regiões e Perfil · Alertas · Por que cresce? · Modelagem
+web/index.html  →  Visão Geral · Regiões e Perfil · Alertas · Motivo do crescimento · Modelagem
 ```
 
 ---
@@ -143,7 +143,7 @@ web/index.html  →  Visão Geral · Regiões e Perfil · Alertas · Por que cre
 **Fluxo principal:** o gestor abre o painel, vê os indicadores do Brasil, filtra por região, estado ou sexo e vê o gráfico atualizar. Na tela de Alertas, encontra as regiões que exigem ação e, com um clique, abre o gráfico daquela região.
 
 ### 1. Visão Geral (Dashboard Executivo)
-Filtro por recorte, 5 indicadores (casos 2024, crescimento 2013–2024, novos casos por ano, projeção 2034 e **taxa por 100 mil habitantes**), gráfico do histórico com a projeção tracejada (alterna entre **casos** e **por 100 mil hab.**) e uma nota explicando como ler o modelo.
+Filtro por recorte, 5 indicadores (casos 2024, crescimento 2013–2024, novos casos por ano, projeção 2034 e **taxa por 100 mil habitantes**), gráfico do histórico com a projeção tracejada (alterna entre **casos** e **por 100 mil hab.**).
 
 ![Tela 1 — Visão Geral](assets/prints/tela1-visao-geral.png)
 
@@ -157,16 +157,15 @@ Alerta de tendência crítica, ranking de risco com selos *Crítico / Atenção 
 
 ![Tela 3 — Alertas](assets/prints/tela3-alertas.png)
 
-### 4. Por que cresce? (fatores associados)
-Responde à pergunta que a banca e os gestores vão fazer. Mostra o que cresceu mais rápido que o total de casos (abandono, retorno após abandono, situação de rua, drogas, alcoolismo, óbitos, HIV, sistema prisional), a queda da cura e a alta do abandono comparadas às metas da OMS, e a distância da **meta nacional de 2035** (menos de 10 casos novos por 100 mil). Deixa claro que é **associação, não causa**, e que parte da alta vem de diagnosticar melhor.
+### 4. Motivo do crescimento (fatores associados)
+Responde à pergunta que a banca e os gestores vão fazer. Mostra o que cresceu mais rápido que o total de casos (abandono, retorno após abandono, situação de rua, drogas, alcoolismo, óbitos, HIV, sistema prisional), a queda da cura e a alta do abandono comparadas às metas da OMS, e a distância da **meta nacional de 2035** (menos de 10 casos novos por 100 mil).
 
-![Tela 4 — Por que cresce?](assets/prints/tela4-por-que-cresce.png)
+![Tela 4 — Motivo do crescimento](assets/prints/tela4-motivo-do-crescimento.png)
 
 ### 5. Modelagem e validação estatística
 Mostra como os modelos foram testados:
 - **Modelo de risco de abandono do tratamento** (regressão logística com sexo, idade, situação de rua, drogas, álcool e HIV), treinado com 369 mil pacientes de 2015–2019 e testado com 242 mil de 2021–2023: **curva ROC (AUC 0,69)**, **teste KS (KS 27,7; p < 0,001)**, matriz de confusão, razões de chance (situação de rua = 3,9× a chance de abandonar) e faixas de risco (de 9,5% a 42% de abandono).
 - **Teste KS de normalidade** (com correção de Lilliefors) nos resíduos da regressão de projeção: 34 de 35 recortes aderentes.
-- **O que não funcionou:** prever quais estados vão crescer mais que o Brasil no ano seguinte (AUC 0,46), registrado por transparência.
 
 ![Tela 5 — Modelagem](assets/prints/tela5-modelagem.png)
 

@@ -17,7 +17,6 @@
 **Tela:** passar o mouse nos indicadores → passar o mouse no gráfico → clicar em **"Por 100 mil hab."** → voltar para **"Casos"**.
 
 > "Na Visão Geral, o gestor vê os números principais e a tendência. A linha tracejada é a projeção feita com regressão linear em Python: se nada mudar, serão mais de 132 mil casos em 2034. O ponto cinza é 2020, quando a pandemia reduziu os diagnósticos; por isso ele fica fora do cálculo. Aqui eu troco para a taxa por 100 mil habitantes: ela subiu 23%, então a alta não é só porque a população cresceu."
-> *(opcional)* "Abaixo, explicamos o modelo: testado com dados reais, ele é conservador. O cenário real tende a ser pior."
 
 ## 1:00–1:45 · Regiões e Perfil *(Integrante 3)*
 **Tela:** mostrar a frase-resumo → trocar o período para **2019 → 2020** → voltar para **2013 → 2024** → rolar até o mapa → clicar no **Amazonas**.
@@ -30,8 +29,8 @@
 
 > "Na tela de Alertas, cada recorte recebe um selo: Crítico, Atenção ou Moderado, calculado pela velocidade e pela consistência do crescimento. Assim, o gestor sabe onde agir primeiro. Com um clique, abre o gráfico e a projeção daquele estado."
 
-## 2:15–2:45 · Por que cresce? + Modelagem *(Integrante 5)*
-**Tela:** abrir **"Por que cresce?"** → mostrar os 4 indicadores → rolar pelo gráfico de fatores e o da meta de 2035.
+## 2:15–2:45 · Motivo do crescimento + Modelagem *(Integrante 5)*
+**Tela:** abrir **"Motivo do crescimento"** → mostrar os 4 indicadores → rolar pelo gráfico de fatores e o da meta de 2035.
 
 > "E por que os casos crescem? Cruzamos outros dados do DATASUS. A cura caiu de 70% para 58%, longe da meta de 85% da OMS, e o abandono do tratamento chegou a 19%. Quem abandona continua transmitindo. Também cresceram os casos em pessoas em situação de rua e que usam drogas. Hoje são quase 40 casos novos por 100 mil habitantes; a meta do Brasil para 2035 é menos de 10."
 > **Tela:** abrir **"Modelagem"** e mostrar a curva ROC e o gráfico de faixas de risco.

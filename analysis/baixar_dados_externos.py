@@ -4,8 +4,11 @@ AlertaTB — Baixa os dados externos usados no painel
 1) IBGE — Projeções da População, Revisão 2024 (por sexo, região e UF, 2000–2070)
    -> data/raw/ibge_populacao_2013_2034.csv
 2) DATASUS/TABNET — SINAN Tuberculose, casos confirmados por ano de diagnóstico,
-   cruzados com fatores de risco e desfecho do tratamento
+   cruzados com local de notificação, sexo, fatores de risco e desfecho do tratamento
    -> data/raw/tabnet/*.csv
+3) Monta a série histórica usada pelo painel a partir do TABNET
+   (ano de diagnóstico × região/UF de notificação e sexo — mesmo critério da planilha original)
+   -> data/processed/tuberculose_2013_2024.csv
 
 Só precisa rodar de novo quando quiser atualizar os dados (o painel usa os CSVs salvos).
 
@@ -38,6 +41,9 @@ LOCAIS_POP = {"Brasil": "Brasil", "Norte": "Norte", "Nordeste": "Nordeste", "Sud
 
 # coluna do TABNET -> nome do arquivo salvo
 CONSULTAS_TABNET = {
+    "Região_de_notificação": "regiao_notificacao",
+    "UF_de_notificação": "uf_notificacao",
+    "Sexo": "sexo",
     "Região_de_residência": "regiao_residencia",
     "Situação_Encerra.": "situacao_encerramento",
     "Tipo_de_entrada__": "tipo_entrada",
@@ -103,6 +109,36 @@ def baixar_tabnet() -> None:
         print(f"  ✔ {saida.relative_to(RAIZ)} ({len(tabela) - 2} anos)")
 
 
+def ler_tabnet(nome: str) -> pd.DataFrame:
+    t = pd.read_csv(PASTA_TABNET / f"{nome}.csv", dtype=str)
+    t = t[t.iloc[:, 0].str.fullmatch(r"\d{4}")]
+    t = t.set_index(t.columns[0])
+    t.index = t.index.astype(int)
+    return t.apply(pd.to_numeric).loc[2013:2024]
+
+
+def montar_serie_historica() -> None:
+    """Mesmas colunas da base original, mas com os números atuais do TABNET."""
+    reg, uf, sexo = ler_tabnet("regiao_notificacao"), ler_tabnet("uf_notificacao"), ler_tabnet("sexo")
+    serie = pd.DataFrame({
+        "Ano": reg.index,
+        "Tuberculose": reg["Total"].values,
+        "Norte": reg["1 Região Norte"].values,
+        "Nordeste": reg["2 Região Nordeste"].values,
+        "Centro Oeste": reg["5 Região Centro-Oeste"].values,
+        "Sul": reg["4 Região Sul"].values,
+        "Sudeste": reg["3 Região Sudeste"].values,
+        "São Paulo": uf["SP"].values,
+        "Rio Janeiro": uf["RJ"].values,
+        "Masculino": sexo["Masculino"].values,
+        "Feminino": sexo["Feminino"].values,
+    })
+    saida = RAIZ / "data" / "processed" / "tuberculose_2013_2024.csv"
+    serie.to_csv(saida, index=False)
+    print(f"  ✔ {saida.relative_to(RAIZ)} (série histórica do painel)")
+
+
 if __name__ == "__main__":
     baixar_populacao()
     baixar_tabnet()
+    montar_serie_historica()

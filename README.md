@@ -15,7 +15,7 @@
 
 ## 🎤 Pitch
 
-Todo ano, **mais de 110 mil brasileiros** são diagnosticados com tuberculose, uma doença que tem tratamento e cura, mas que voltou a crescer: **+30,9% entre 2013 e 2024**. Os dados para agir já existem e são públicos, mas ficam presos em planilhas do DATASUS que poucos gestores têm tempo de analisar. O resultado é um sistema de saúde que reage ao problema depois que ele aparece.
+Todo ano, **mais de 110 mil brasileiros** são diagnosticados com tuberculose, uma doença que tem tratamento e cura, mas que voltou a crescer: **+31,1% entre 2013 e 2024**. Os dados para agir já existem e são públicos, mas ficam presos em planilhas do DATASUS que poucos gestores têm tempo de analisar. O resultado é um sistema de saúde que reage ao problema depois que ele aparece.
 
 O **AlertaTB** transforma essas planilhas num painel que mostra, em segundos, **onde a doença cresce mais rápido** e **quantos casos esperar nos próximos dez anos**. Assim, as secretarias de saúde podem comprar testes e medicamentos, reforçar equipes e direcionar campanhas **antes** do pico.
 
@@ -31,11 +31,11 @@ O **AlertaTB** transforma essas planilhas num painel que mostra, em segundos, **
 ## 📌 Sobre o projeto
 
 ### O problema
-A tuberculose continua sendo um dos principais desafios de saúde pública no Brasil. Entre **2013 e 2024**, os casos notificados subiram de **85.212** para **111.521**, um crescimento de **30,9%**. A única queda foi em 2020 (86.236 casos), ligada à subnotificação durante a pandemia de Covid-19.
+A tuberculose continua sendo um dos principais desafios de saúde pública no Brasil. Entre **2013 e 2024**, os casos confirmados subiram de **86.212** para **113.012**, um crescimento de **31,1%**. A única queda foi em 2020 (86.160 casos), ligada à subnotificação durante a pandemia de Covid-19.
 
 Os dados são públicos (SINAN/DATASUS), mas ficam espalhados em tabelas estáticas. Isso dificulta que gestores vejam rápido as tendências regionais e demográficas. Em 2024:
-- o **Sudeste** concentrou **45,1%** dos casos (São Paulo **22,7%** e Rio de Janeiro **15,4%**);
-- o público **masculino** representou **70,1%** das notificações.
+- o **Sudeste** concentrou **44,9%** dos casos (São Paulo **22,9%** e Rio de Janeiro **15,1%**);
+- o público **masculino** representou **70,3%** das notificações.
 
 ### Público-alvo
 - **Gestores de Secretarias de Saúde** (municipais e estaduais): orçamento, compra de medicamentos e testes.
@@ -43,7 +43,7 @@ Os dados são públicos (SINAN/DATASUS), mas ficam espalhados em tabelas estáti
 - **Pesquisadores e formuladores de políticas públicas**: recortes geográficos e demográficos confiáveis.
 
 ### A solução
-O **AlertaTB** é um **dashboard web analítico e preditivo**. Ele transforma a base bruta do SINAN/DATASUS em visualizações interativas e usa **Regressão Linear** para projetar os casos de **2025 a 2034**. A projeção indica **+2.279 casos/ano**, chegando a **129.157 casos em 2034** se o cenário atual se mantiver. O painel tem filtros dinâmicos e alertas visuais para as regiões com crescimento mais rápido e consistente.
+O **AlertaTB** é um **dashboard web analítico e preditivo**. Ele transforma a base bruta do SINAN/DATASUS em visualizações interativas e usa **Regressão Linear** para projetar os casos de **2025 a 2034**. A projeção indica **+2.430 casos/ano**, chegando a **132.690 casos em 2034** se o cenário atual se mantiver (2020 fica fora do cálculo por ser um ano atípico da pandemia). O painel tem filtros dinâmicos e alertas visuais para as regiões com crescimento mais rápido e consistente.
 
 ### Alinhamento ao ODS 3
 Meta **3.3** da ONU: acabar com epidemias de doenças transmissíveis como a tuberculose. O projeto ajuda a antecipar surtos regionais, direcionar campanhas por perfil demográfico, otimizar recursos do SUS e interromper a cadeia de transmissão.
@@ -55,27 +55,28 @@ Meta **3.3** da ONU: acabar com epidemias de doenças transmissíveis como a tub
 | Item | Descrição |
 |---|---|
 | Fonte | **SINAN** (Sistema de Informação de Agravos de Notificação) via **DATASUS** — Ministério da Saúde |
-| Período | 2013 a 2024 (12 anos) |
+| Período | 2013 a 2024 (12 anos) — casos confirmados por **ano de diagnóstico** e **local de notificação**, consulta ao TABNET em 27/11/2026 |
 | Recortes | Brasil · 5 macrorregiões · São Paulo · Rio de Janeiro · Sexo (M/F) |
 | População | **IBGE**, Projeções da População (Revisão 2024), para calcular a **taxa por 100 mil habitantes** |
 | Fatores associados | **TABNET/DATASUS** (SINAN): desfecho do tratamento, abandono, HIV, situação de rua, drogas, alcoolismo, PPL, casos novos |
 
 Arquivos em [`data/`](data/):
 - [`data/raw/Analise_Tuberculose.xlsx`](data/raw/Analise_Tuberculose.xlsx): planilha original com estatística descritiva, correlação, regressões e projeções.
-- [`data/processed/tuberculose_2013_2024.csv`](data/processed/tuberculose_2013_2024.csv): série histórica limpa.
+- [`data/processed/tuberculose_2013_2024.csv`](data/processed/tuberculose_2013_2024.csv): série histórica usada pelo painel, montada direto do TABNET (corrige erros de digitação da planilha original).
+- [`data/raw/base_original_planilha_2013_2024.csv`](data/raw/base_original_planilha_2013_2024.csv): números da planilha do Checkpoint 1, guardados para comparação.
 - [`data/processed/projecao_2025_2034.csv`](data/processed/projecao_2025_2034.csv): projeção linear original da planilha.
 - [`data/raw/ibge_populacao_2013_2034.csv`](data/raw/ibge_populacao_2013_2034.csv) e [`data/raw/tabnet/`](data/raw/tabnet/): baixados por [`analysis/baixar_dados_externos.py`](analysis/baixar_dados_externos.py).
 - [`data/processed/dados_painel.json`](data/processed/dados_painel.json): gerado por [`analysis/regressao.py`](analysis/regressao.py), usado pelo portal web.
 
 ### Taxa por 100 mil habitantes (2024)
-Mostra que a alta **não é só efeito do crescimento da população**: a taxa do Brasil subiu **+22,7%** desde 2013.
+Mostra que a alta **não é só efeito do crescimento da população**: a taxa do Brasil subiu **+22,9%** desde 2013.
 
 | Recorte | Taxa 2013 | Taxa 2024 | Variação |
 |---|---:|---:|---:|
-| **Brasil** | 42,8 | **52,5** | +22,7% |
-| Rio de Janeiro | 79,5 | **100,0** | +25,8% |
-| Norte | 52,9 | **80,7** | +52,6% |
-| Homens | 59,8 | **75,4** | +26,1% |
+| **Brasil** | 43,3 | **53,2** | +22,9% |
+| Rio de Janeiro | 79,5 | **99,4** | +25,0% |
+| Norte | 52,8 | **81,4** | +54,2% |
+| Homens | 59,8 | **76,6** | +28,1% |
 
 ### Por que está crescendo? (TABNET, 2013 → 2024)
 - **Cura caiu** de 70,4% para 58,0% (meta da OMS: 85%) e o **abandono subiu** de 13,5% para 18,9% (aceitável: até 5%).
@@ -89,16 +90,18 @@ Mostra que a alta **não é só efeito do crescimento da população**: a taxa d
 
 | Recorte | Casos 2024 | Crescimento/ano | R² | Projeção 2034 |
 |---|---:|---:|---:|---:|
-| **Brasil** | **111.521** | **+2.279** | **0,73** | **129.157** |
-| Norte | 15.065 | +548 | 0,89 | 19.544 |
-| Nordeste | 27.559 | +476 | 0,64 | 31.831 |
-| Centro-Oeste | 5.491 | +111 | 0,54 | 6.313 |
-| Sul | 13.145 | +160 | 0,42 | 14.013 |
-| Sudeste | 50.261 | +1.015 | 0,72 | 57.844 |
-| São Paulo | 25.318 | +398 | 0,53 | 27.760 |
-| Rio de Janeiro | 17.228 | +361 | 0,83 | 20.303 |
-| Masculino | 78.208 | +1.771 | 0,78 | 92.930 |
-| Feminino | 33.301 | +501 | 0,54 | 36.130 |
+| **Brasil** | **113.012** | **+2.430** | **0,84** | **132.690** |
+| Norte | 15.199 | +568 | 0,94 | 19.983 |
+| Nordeste | 28.126 | +531 | 0,81 | 32.975 |
+| Centro-Oeste | 5.568 | +121 | 0,63 | 6.527 |
+| Sul | 13.428 | +190 | 0,59 | 14.624 |
+| Sudeste | 50.691 | +1.019 | 0,82 | 58.581 |
+| São Paulo | 25.854 | +457 | 0,68 | 28.988 |
+| Rio de Janeiro | 17.121 | +374 | 0,94 | 20.621 |
+| Masculino | 79.395 | +1.906 | 0,88 | 95.784 |
+| Feminino | 33.608 | +523 | 0,65 | 36.889 |
+
+Regressão linear sem 2020 (ano atípico da pandemia, com subnotificação). Com 2020 no cálculo, o R² do Brasil cai de 0,84 para 0,71 e a projeção fica artificialmente mais baixa. Detalhes em [docs/avaliacao_da_base.md](docs/avaliacao_da_base.md).
 
 ---
 
@@ -144,7 +147,7 @@ Filtro por recorte, 5 indicadores (casos 2024, crescimento 2013–2024, novos ca
 ![Tela 1 — Visão Geral](assets/prints/tela1-visao-geral.png)
 
 ### 2. Regiões e Perfil: quem mais cresceu
-Compara dois anos à escolha (ex.: 2013 → 2024) e mostra **quanto cada região, estado e sexo cresceu**, com uma frase-resumo gerada automaticamente. Inclui ranking de variação com a média do Brasil, evolução das regiões com base 100, cartões comparativos, perfil por sexo e participação no total. Exemplo: de 2013 a 2024, o **Norte cresceu +69,5%**, 4,2× mais que o Sul.
+Compara dois anos à escolha (ex.: 2013 → 2024) e mostra **quanto cada região, estado e sexo cresceu**, com uma frase-resumo gerada automaticamente. Inclui ranking de variação com a média do Brasil, evolução das regiões com base 100, cartões comparativos, perfil por sexo e participação no total. Exemplo: de 2013 a 2024, o **Norte cresceu +71,2%**, 3,7× mais que o Sul.
 
 ![Tela 2 — Regiões e Perfil](assets/prints/tela2-regioes-perfil.png)
 
@@ -176,10 +179,10 @@ cd alertatb
 ```
 
 ### Opção 3: recalcular os dados (Python 3.10+)
-Só é necessário se a base em `data/processed/tuberculose_2013_2024.csv` for alterada.
+Só é necessário para atualizar os dados com uma nova consulta ao DATASUS/IBGE.
 ```bash
 pip install -r analysis/requirements.txt
-python analysis/baixar_dados_externos.py   # opcional: atualiza população (IBGE) e fatores (TABNET)
+python analysis/baixar_dados_externos.py   # opcional: baixa de novo TABNET (casos e fatores) e IBGE (população)
 python analysis/regressao.py
 # gera data/processed/dados_painel.json e web/js/dados.js
 # depois é só recarregar o web/index.html no navegador

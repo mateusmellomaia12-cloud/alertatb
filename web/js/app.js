@@ -447,7 +447,7 @@
   const avisos = DADOS.avisos_consistencia || [];
   document.getElementById('avisos-dados').innerHTML = avisos.length
     ? avisos.map(a => `<li><strong>${a.ano}</strong> · soma por ${a.recorte}: ${num(a.soma)} × total ${num(a.total)} (${a.diferenca > 0 ? '+' : '−'}${num(Math.abs(a.diferenca))})</li>`).join('')
-    : '<li>Nenhuma inconsistência encontrada.</li>';
+    : '<li>✔ Todos os anos conferem: soma das regiões e soma por sexo = total do Brasil.</li>';
 
   // =========================================================
   // TELA 4 — Por que cresce? (fatores associados, dados do TABNET)
@@ -630,7 +630,7 @@
     document.getElementById('nota-fatores-leitura').innerHTML =
       `<strong>Como ler esta tela:</strong> os números mostram <strong>associação, não causa</strong>. Parte da alta também vem de ` +
       `<strong>diagnosticar melhor</strong>: com mais testes (como o teste rápido molecular e o de HIV), aparecem casos que antes passavam despercebidos. ` +
-      `Fonte: ${F.fonte}. Os totais do TABNET são de uma consulta mais recente e podem diferir um pouco da base das outras telas.`;
+      `Fonte: ${F.fonte}. Mesma consulta ao TABNET usada nas outras telas.`;
   }
 
   // =========================================================

@@ -1,73 +1,90 @@
 # Avaliação da base de dados
 
-Análise da planilha [`data/raw/Analise_Tuberculose.xlsx`](../data/raw/Analise_Tuberculose.xlsx) (SINAN/DATASUS, 2013–2024), feita em 24/11/2026.
+Análise da planilha [`data/raw/Analise_Tuberculose.xlsx`](../data/raw/Analise_Tuberculose.xlsx) (SINAN/DATASUS, 2013–2024), feita em 24/11/2026 e revisada em 27/11/2026, quando a base foi conferida e reconstruída direto do TABNET.
 
-**Resumo:** as regressões, o R² e as projeções da planilha estão corretos e batem com o relatório do Checkpoint 1. A base é um bom ponto de partida, mas tem três problemas que a banca pode notar e várias oportunidades de melhoria.
+**Resumo:** os cálculos da planilha (regressões, R², projeções) estavam corretos, mas **alguns números de entrada tinham erros de digitação**. A base usada no painel agora é montada automaticamente do TABNET por [`analysis/baixar_dados_externos.py`](../analysis/baixar_dados_externos.py), e todas as somas fecham.
 
 Os números abaixo podem ser reproduzidos com [`analysis/regressao.py`](../analysis/regressao.py).
 
 ---
 
-## ⚠️ Problemas encontrados
+## ✅ Problema resolvido: totais que não fechavam
 
-### 1. A projeção começa caindo
-Com todos os anos no ajuste, o modelo prevê **108.648 casos em 2025**, menos que os **111.521 reais de 2024**. Isso aparece no gráfico do relatório do CP1 como uma queda no início da linha tracejada.
+Na planilha original, a soma das regiões e a soma por sexo não batiam com o total do Brasil em 2013, 2015, 2021 e 2022.
 
-**Causa:** 2020 teve subnotificação por causa da pandemia de Covid-19 e "puxa" a reta para baixo.
+### De onde vieram os números da planilha
+Comparamos a planilha com várias consultas do TABNET (ano de diagnóstico ou de notificação × região de residência ou de notificação). A combinação que bate é:
 
-**Ajuste sem 2020:**
+> **Casos confirmados por ano de diagnóstico × região/UF de notificação** (SINAN/TABNET)
 
-| Recorte | R² com 2020 | R² sem 2020 | Proj. 2025 sem 2020 | Proj. 2034 sem 2020 |
-|---|---:|---:|---:|---:|
-| Brasil | 0,73 | **0,85** | 110.501 | 132.164 |
-| Norte | 0,89 | **0,94** | 14.842 | 19.919 |
-| Sudeste | 0,72 | **0,85** | 49.538 | 59.190 |
-| Sul | 0,42 | **0,56** | 12.778 | 14.351 |
+Com esse critério, **de 2013 a 2018 quase todos os valores batem exatamente**. As diferenças que sobram são de dois tipos:
 
-A queda em 2025 diminui (de ~2.900 para ~1.000 casos), mas **não some**, porque uma reta não acompanha a aceleração recente (ver item 2). No gráfico, vale ligar o último ponto real ao primeiro projetado com uma legenda clara, ou mostrar uma faixa de incerteza.
+**1. Erros de digitação na planilha (2013 e 2015)**
 
-### 2. O modelo subestima o crescimento recente
-**Backtest:** treinando a regressão só com dados até 2021 e comparando com o que aconteceu de verdade:
-
-| Recorte | Erro 2022 | Erro 2023 | Erro 2024 |
-|---|---:|---:|---:|
-| Brasil | −9,1% | −13,6% | −14,0% |
-| Norte | −9,4% | −11,9% | −16,0% |
-| Sudeste | −7,2% | −12,9% | −13,9% |
-
-A doença está **acelerando desde 2021** e a regressão linear não capta isso. Não é motivo para trocar o modelo, mas no pitch vale dizer que **a projeção é conservadora: o cenário real tende a ser pior**. Isso mostra domínio técnico.
-
-### 3. Alguns totais não fecham
-A soma das 5 regiões deveria dar o total do Brasil, e a soma masculino + feminino também:
-
-| Ano | Recorte | Soma | Total Brasil | Diferença |
+| Ano | Campo | Planilha | TABNET | Diferença |
 |---|---|---:|---:|---:|
-| 2013 | regiões | 84.222 | 85.212 | **−990** |
-| 2015 | regiões | 85.462 | 85.416 | +46 (soma maior que o total) |
-| 2015 | sexo | 85.652 | 85.416 | **+236** (soma maior que o total) |
-| 2021 | regiões | 91.345 | 91.385 | −40 |
-| 2022 | regiões | 103.124 | 103.322 | −198 |
+| 2013 | Total Brasil | 85.212 | **86.212** | −1.000 (dígito trocado) |
+| 2013 | Sudeste | 36.467 | **38.467** | −2.000 (dígito trocado) |
+| 2013 | Norte | 8.887 | **8.877** | +10 (dígitos invertidos) |
+| 2013 | Feminino | 26.941 | **27.933** | −992 |
+| 2015 | Total Brasil | 85.416 | **85.462** | −46 |
+| 2015 | Feminino | 26.640 | **26.445** | +195 |
 
-Parecem erros de digitação ou consultas feitas em datas diferentes. **Conferir esses anos de novo no TABNET/DATASUS.** Diferenças pequenas por sexo "ignorado" são normais; somas maiores que o total, não.
+O erro no Sudeste de 2013 fazia a região parecer ter crescido **+37,8%**. O valor correto é **+31,8%**.
+
+**2. Atualização do DATASUS (2019 em diante)**
+O SINAN continua recebendo notificações atrasadas e revisões, então os anos mais recentes mudam um pouco a cada consulta. 2024 foi o que mais mudou: **111.521 → 113.012** casos. Não é erro, é o dado ficando mais completo. Por isso o painel cita a data da consulta (27/11/2026).
+
+### O que foi feito
+- `data/processed/tuberculose_2013_2024.csv` agora é gerado direto do TABNET (mesmo critério e mesmas colunas da planilha).
+- Os números antigos ficaram guardados em [`data/raw/base_original_planilha_2013_2024.csv`](../data/raw/base_original_planilha_2013_2024.csv) para comparação.
+- O script continua conferindo as somas a cada execução. Hoje não há nenhuma inconsistência.
 
 ---
 
-## 💡 O que podemos fazer
+## ⚠️ Pontos de atenção do modelo
 
-### Até o Checkpoint 2 (27/11): rápido e com impacto
-- [ ] Corrigir 2013, 2015, 2021 e 2022 na fonte e atualizar `data/processed/tuberculose_2013_2024.csv`
-- [x] Regressão feita em Python, não só no Excel ([`analysis/regressao.py`](../analysis/regressao.py)). O script gera `data/processed/dados_painel.json` e o site lê desse arquivo. Isso conta como "estrutura funcional", não números copiados.
+### 1. Por que 2020 fica fora do cálculo
+Em 2020, a pandemia de Covid-19 fechou serviços e desviou equipes, e muitos casos de tuberculose **deixaram de ser diagnosticados**. O número caiu (86.160) e voltou a subir em seguida. Não houve menos doença, houve menos registro.
+
+Se 2020 entra na regressão, esse ponto "puxa" a reta para baixo:
+
+| Recorte | R² com 2020 | R² sem 2020 | Cresc./ano com 2020 | Cresc./ano sem 2020 | Proj. 2034 com 2020 | Proj. 2034 sem 2020 |
+|---|---:|---:|---:|---:|---:|---:|
+| Brasil | 0,71 | **0,84** | +2.298 | **+2.430** | 129.612 | **132.690** |
+| Norte | 0,89 | **0,94** | +552 | **+568** | 19.602 | **19.983** |
+| Sudeste | 0,68 | **0,82** | +960 | **+1.019** | 57.193 | **58.581** |
+| Sul | 0,45 | **0,59** | +175 | **+190** | 14.267 | **14.624** |
+
+Os números do Checkpoint 1 (+2.279/ano, R² 0,73, 129.157 em 2034) eram o ajuste **com** 2020 e **com** os erros de digitação. O painel e o README agora usam o ajuste **sem 2020** e com a base corrigida. Essa é uma prática comum em análises de saúde pós-pandemia, e o ano continua aparecendo no gráfico, marcado como atípico.
+
+### 2. A projeção começa abaixo de 2024
+Mesmo sem 2020, o modelo prevê **110.824 casos em 2025**, abaixo dos **113.012 reais de 2024**. A reta representa a tendência média de 12 anos, e a doença **acelerou desde 2021**.
+
+**Backtest:** treinando só com dados até 2021 e comparando com o que aconteceu de verdade:
+
+| Recorte | Erro 2022 | Erro 2023 | Erro 2024 |
+|---|---:|---:|---:|
+| Brasil | −7,0% | −11,4% | −12,7% |
+| Norte | −7,2% | −9,4% | −14,3% |
+| Sudeste | −5,6% | −11,4% | −12,9% |
+| Sul | −8,2% | −14,1% | −15,9% |
+
+No pitch, vale dizer que **a projeção é conservadora: o cenário real tende a ser pior**. Isso mostra domínio técnico.
+
+---
+
+## 💡 Status das melhorias
+
+- [x] Base conferida e reconstruída a partir do TABNET (erros de 2013 e 2015 corrigidos)
+- [x] Regressão em Python ([`analysis/regressao.py`](../analysis/regressao.py)), lida pelo site
 - [x] 2020 tratado como ano atípico: aparece no histórico, mas fica fora do ajuste
-- [ ] Mostrar no site o R² e uma nota dizendo que a projeção é conservadora
-
-### Até a banca (07/12): maior salto de qualidade
-- [ ] **Taxa por 100 mil habitantes**, não só número de casos. Hoje o Sudeste parece o pior porque é a região mais populosa. Dividindo pela população (IBGE, também pública), o **Norte** provavelmente aparece como a região mais crítica.
-- [ ] **Os 27 estados**, não só SP e RJ. O TABNET permite essa consulta, e dá para fazer um mapa do Brasil no site.
-- [ ] **Comparar com a meta oficial.** O plano nacional "Brasil Livre da Tuberculose" mira menos de 10 casos por 100 mil habitantes até 2035. O painel pode mostrar "quão longe estamos da meta", o que reforça o alinhamento ao ODS 3.
-- [ ] **Validar a regra dos selos** Crítico / Atenção / Moderado (proposta abaixo)
-
-### Extra, se sobrar tempo
-O TABNET também tem **faixa etária**, **desfecho do tratamento** (cura, abandono, óbito) e **coinfecção com HIV**. A taxa de **abandono de tratamento** é um dos maiores problemas da tuberculose no Brasil e daria um quarto ângulo para o painel.
+- [x] R² e nota de "projeção conservadora" no site
+- [x] **Taxa por 100 mil habitantes** (população do IBGE, Projeções 2024)
+- [x] **Comparação com a meta de 2035** (menos de 10 casos novos por 100 mil)
+- [x] **Fatores associados** (desfecho do tratamento, abandono, HIV, situação de rua, drogas, alcoolismo, PPL): Tela 4
+- [ ] Os 27 estados e um mapa (opcional)
+- [ ] Validar com o grupo a regra dos selos (abaixo)
 
 ---
 
@@ -81,27 +98,26 @@ O TABNET também tem **faixa etária**, **desfecho do tratamento** (cura, abando
 | 🟠 Atenção | crescimento ≥ 1,5%/ano **ou** R² ≥ 0,80 |
 | 🟢 Moderado | demais casos |
 
-Resultado atual (sem 2020 no ajuste):
+Resultado atual (base corrigida, sem 2020 no ajuste):
 
 | Recorte | Casos 2024 | Cresc./ano | %/ano | R² | Proj. 2034 | Selo |
 |---|---:|---:|---:|---:|---:|---|
-| Brasil | 111.521 | +2.407 | 2,2 | 0,85 | 132.164 | 🔴 Crítico |
-| Norte | 15.065 | +564 | 3,7 | 0,94 | 19.919 | 🔴 Crítico |
-| Nordeste | 27.559 | +509 | 1,9 | 0,79 | 32.611 | 🟠 Atenção |
-| Centro-Oeste | 5.491 | +118 | 2,1 | 0,63 | 6.468 | 🟠 Atenção |
-| Sul | 13.145 | +175 | 1,3 | 0,56 | 14.351 | 🟢 Moderado |
-| Sudeste | 50.261 | +1.072 | 2,1 | 0,85 | 59.190 | 🔴 Crítico |
-| São Paulo | 25.318 | +429 | 1,7 | 0,68 | 28.488 | 🟠 Atenção |
-| Rio de Janeiro | 17.228 | +379 | 2,2 | 0,94 | 20.721 | 🔴 Crítico |
-| Masculino | 78.208 | +1.856 | 2,4 | 0,88 | 94.942 | 🔴 Crítico |
-| Feminino | 33.301 | +543 | 1,6 | 0,72 | 37.129 | 🟠 Atenção |
+| Brasil | 113.012 | +2.430 | 2,1 | 0,84 | 132.690 | 🔴 Crítico |
+| Norte | 15.199 | +568 | 3,7 | 0,94 | 19.983 | 🔴 Crítico |
+| Nordeste | 28.126 | +531 | 1,9 | 0,81 | 32.975 | 🟠 Atenção |
+| Centro-Oeste | 5.568 | +121 | 2,2 | 0,63 | 6.527 | 🟠 Atenção |
+| Sul | 13.428 | +190 | 1,4 | 0,59 | 14.624 | 🟢 Moderado |
+| Sudeste | 50.691 | +1.019 | 2,0 | 0,82 | 58.581 | 🔴 Crítico |
+| São Paulo | 25.854 | +457 | 1,8 | 0,68 | 28.988 | 🟠 Atenção |
+| Rio de Janeiro | 17.121 | +374 | 2,2 | 0,94 | 20.621 | 🔴 Crítico |
+| Masculino | 79.395 | +1.906 | 2,4 | 0,88 | 95.784 | 🔴 Crítico |
+| Feminino | 33.608 | +523 | 1,6 | 0,65 | 36.889 | 🟠 Atenção |
 
 Os limites são uma sugestão: o grupo pode ajustá-los nas constantes no topo do script.
 
 ---
 
 ## Observações menores
-- O `.csv` original estava vazio; os CSVs em `data/processed/` foram gerados a partir do Excel.
-- A coluna "Tuberculose" representa o total do Brasil; no painel, exibir como **"Brasil"**.
-- As abas "Descritiva por Ano" e "Correlação" estão corretas, mas dizem pouco. A variação entre regiões reflete só o tamanho delas, e as correlações altas refletem que todas crescem juntas no tempo. Não precisam ser destaque no painel.
-- Os dados de 2023 e 2024 do SINAN ainda podem ser revisados pelo Ministério da Saúde. Vale citar a data da consulta.
+- A coluna "Tuberculose" representa o total do Brasil; no painel, aparece como **"Brasil"**.
+- As abas "Descritiva por Ano" e "Correlação" da planilha estão corretas, mas dizem pouco: a variação entre regiões reflete só o tamanho delas, e as correlações altas refletem que todas crescem juntas no tempo.
+- 2024 e 2025 ainda podem ser revisados pelo Ministério da Saúde. Para atualizar, basta rodar `python analysis/baixar_dados_externos.py` e `python analysis/regressao.py`.

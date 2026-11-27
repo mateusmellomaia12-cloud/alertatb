@@ -31,11 +31,11 @@ Detalhes e justificativas: [docs/avaliacao_da_base.md](../docs/avaliacao_da_base
 {
   "recortes": {
     "Brasil": {
-      "historico": [{ "ano": 2013, "casos": 85212 }, ...],
-      "projecao":  [{ "ano": 2025, "casos": 110501 }, ...],
-      "coeficiente_anual": 2407.4,
-      "r2": 0.853,
-      "crescimento_pct_ano": 2.16,
+      "historico": [{ "ano": 2013, "casos": 86212 }, ...],
+      "projecao":  [{ "ano": 2025, "casos": 110824 }, ...],
+      "coeficiente_anual": 2429.5,
+      "r2": 0.835,
+      "crescimento_pct_ano": 2.15,
       "status": "Crítico",
       ...
     },

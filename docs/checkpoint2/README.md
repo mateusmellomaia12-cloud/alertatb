@@ -23,4 +23,5 @@ _Registrar aqui os retornos do Professor Mentor e o que foi ajustado._
 - **Painel web com 4 telas** publicado no GitHub Pages: Visão Geral, Regiões e Perfil, Alertas e Por que cresce?.
 - **Taxa por 100 mil habitantes** (IBGE), que mostra que a alta é real e não só efeito do aumento da população (+22,9% desde 2013).
 - **Fatores associados** (abandono, desfecho, HIV, situação de rua, drogas, alcoolismo, PPL) e comparação com a **meta nacional de 2035**.
+- **Os 27 estados** (antes só SP e RJ): mapa interativo na Tela 2 e todos no ranking de alertas e no filtro da Visão Geral.
 - **Fontes e metodologia** visíveis no site, com links oficiais.

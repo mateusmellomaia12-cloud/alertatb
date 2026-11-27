@@ -34,15 +34,23 @@ ENTRADA = RAIZ / "data" / "processed" / "tuberculose_2013_2024.csv"
 SAIDA = RAIZ / "data" / "processed" / "dados_painel.json"
 SAIDA_WEB = RAIZ / "web" / "js" / "dados.js"   # mesmo conteúdo, para o site abrir sem servidor
 POPULACAO = RAIZ / "data" / "raw" / "ibge_populacao_2013_2034.csv"   # gerado por baixar_dados_externos.py
+CASOS_UF = RAIZ / "data" / "raw" / "tabnet" / "uf_notificacao.csv"      # 27 UFs, mesmo critério da série
 
 ANOS_ATIPICOS = [2020]            # excluídos do ajuste
 ANO_CORTE_BACKTEST = 2021         # treina até este ano, testa os seguintes
 ANOS_PROJECAO = list(range(2025, 2035))
 
 REGIOES = ["Norte", "Nordeste", "Centro Oeste", "Sul", "Sudeste"]
-ESTADOS = ["São Paulo", "Rio Janeiro"]
 SEXO = ["Masculino", "Feminino"]
-# nome exibido no painel -> (coluna no CSV, grupo)
+REGIAO_DA_UF = {
+    "RO": "Norte", "AC": "Norte", "AM": "Norte", "RR": "Norte", "PA": "Norte", "AP": "Norte", "TO": "Norte",
+    "MA": "Nordeste", "PI": "Nordeste", "CE": "Nordeste", "RN": "Nordeste", "PB": "Nordeste", "PE": "Nordeste",
+    "AL": "Nordeste", "SE": "Nordeste", "BA": "Nordeste",
+    "MG": "Sudeste", "ES": "Sudeste", "RJ": "Sudeste", "SP": "Sudeste",
+    "PR": "Sul", "SC": "Sul", "RS": "Sul",
+    "MS": "Centro-Oeste", "MT": "Centro-Oeste", "GO": "Centro-Oeste", "DF": "Centro-Oeste",
+}
+# nome exibido no painel -> (coluna no CSV, grupo). Os 27 estados entram em main().
 RECORTES = {
     "Brasil": ("Tuberculose", "Brasil"),
     "Norte": ("Norte", "Região"),
@@ -50,16 +58,11 @@ RECORTES = {
     "Centro-Oeste": ("Centro Oeste", "Região"),
     "Sul": ("Sul", "Região"),
     "Sudeste": ("Sudeste", "Região"),
-    "São Paulo": ("São Paulo", "Estado"),
-    "Rio de Janeiro": ("Rio Janeiro", "Estado"),
     "Masculino": ("Masculino", "Sexo"),
     "Feminino": ("Feminino", "Sexo"),
 }
 # nome exibido no painel -> (local, sexo) na tabela de população do IBGE
-POP_RECORTE = {nome: (nome, "Ambos") for nome in RECORTES}
-POP_RECORTE["Brasil"] = ("Brasil", "Ambos")
-POP_RECORTE["Masculino"] = ("Brasil", "Homens")
-POP_RECORTE["Feminino"] = ("Brasil", "Mulheres")
+POP_ESPECIAL = {"Masculino": ("Brasil", "Homens"), "Feminino": ("Brasil", "Mulheres")}
 
 # Regra dos selos (SUGESTÃO — o grupo pode ajustar os limites):
 #   crescimento % ao ano = coeficiente anual / casos do último ano real
@@ -157,18 +160,38 @@ def analisar_recorte(df: pd.DataFrame, coluna: str, grupo: str, pop: dict[int, i
 # --------------------------------------------------------------------------
 # Execução
 # --------------------------------------------------------------------------
-def ler_populacao() -> dict[str, dict[int, int]]:
+def ler_populacao(nomes) -> dict[str, dict[int, int]]:
     pop = pd.read_csv(POPULACAO)
     resultado = {}
-    for nome, (local, sexo) in POP_RECORTE.items():
+    for nome in nomes:
+        local, sexo = POP_ESPECIAL.get(nome, (nome, "Ambos"))
         sel = pop[(pop["local"] == local) & (pop["sexo"] == sexo)]
+        if sel.empty:
+            raise ValueError(f"População não encontrada para {nome}")
         resultado[nome] = dict(zip(sel["ano"].astype(int), sel["populacao"].astype(int)))
     return resultado
 
 
+def ler_estados(anos) -> tuple[pd.DataFrame, dict[str, str]]:
+    """Casos por UF de notificação (TABNET) e o nome de cada sigla (IBGE)."""
+    uf = pd.read_csv(CASOS_UF, dtype=str)
+    uf = uf[uf.iloc[:, 0].str.fullmatch(r"\d{4}")].set_index(uf.columns[0])
+    uf.index = uf.index.astype(int)
+    uf = uf.loc[list(anos), list(REGIAO_DA_UF)].replace("-", "0").apply(pd.to_numeric)
+    pop = pd.read_csv(POPULACAO)
+    nomes = dict(pop.drop_duplicates("sigla")[["sigla", "local"]].values)
+    uf.columns = [nomes[s] for s in uf.columns]
+    return uf.reset_index(drop=True), {nomes[s]: s for s in REGIAO_DA_UF}
+
+
 def main() -> None:
     df = pd.read_csv(ENTRADA, encoding="utf-8")
-    pop = ler_populacao()
+    estados, sigla_de = ler_estados(df["Ano"])
+    df = pd.concat([df, estados.add_prefix("UF ")], axis=1)
+    recortes = {k: v for k, v in RECORTES.items() if v[1] != "Sexo"}
+    recortes.update({nome: ("UF " + nome, "Estado") for nome in sorted(sigla_de)})
+    recortes.update({k: v for k, v in RECORTES.items() if v[1] == "Sexo"})
+    pop = ler_populacao(recortes)
 
     avisos = verificar_consistencia(df)
     resultado = {
@@ -183,9 +206,12 @@ def main() -> None:
         },
         "avisos_consistencia": avisos,
         "recortes": {nome: analisar_recorte(df, col, grupo, pop[nome])
-                     for nome, (col, grupo) in RECORTES.items()},
+                     for nome, (col, grupo) in recortes.items()},
         "fatores": montar_fatores(pop["Brasil"]),
     }
+    for nome, sigla in sigla_de.items():
+        resultado["recortes"][nome]["sigla"] = sigla
+        resultado["recortes"][nome]["regiao"] = REGIAO_DA_UF[sigla]
 
     texto = json.dumps(resultado, ensure_ascii=False, indent=2)
     SAIDA.write_text(texto, encoding="utf-8")

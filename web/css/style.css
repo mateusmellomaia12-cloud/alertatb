@@ -218,6 +218,49 @@ p { margin: 0; }
 .pequeno { font-size: 12.5px; color: var(--cinza); }
 
 /* ---------- Rodapé ---------- */
+/* ---------- Mapa dos estados (Tela 2) ---------- */
+.mapa-grade { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+.mapa-area { position: relative; }
+#mapa-uf { width: 100%; height: auto; max-height: 520px; display: block; }
+#mapa-uf .uf { cursor: pointer; outline: none; }
+#mapa-uf path { stroke: #fff; stroke-width: 1.4; stroke-linejoin: round; transition: opacity .15s; }
+#mapa-uf .uf:hover path, #mapa-uf .uf:focus-visible path { opacity: .82; }
+#mapa-uf .uf.sel path { stroke: var(--critico); stroke-width: 4; }
+#mapa-uf text { font: 600 21px 'Inter', sans-serif; fill: var(--roxo-profundo); text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
+#mapa-uf text.claro { fill: #fff; }
+.mapa-legenda { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--cinza); margin-top: 6px; font-variant-numeric: tabular-nums; }
+.mapa-legenda i { flex: 1; max-width: 240px; height: 10px; border-radius: 5px; }
+.mapa-dica {
+  position: absolute; pointer-events: none; background: var(--roxo-profundo); color: #fff; font-size: 12.5px;
+  padding: 6px 10px; border-radius: 6px; white-space: nowrap; z-index: 2;
+}
+.mapa-lado { display: flex; flex-direction: column; gap: 10px; }
+.mapa-detalhe { background: var(--nevoa); border: 1px solid var(--lavanda); border-radius: var(--raio); padding: 14px 16px; }
+.det-topo { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.det-nome { font-family: var(--fonte-titulo); font-size: 18px; color: var(--roxo-profundo); display: block; }
+.det-reg { font-size: 12px; color: var(--cinza); }
+.mapa-detalhe dl { margin: 10px 0 8px; display: grid; gap: 6px; }
+.mapa-detalhe dl div { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; border-bottom: 1px dashed var(--linha); padding-bottom: 5px; }
+.mapa-detalhe dt { color: var(--cinza); }
+.mapa-detalhe dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.det-pos { display: block; font-size: 11.5px; color: var(--roxo-medio); }
+.botao-link { background: none; border: 0; padding: 0; color: var(--roxo-medio); font: 600 13px var(--fonte-texto, 'Inter', sans-serif); cursor: pointer; }
+.botao-link:hover { color: var(--roxo-profundo); text-decoration: underline; }
+.mapa-sub { font-size: 12px; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; color: var(--roxo-medio); margin: 4px 0 0; }
+.mapa-ranking { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; counter-reset: rk; }
+.mapa-ranking li {
+  display: grid; grid-template-columns: 22px minmax(0, 1.3fr) minmax(0, 1fr) 62px; align-items: center; gap: 8px;
+  font-size: 13px; padding: 4px 6px; border-radius: 6px; cursor: pointer; counter-increment: rk;
+}
+.mapa-ranking li::before { content: counter(rk) "º"; color: var(--cinza); font-size: 11.5px; }
+.mapa-ranking li:hover, .mapa-ranking li.sel { background: var(--nevoa); }
+.mapa-ranking li.sel .rk-nome { font-weight: 600; color: var(--roxo-profundo); }
+.rk-nome { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rk-barra { height: 8px; background: var(--linha); border-radius: 4px; overflow: hidden; }
+.rk-barra span { display: block; height: 100%; border-radius: 4px; }
+.mapa-ranking strong { text-align: right; font-variant-numeric: tabular-nums; }
+@media (max-width: 860px) { .mapa-grade { grid-template-columns: 1fr; } }
+
 /* ---------- Fontes e metodologia ---------- */
 .fontes { border-top: 1px solid var(--linha); background: var(--nevoa); }
 .fontes-conteudo { max-width: 1200px; margin: 0 auto; padding: 24px 20px 20px; }

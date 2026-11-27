@@ -83,7 +83,7 @@ No pitch, vale dizer que **a projeção é conservadora: o cenário real tende a
 - [x] **Taxa por 100 mil habitantes** (população do IBGE, Projeções 2024)
 - [x] **Comparação com a meta de 2035** (menos de 10 casos novos por 100 mil)
 - [x] **Fatores associados** (desfecho do tratamento, abandono, HIV, situação de rua, drogas, alcoolismo, PPL): Tela 4
-- [ ] Os 27 estados e um mapa (opcional)
+- [x] Os 27 estados e um mapa (Tela 2), com taxa, variação e tendência de cada UF
 - [ ] Validar com o grupo a regra dos selos (abaixo)
 
 ---

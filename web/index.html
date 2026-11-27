@@ -133,6 +133,30 @@
 
       <div class="painel">
         <div class="painel-cabecalho">
+          <h2 id="titulo-mapa">Mapa dos estados</h2>
+          <div class="chips" role="group" aria-label="Medida do mapa">
+            <button type="button" class="chip chip-mapa ativo" data-medida="taxa">Por 100 mil hab.</button>
+            <button type="button" class="chip chip-mapa" data-medida="variacao">Variação no período</button>
+            <button type="button" class="chip chip-mapa" data-medida="casos">Casos</button>
+          </div>
+        </div>
+        <div class="mapa-grade">
+          <div class="mapa-area">
+            <svg id="mapa-uf" role="img" aria-labelledby="titulo-mapa"></svg>
+            <div class="mapa-legenda" id="mapa-legenda"></div>
+            <div class="mapa-dica" id="mapa-dica" hidden></div>
+          </div>
+          <div class="mapa-lado">
+            <div class="mapa-detalhe" id="mapa-detalhe"></div>
+            <h3 class="mapa-sub" id="mapa-ranking-titulo"></h3>
+            <ol class="mapa-ranking" id="mapa-ranking"></ol>
+          </div>
+        </div>
+        <p class="pequeno" id="nota-mapa"></p>
+      </div>
+
+      <div class="painel">
+        <div class="painel-cabecalho">
           <h2>Comparativo detalhado</h2>
           <span class="dica" id="periodo-tabela"></span>
         </div>
@@ -299,6 +323,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="js/dados.js"></script>
+  <script src="js/mapa-uf.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

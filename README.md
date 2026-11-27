@@ -56,8 +56,9 @@ Meta **3.3** da ONU: acabar com epidemias de doenças transmissíveis como a tub
 |---|---|
 | Fonte | **SINAN** (Sistema de Informação de Agravos de Notificação) via **DATASUS** — Ministério da Saúde |
 | Período | 2013 a 2024 (12 anos) — casos confirmados por **ano de diagnóstico** e **local de notificação**, consulta ao TABNET em 27/11/2026 |
-| Recortes | Brasil · 5 macrorregiões · São Paulo · Rio de Janeiro · Sexo (M/F) |
+| Recortes | Brasil · 5 macrorregiões · **27 estados** · Sexo (M/F) |
 | População | **IBGE**, Projeções da População (Revisão 2024), para calcular a **taxa por 100 mil habitantes** |
+| Mapa | **IBGE**, malha dos estados (API de malhas), convertida em SVG por [`analysis/gerar_mapa.py`](analysis/gerar_mapa.py) |
 | Fatores associados | **TABNET/DATASUS** (SINAN): desfecho do tratamento, abandono, HIV, situação de rua, drogas, alcoolismo, PPL, casos novos |
 
 Arquivos em [`data/`](data/):
@@ -147,7 +148,7 @@ Filtro por recorte, 5 indicadores (casos 2024, crescimento 2013–2024, novos ca
 ![Tela 1 — Visão Geral](assets/prints/tela1-visao-geral.png)
 
 ### 2. Regiões e Perfil: quem mais cresceu
-Compara dois anos à escolha (ex.: 2013 → 2024) e mostra **quanto cada região, estado e sexo cresceu**, com uma frase-resumo gerada automaticamente. Inclui ranking de variação com a média do Brasil, evolução das regiões com base 100, cartões comparativos, perfil por sexo e participação no total. Exemplo: de 2013 a 2024, o **Norte cresceu +71,2%**, 3,7× mais que o Sul.
+Compara dois anos à escolha (ex.: 2013 → 2024) e mostra **quanto cada região, estado e sexo cresceu**, com uma frase-resumo gerada automaticamente. Inclui um **mapa dos 27 estados** (taxa por 100 mil, variação no período ou casos, com ranking e detalhes ao clicar), ranking de variação com a média do Brasil, evolução das regiões com base 100, cartões comparativos, perfil por sexo e participação no total. Exemplo: de 2013 a 2024, o **Norte cresceu +71,2%**, 3,7× mais que o Sul.
 
 ![Tela 2 — Regiões e Perfil](assets/prints/tela2-regioes-perfil.png)
 

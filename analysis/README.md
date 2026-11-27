@@ -5,6 +5,9 @@ Baixa os dados externos e salva em `../data/raw/` (só precisa rodar para atuali
 - **IBGE**, Projeções da População (Revisão 2024): população por ano, região/UF e sexo → `ibge_populacao_2013_2034.csv`
 - **TABNET/DATASUS** (SINAN tuberculose): casos por ano de diagnóstico × desfecho, tipo de entrada, HIV, PPL, situação de rua, drogas, alcoolismo → `tabnet/*.csv`
 
+## `gerar_mapa.py`
+Converte a malha dos estados do IBGE (`../data/raw/ibge_malha_uf.geojson`) em caminhos SVG → **`../web/js/mapa-uf.js`**, usado no mapa da Tela 2. Só precisa rodar se a malha mudar.
+
 ## `fatores.py`
 Usado pelo `regressao.py`. Monta o bloco `fatores` do JSON (Tela 4): variação de cada fator, % dos casos, desfecho do tratamento e incidência de casos novos por 100 mil, comparada à meta de 2035.
 

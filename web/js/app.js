@@ -328,7 +328,7 @@
 
     // ---- cards comparativos (regiões, estados e sexo) ----
     document.getElementById('periodo-tabela').textContent = `${ini} → ${fim}`;
-    const recortesCard = ['Brasil'].concat(regs.map(r => r.nome), ESTADOS, ['Masculino', 'Feminino']);
+    const recortesCard = ['Brasil'].concat(regs.map(r => r.nome), ['São Paulo', 'Rio de Janeiro'], ['Masculino', 'Feminino']);
     const maxVar = Math.max(...recortesCard.map(n => Math.abs(variacao(casosNoAno(n, ini), casosNoAno(n, fim)))));
     document.getElementById('cards-comparativo').innerHTML = recortesCard.map(n => {
       const a = casosNoAno(n, ini), b = casosNoAno(n, fim), v = variacao(a, b);
@@ -386,6 +386,137 @@
 
   selIni.addEventListener('change', () => { preencherAnoFim(Number(selIni.value), Number(selFim.value)); renderRegioes(); });
   selFim.addEventListener('change', renderRegioes);
+  [selIni, selFim].forEach(sel => sel.addEventListener('change', renderMapa));
+
+  // ---------- Mapa dos 27 estados (Tela 2) ----------
+  const UFS = Object.keys(RECORTES).filter(n => RECORTES[n].sigla);
+  const NOME_DA_SIGLA = Object.fromEntries(UFS.map(n => [RECORTES[n].sigla, n]));
+  const SEM_SIGLA = ['DF', 'SE', 'AL', 'RN', 'PB', 'ES'];   // estados pequenos demais para a sigla caber
+  let medidaMapa = 'taxa';
+  let ufSelecionada = null;
+
+  // mistura duas cores hex: t = 0 -> a, t = 1 -> b
+  function misturar(a, b, t) {
+    const pa = [1, 3, 5].map(i => parseInt(a.slice(i, i + 2), 16));
+    const pb = [1, 3, 5].map(i => parseInt(b.slice(i, i + 2), 16));
+    return '#' + pa.map((v, i) => Math.round(v + (pb[i] - v) * t).toString(16).padStart(2, '0')).join('');
+  }
+  const CLARO = '#F1ECFA', ESCURO = COR.roxoProfundo, VERDE = '#2E8B57';
+
+  function valoresMapa(ini, fim) {
+    return Object.fromEntries(UFS.map(n => {
+      const a = casosNoAno(n, ini), b = casosNoAno(n, fim);
+      const v = medidaMapa === 'taxa' ? taxaNoAno(n, fim) : medidaMapa === 'casos' ? b : variacao(a, b);
+      return [n, v];
+    }));
+  }
+  const fmtMapa = (v) => (medidaMapa === 'taxa' ? dec(v) : medidaMapa === 'casos' ? num(v) : pctSinal(v));
+
+  function corMapa(v, min, max) {
+    if (medidaMapa === 'variacao') {
+      if (v < 0) return misturar('#EEF6F1', VERDE, Math.min(1, v / Math.min(min, -1)));
+      return misturar(CLARO, ESCURO, max > 0 ? Math.pow(v / max, 0.85) : 0);
+    }
+    return misturar(CLARO, ESCURO, max > min ? Math.pow((v - min) / (max - min), 0.85) : 0.5);
+  }
+
+  function renderMapa() {
+    const svg = document.getElementById('mapa-uf');
+    if (!window.MAPA_UF || !UFS.length) { svg.closest('.painel').hidden = true; return; }
+    const ini = Number(selIni.value), fim = Number(selFim.value);
+    const vals = valoresMapa(ini, fim);
+    const lista = Object.values(vals), min = Math.min(...lista), max = Math.max(...lista);
+    const ordem = UFS.slice().sort((a, b) => vals[b] - vals[a]);
+    if (!ufSelecionada) ufSelecionada = ordem[0];
+
+    const titulo = { taxa: `Casos por 100 mil habitantes em ${fim}`, variacao: `Variação dos casos, ${ini}–${fim}`, casos: `Casos em ${fim}` }[medidaMapa];
+    document.getElementById('titulo-mapa').textContent = `Mapa dos estados: ${titulo.charAt(0).toLowerCase() + titulo.slice(1)}`;
+
+    // desenho
+    svg.setAttribute('viewBox', MAPA_UF.viewBox);
+    svg.innerHTML = UFS.map(n => {
+      const sigla = RECORTES[n].sigla, g = MAPA_UF.estados[sigla], cor = corMapa(vals[n], min, max);
+      const escuro = medidaMapa === 'variacao' ? Math.abs(vals[n]) / Math.max(Math.abs(min), Math.abs(max)) > 0.55
+        : (vals[n] - min) / ((max - min) || 1) > 0.5;
+      const rotulo = !SEM_SIGLA.includes(sigla)
+        ? `<text x="${g.x}" y="${g.y}" class="${escuro ? 'claro' : ''}">${sigla}</text>` : '';
+      return `<g class="uf${n === ufSelecionada ? ' sel' : ''}" data-uf="${n}" tabindex="0" role="button"
+        aria-label="${n}: ${fmtMapa(vals[n])}"><path d="${g.d}" fill="${cor}"></path>${rotulo}</g>`;
+    }).join('');
+    // o estado selecionado é desenhado por último, para a borda ficar por cima
+    const sel = svg.querySelector('.uf.sel'); if (sel) svg.appendChild(sel);
+
+    // legenda
+    const meio = medidaMapa === 'variacao' && min < 0;
+    document.getElementById('mapa-legenda').innerHTML = `
+      <span>${fmtMapa(min)}</span>
+      <i style="background:linear-gradient(90deg, ${meio ? `${VERDE}, #EEF6F1 ${(-min / (max - min) * 100).toFixed(0)}%, ${CLARO}` : CLARO}, ${ESCURO})"></i>
+      <span>${fmtMapa(max)}</span>`;
+
+    // ranking (10 maiores)
+    document.getElementById('mapa-ranking-titulo').textContent =
+      { taxa: `Maiores taxas em ${fim}`, variacao: `Maior variação, ${ini}–${fim}`, casos: `Mais casos em ${fim}` }[medidaMapa];
+    const maxAbs = Math.max(...lista.map(Math.abs)) || 1;
+    document.getElementById('mapa-ranking').innerHTML = ordem.slice(0, 10).map(n => `
+      <li data-uf="${n}" class="${n === ufSelecionada ? 'sel' : ''}" tabindex="0">
+        <span class="rk-nome">${n}</span>
+        <span class="rk-barra"><span style="width:${(Math.abs(vals[n]) / maxAbs * 100).toFixed(1)}%;background:${corMapa(vals[n], min, max)}"></span></span>
+        <strong>${fmtMapa(vals[n])}</strong>
+      </li>`).join('');
+
+    // detalhe do estado selecionado
+    const r = RECORTES[ufSelecionada], a = casosNoAno(ufSelecionada, ini), b = casosNoAno(ufSelecionada, fim);
+    const posTaxa = UFS.slice().sort((x, y) => taxaNoAno(y, fim) - taxaNoAno(x, fim)).indexOf(ufSelecionada) + 1;
+    document.getElementById('mapa-detalhe').innerHTML = `
+      <div class="det-topo"><div><strong class="det-nome">${ufSelecionada}</strong><span class="det-reg">${r.regiao}</span></div>${selo(r.status)}</div>
+      <dl>
+        <div><dt>Casos</dt><dd>${num(a)} → <strong>${num(b)}</strong></dd></div>
+        <div><dt>Variação ${ini}–${fim}</dt><dd><strong>${pctSinal(variacao(a, b))}</strong></dd></div>
+        <div><dt>Por 100 mil hab.</dt><dd>${dec(taxaNoAno(ufSelecionada, ini))} → <strong>${dec(taxaNoAno(ufSelecionada, fim))}</strong> <span class="det-pos">${posTaxa}º do país</span></dd></div>
+        <div><dt>Tendência 2013–${ANO_FINAL}</dt><dd>${sinal(r.coeficiente_anual)} casos/ano · R² ${dec(r.r2, 2)}</dd></div>
+      </dl>
+      <button type="button" class="botao-link" data-abrir="${ufSelecionada}">Ver gráfico e projeção →</button>`;
+
+    const brasilTaxa = taxaNoAno('Brasil', fim);
+    const acima = UFS.filter(n => taxaNoAno(n, fim) > brasilTaxa).length;
+    document.getElementById('nota-mapa').textContent =
+      `Clique num estado para ver os detalhes. Em ${fim}, ${acima} dos 27 estados ficaram acima da taxa do Brasil (${dec(brasilTaxa)} por 100 mil). ` +
+      `Casos por UF de notificação (SINAN/TABNET); população: IBGE.`;
+  }
+
+  function selecionarUF(nome) { ufSelecionada = nome; renderMapa(); }
+  const areaMapa = document.querySelector('.mapa-grade');
+  if (areaMapa) {
+    const dica = document.getElementById('mapa-dica');
+    areaMapa.addEventListener('click', e => {
+      const abrir = e.target.closest('[data-abrir]');
+      if (abrir) { abrirRecorte(abrir.dataset.abrir); return; }
+      const alvo = e.target.closest('[data-uf]');
+      if (alvo) selecionarUF(alvo.dataset.uf);
+    });
+    areaMapa.addEventListener('keydown', e => {
+      const alvo = e.target.closest('[data-uf]');
+      if (alvo && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); selecionarUF(alvo.dataset.uf); }
+    });
+    const svgMapa = document.getElementById('mapa-uf');
+    svgMapa.addEventListener('mousemove', e => {
+      const g = e.target.closest('.uf');
+      if (!g) { dica.hidden = true; return; }
+      const n = g.dataset.uf, caixa = svgMapa.parentElement.getBoundingClientRect();
+      const ini = Number(selIni.value), fim = Number(selFim.value);
+      dica.innerHTML = `<strong>${n}</strong><br>${fmtMapa(valoresMapa(ini, fim)[n])}${medidaMapa === 'taxa' ? ' por 100 mil' : medidaMapa === 'casos' ? ' casos' : ''}`;
+      dica.style.left = (e.clientX - caixa.left + 14) + 'px';
+      dica.style.top = (e.clientY - caixa.top + 14) + 'px';
+      dica.hidden = false;
+    });
+    svgMapa.addEventListener('mouseleave', () => { dica.hidden = true; });
+  }
+  document.querySelectorAll('.chip-mapa').forEach(btn => btn.addEventListener('click', () => {
+    medidaMapa = btn.dataset.medida;
+    document.querySelectorAll('.chip-mapa').forEach(b => b.classList.toggle('ativo', b === btn));
+    ufSelecionada = null;
+    renderMapa();
+  }));
 
   // =========================================================
   // TELA 3 — Alertas
@@ -404,9 +535,14 @@
       .sort((a, b) => RECORTES[b].crescimento_pct_ano - RECORTES[a].crescimento_pct_ano);
     const banner = document.getElementById('banner-alerta');
     if (criticos.length) {
-      const lista = criticos.map(n => `<strong>${n}</strong> (${sinal(RECORTES[n].coeficiente_anual)} casos/ano, R² ${dec(RECORTES[n].r2, 2)})`);
+      const regCrit = criticos.filter(n => RECORTES[n].grupo === 'Região')
+        .map(n => `<strong>${n}</strong> (${sinal(RECORTES[n].coeficiente_anual)} casos/ano, R² ${dec(RECORTES[n].r2, 2)})`);
+      const ufCrit = criticos.filter(n => RECORTES[n].grupo === 'Estado').map(n => `<strong>${n}</strong>`);
+      let texto = '';
+      if (regCrit.length) texto += `Regiões: ${regCrit.join(', ')}. `;
+      if (ufCrit.length) texto += `${ufCrit.length} estados: ${ufCrit.join(', ')}. `;
       banner.innerHTML = `<span class="titulo-alerta">⚠ Alerta de tendência crítica</span>
-        <p>${lista.join(', ')} crescem rápido e de forma consistente. Prioridade para reforço de testagem, medicamentos e busca ativa.</p>`;
+        <p>${texto}Crescem rápido e de forma consistente. Prioridade para reforço de testagem, medicamentos e busca ativa.</p>`;
       banner.hidden = false;
     } else banner.hidden = true;
 
@@ -644,6 +780,7 @@
   function iniciar() {
     renderVisaoGeral('Brasil');
     renderRegioes();
+    renderMapa();
     renderAlertas();
     renderFatores();
     mostrarTela();

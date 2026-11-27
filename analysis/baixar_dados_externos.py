@@ -32,6 +32,8 @@ PASTA_TABNET = PASTA_RAW / "tabnet"
 
 URL_IBGE = ("https://ftp.ibge.gov.br/Projecao_da_Populacao/Projecao_da_Populacao_2024/"
             "projecoes_2024_tab2_grupo_quinquenal.xlsx")
+URL_MALHA = ("https://servicodados.ibge.gov.br/api/v3/malhas/paises/BR"
+             "?formato=application/vnd.geo+json&intrarregiao=UF&qualidade=minima")
 URL_TABNET = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sinannet/cnv/tubercbr.def"
 
 ANOS_POP = range(2013, 2035)
@@ -68,12 +70,14 @@ def baixar_populacao() -> None:
     print("IBGE: baixando projeções da população (revisão 2024)...")
     planilha = pd.read_excel(io.BytesIO(baixar(URL_IBGE)), header=5)
     planilha.columns = [str(c).strip() for c in planilha.columns]
-    col_sexo, col_local = planilha.columns[1], planilha.columns[4]
-    planilha = planilha[planilha[col_local].isin(LOCAIS_POP)]
+    col_sexo, col_sigla, col_local = planilha.columns[1], planilha.columns[3], planilha.columns[4]
+    # Brasil, regiões e as 27 UFs (UF = sigla de 2 letras diferente de BR)
+    eh_uf = planilha[col_sigla].astype(str).str.fullmatch(r"[A-Z]{2}") & (planilha[col_sigla] != "BR")
+    planilha = planilha[planilha[col_local].isin(LOCAIS_POP) | eh_uf]
     linhas = []
-    for (sexo, local), g in planilha.groupby([col_sexo, col_local]):
+    for (sexo, sigla, local), g in planilha.groupby([col_sexo, col_sigla, col_local]):
         for ano in ANOS_POP:
-            linhas.append({"ano": ano, "local": LOCAIS_POP[local], "sexo": sexo,
+            linhas.append({"ano": ano, "local": LOCAIS_POP.get(local, local), "sigla": sigla, "sexo": sexo,
                            "populacao": int(g[str(ano)].sum())})
     saida = PASTA_RAW / "ibge_populacao_2013_2034.csv"
     pd.DataFrame(linhas).sort_values(["local", "sexo", "ano"]).to_csv(saida, index=False)
@@ -138,7 +142,15 @@ def montar_serie_historica() -> None:
     print(f"  ✔ {saida.relative_to(RAIZ)} (série histórica do painel)")
 
 
+def baixar_malha() -> None:
+    print("IBGE: baixando a malha dos estados (contorno para o mapa)...")
+    saida = PASTA_RAW / "ibge_malha_uf.geojson"
+    saida.write_bytes(baixar(URL_MALHA))
+    print(f"  ✔ {saida.relative_to(RAIZ)}")
+
+
 if __name__ == "__main__":
     baixar_populacao()
+    baixar_malha()
     baixar_tabnet()
     montar_serie_historica()

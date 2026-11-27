@@ -7,7 +7,7 @@
 - [x] Instruções de como executar (reproduzíveis)
 - [x] Prints do protótipo
 - [x] Tecnologias utilizadas
-- [ ] Vídeo de demonstração (máx. 3 min), com link no README
+- [ ] Vídeo de demonstração (máx. 3 min), com link no README — roteiro: [roteiro_video.md](roteiro_video.md)
 
 ## Evolução desde o Checkpoint 1
 _Registrar aqui os retornos do Professor Mentor e o que foi ajustado._

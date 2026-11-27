@@ -85,32 +85,63 @@
       <div class="tela-cabecalho">
         <div>
           <p class="sobretitulo">Tela 2 · Análise regional e demográfica</p>
-          <h1 id="t2">Onde e em quem a doença se concentra</h1>
+          <h1 id="t2">Quem mais cresceu</h1>
         </div>
-        <div class="filtro">
-          <label for="filtro-ano">Ano</label>
-          <select id="filtro-ano"></select>
+        <div class="filtros-periodo">
+          <div class="filtro">
+            <label for="filtro-ano-ini">De</label>
+            <select id="filtro-ano-ini"></select>
+          </div>
+          <span class="seta-periodo" aria-hidden="true">→</span>
+          <div class="filtro">
+            <label for="filtro-ano-fim">Até</label>
+            <select id="filtro-ano-fim"></select>
+          </div>
         </div>
       </div>
 
+      <div class="insight" id="insight-regioes" role="status"></div>
+
       <div class="grade-2">
         <div class="painel">
-          <div class="painel-cabecalho"><h2>Casos por macrorregião</h2></div>
-          <div class="grafico grafico-barras"><canvas id="grafico-regioes" aria-label="Casos por macrorregião"></canvas></div>
+          <div class="painel-cabecalho">
+            <h2 id="titulo-ranking-cresc">Variação por região</h2>
+          </div>
+          <div class="grafico grafico-barras"><canvas id="grafico-cresc-regioes" aria-label="Crescimento percentual por região no período"></canvas></div>
+          <p class="pequeno" id="nota-ranking"></p>
         </div>
         <div class="painel">
-          <div class="painel-cabecalho"><h2>Perfil por sexo</h2></div>
-          <div class="grafico grafico-rosca"><canvas id="grafico-sexo" aria-label="Distribuição por sexo"></canvas></div>
-          <p class="destaque-texto" id="texto-sexo"></p>
+          <div class="painel-cabecalho">
+            <h2 id="titulo-indice">Evolução das regiões</h2>
+          </div>
+          <div class="grafico grafico-barras"><canvas id="grafico-indice" aria-label="Evolução das regiões com base 100 no ano inicial"></canvas></div>
+          <p class="pequeno" id="nota-indice"></p>
         </div>
       </div>
 
       <div class="painel">
-        <div class="painel-cabecalho"><h2>Destaques estaduais</h2></div>
-        <div class="estados" id="cards-estados"></div>
+        <div class="painel-cabecalho">
+          <h2>Comparativo detalhado</h2>
+          <span class="dica" id="periodo-tabela"></span>
+        </div>
+        <div class="comparativo" id="cards-comparativo"></div>
+      </div>
+
+      <div class="grade-2">
+        <div class="painel">
+          <div class="painel-cabecalho"><h2>Perfil por sexo</h2></div>
+          <div class="sexo-grade">
+            <div class="grafico grafico-rosca"><canvas id="grafico-sexo" aria-label="Distribuição por sexo no ano final"></canvas></div>
+            <div class="sexo-texto" id="texto-sexo"></div>
+          </div>
+        </div>
+        <div class="painel">
+          <div class="painel-cabecalho"><h2>Participação no total do Brasil</h2></div>
+          <div class="grafico grafico-barras"><canvas id="grafico-participacao" aria-label="Participação de cada região no total, ano inicial e final"></canvas></div>
+          <p class="pequeno">A fatia de cada região muda pouco ao longo dos anos. Por isso o crescimento (acima) mostra melhor as diferenças.</p>
+        </div>
       </div>
     </section>
-
     <!-- ============ TELA 3 — ALERTAS ============ -->
     <section id="tela-alertas" class="tela" aria-labelledby="t3" hidden>
       <div class="tela-cabecalho">

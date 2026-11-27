@@ -162,66 +162,204 @@
   selRecorte.addEventListener('change', () => renderVisaoGeral(selRecorte.value));
 
   // =========================================================
-  // TELA 2 — Regiões e perfil
+  // TELA 2 — Regiões e perfil (comparação entre dois anos)
   // =========================================================
-  const selAno = document.getElementById('filtro-ano');
-  ANOS.slice().reverse().forEach(a => selAno.appendChild(new Option(a, a)));
+  const selIni = document.getElementById('filtro-ano-ini');
+  const selFim = document.getElementById('filtro-ano-fim');
+  const COR_REGIAO = {
+    'Norte': COR.verdeAzulado, 'Nordeste': COR.roxoMedio, 'Centro-Oeste': '#B08A2E',
+    'Sul': '#8C6BC8', 'Sudeste': COR.roxoProfundo,
+  };
+  const variacao = (a, b) => (b / a - 1) * 100;
+  const pctSinal = (v) => (v >= 0 ? '+' : '−') + dec(Math.abs(v)) + '%';
 
-  function renderRegioes(ano) {
-    const total = casosNoAno('Brasil', ano);
+  ANOS.slice(0, -1).forEach(a => selIni.appendChild(new Option(a, a)));
+  function preencherAnoFim(ini, desejado) {
+    selFim.innerHTML = '';
+    ANOS.filter(a => a > ini).forEach(a => selFim.appendChild(new Option(a, a)));
+    selFim.value = String(desejado > ini ? desejado : ANO_FINAL);
+  }
+  selIni.value = String(ANOS[0]);
+  preencherAnoFim(ANOS[0], ANO_FINAL);
 
-    // Barras por região (ordenadas)
-    const regs = REGIOES.map(n => ({ nome: n, casos: casosNoAno(n, ano) })).sort((a, b) => b.casos - a.casos);
-    const coresBarras = [COR.roxoProfundo, COR.roxoMedio, COR.verdeAzulado, '#8C6BC8', COR.lavanda];
+  function renderRegioes() {
+    const ini = Number(selIni.value), fim = Number(selFim.value);
+    const periodo = `${ini}–${fim}`;
+    const temAtipico = ANOS_ATIPICOS.some(a => a === ini || a === fim);
+
+    // ---- crescimento de cada região no período ----
+    const regs = REGIOES.map(n => {
+      const a = casosNoAno(n, ini), b = casosNoAno(n, fim);
+      return { nome: n, ini: a, fim: b, var: variacao(a, b) };
+    }).sort((x, y) => y.var - x.var);
+    const brasilVar = variacao(casosNoAno('Brasil', ini), casosNoAno('Brasil', fim));
+
+    // ---- frase-resumo ----
+    const maior = regs[0], menor = regs[regs.length - 1];
+    let frase = `Entre <strong>${ini}</strong> e <strong>${fim}</strong>, os casos no Brasil variaram <strong>${pctSinal(brasilVar)}</strong>. `;
+    if (maior.var <= 0) {
+      frase += `Todas as regiões tiveram queda: a menor foi em <strong>${maior.nome}</strong> (${pctSinal(maior.var)}) ` +
+        `e a maior em <strong>${menor.nome}</strong> (${pctSinal(menor.var)}).`;
+    } else {
+      frase += `<strong>${maior.nome}</strong> foi a região que mais cresceu (<strong>${pctSinal(maior.var)}</strong>)`;
+      if (menor.var > 0 && maior.var / menor.var >= 1.5) {
+        frase += `, um ritmo <strong>${dec(maior.var / menor.var)}× maior</strong> que o de ${menor.nome} (${pctSinal(menor.var)}).`;
+      } else if (menor.var < 0) {
+        frase += `, enquanto ${menor.nome} teve queda (${pctSinal(menor.var)}).`;
+      } else {
+        frase += `; ${menor.nome} teve a menor variação (${pctSinal(menor.var)}).`;
+      }
+    }
+    if (temAtipico) frase += ` <em>Atenção: ${ANOS_ATIPICOS.join(', ')} teve subnotificação por causa da pandemia.</em>`;
+    document.getElementById('insight-regioes').innerHTML = frase;
+
+    // ---- gráfico 1: barras de crescimento % ----
+    document.getElementById('titulo-ranking-cresc').textContent = `Variação por região, ${periodo}`;
+    document.getElementById('nota-ranking').textContent = `Linha tracejada: média do Brasil (${pctSinal(brasilVar)}).`;
     if (window.Chart) {
       const dados = {
         labels: regs.map(r => r.nome),
-        datasets: [{ data: regs.map(r => r.casos), backgroundColor: coresBarras, borderRadius: 6, barThickness: 'flex', maxBarThickness: 34 }],
+        datasets: [{
+          data: regs.map(r => r.var), backgroundColor: regs.map(r => COR_REGIAO[r.nome]),
+          borderRadius: 6, maxBarThickness: 34,
+        }],
       };
+      const linhaBrasil = {
+        id: 'linhaBrasil',
+        afterDatasetsDraw(chart) {
+          const x = chart.scales.x.getPixelForValue(chart.config.options.plugins.linhaBrasil.valor);
+          const { top, bottom } = chart.chartArea, ctx = chart.ctx;
+          ctx.save(); ctx.strokeStyle = COR.cinza; ctx.setLineDash([5, 4]); ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, bottom); ctx.stroke(); ctx.restore();
+        },
+      };
+      const rotulosValor = {
+        id: 'rotulosValor',
+        afterDatasetsDraw(chart) {
+          const ctx = chart.ctx, meta = chart.getDatasetMeta(0);
+          ctx.save(); ctx.font = "600 12px 'Inter', sans-serif"; ctx.fillStyle = COR.roxoProfundo; ctx.textBaseline = 'middle';
+          meta.data.forEach((bar, i) => {
+            const v = chart.data.datasets[0].data[i];
+            ctx.textAlign = v >= 0 ? 'left' : 'right';
+            ctx.fillText(pctSinal(v), bar.x + (v >= 0 ? 6 : -6), bar.y);
+          });
+          ctx.restore();
+        },
+      };
+      const maxAbs = Math.max(...regs.map(r => Math.abs(r.var)), Math.abs(brasilVar));
       const opcoes = {
         indexAxis: 'y',
-        scales: { x: { grid: { color: COR.linha }, ticks: { callback: v => num(v) } }, y: { grid: { display: false } } },
-        plugins: { tooltip: { callbacks: { label: c => ` ${num(c.raw)} casos (${dec(c.raw / total * 100)}% do Brasil)` } } },
+        layout: { padding: { right: 8 } },
+        scales: {
+          x: { suggestedMin: Math.min(0, ...regs.map(r => r.var)) * 1.25, suggestedMax: maxAbs * 1.25,
+               grid: { color: COR.linha }, ticks: { callback: v => dec(v, 0) + '%' } },
+          y: { grid: { display: false } },
+        },
+        plugins: {
+          linhaBrasil: { valor: brasilVar },
+          tooltip: { callbacks: { label: c => { const r = regs[c.dataIndex]; return ` ${pctSinal(r.var)}: de ${num(r.ini)} para ${num(r.fim)} casos`; } } },
+        },
       };
-      if (graficos.regioes) { graficos.regioes.data = dados; graficos.regioes.update(); }
-      else graficos.regioes = new Chart(document.getElementById('grafico-regioes'), { type: 'bar', data: dados, options: opcoes });
+      if (graficos.cresc) { graficos.cresc.destroy(); }
+      graficos.cresc = new Chart(document.getElementById('grafico-cresc-regioes'),
+        { type: 'bar', data: dados, options: opcoes, plugins: [linhaBrasil, rotulosValor] });
     }
 
-    // Rosca por sexo
-    const m = casosNoAno('Masculino', ano), f = casosNoAno('Feminino', ano);
-    const pm = m / (m + f) * 100;
+    // ---- gráfico 2: evolução com base 100 no ano inicial ----
+    const anosPeriodo = ANOS.filter(a => a >= ini && a <= fim);
+    document.getElementById('titulo-indice').textContent = `Evolução das regiões (${ini} = 100)`;
+    document.getElementById('nota-indice').textContent =
+      `Cada linha começa em 100. Uma linha em 150 significa 50% mais casos que em ${ini}.`;
+    if (window.Chart) {
+      const dados = {
+        labels: anosPeriodo,
+        datasets: REGIOES.map(n => {
+          const base = casosNoAno(n, ini);
+          return {
+            label: n, data: anosPeriodo.map(a => casosNoAno(n, a) / base * 100),
+            borderColor: COR_REGIAO[n], backgroundColor: COR_REGIAO[n],
+            borderWidth: n === maior.nome ? 3.5 : 2, tension: 0.25,
+            pointRadius: anosPeriodo.map(a => (a === fim ? 4 : 0)), pointHoverRadius: 5,
+          };
+        }),
+      };
+      const opcoes = {
+        interaction: { mode: 'index', intersect: false },
+        scales: {
+          x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkip: true, autoSkipPadding: 10 } },
+          y: { grid: { color: COR.linha }, ticks: { callback: v => dec(v, 0) } },
+        },
+        plugins: {
+          legend: { display: true, position: 'bottom', labels: { usePointStyle: true, pointStyle: 'line', padding: 14, boxWidth: 24 } },
+          tooltip: {
+            itemSort: (a, b) => b.raw - a.raw,
+            callbacks: { label: c => ` ${c.dataset.label}: ${dec(c.raw)} (${num(casosNoAno(c.dataset.label, Number(c.label)))} casos)` },
+          },
+        },
+      };
+      if (graficos.indice) { graficos.indice.destroy(); }
+      graficos.indice = new Chart(document.getElementById('grafico-indice'), { type: 'line', data: dados, options: opcoes });
+    }
+
+    // ---- cards comparativos (regiões, estados e sexo) ----
+    document.getElementById('periodo-tabela').textContent = `${ini} → ${fim}`;
+    const recortesCard = ['Brasil'].concat(regs.map(r => r.nome), ESTADOS, ['Masculino', 'Feminino']);
+    const maxVar = Math.max(...recortesCard.map(n => Math.abs(variacao(casosNoAno(n, ini), casosNoAno(n, fim)))));
+    document.getElementById('cards-comparativo').innerHTML = recortesCard.map(n => {
+      const a = casosNoAno(n, ini), b = casosNoAno(n, fim), v = variacao(a, b);
+      const largura = maxVar ? Math.abs(v) / maxVar * 100 : 0;
+      const classe = v < 0 ? 'queda' : (v > brasilVar + 0.05 ? 'acima' : 'abaixo');
+      const grupo = RECORTES[n].grupo;
+      return `<div class="comp ${n === 'Brasil' ? 'comp-brasil' : ''}">
+        <div class="comp-topo"><span class="comp-nome">${n}</span><span class="comp-grupo">${grupo === 'Brasil' ? 'Referência' : grupo}</span></div>
+        <div class="comp-var ${classe}">${v >= 0 ? '▲' : '▼'} ${pctSinal(v)}</div>
+        <div class="comp-barra"><span class="${classe}" style="width:${largura.toFixed(1)}%"></span></div>
+        <div class="comp-casos">${num(a)} → <strong>${num(b)}</strong> casos</div>
+      </div>`;
+    }).join('');
+
+    // ---- perfil por sexo (ano final) + quem cresceu mais ----
+    const m = casosNoAno('Masculino', fim), f = casosNoAno('Feminino', fim);
+    const vm = variacao(casosNoAno('Masculino', ini), m), vf = variacao(casosNoAno('Feminino', ini), f);
     if (window.Chart) {
       const dados = { labels: ['Masculino', 'Feminino'], datasets: [{ data: [m, f], backgroundColor: [COR.roxoProfundo, COR.verdeAzulado], borderWidth: 2, borderColor: '#fff' }] };
       const opcoes = {
         cutout: '62%',
-        plugins: {
-          legend: { display: true, position: 'right', labels: { usePointStyle: true, pointStyle: 'circle', padding: 16 } },
-          tooltip: { callbacks: { label: c => ` ${c.label}: ${num(c.raw)} (${dec(c.raw / (m + f) * 100)}%)` } },
-        },
+        plugins: { tooltip: { callbacks: { label: c => ` ${c.label}: ${num(c.raw)} (${dec(c.raw / (m + f) * 100)}%)` } } },
       };
       if (graficos.sexo) { graficos.sexo.data = dados; graficos.sexo.update(); }
       else graficos.sexo = new Chart(document.getElementById('grafico-sexo'), { type: 'doughnut', data: dados, options: opcoes });
     }
-    document.getElementById('texto-sexo').innerHTML =
-      `Em ${ano}, <strong>${dec(pm)}%</strong> dos casos foram em homens: <strong>${dec(m / f, 1)}×</strong> mais que em mulheres.`;
+    const quemMais = vm >= vf ? 'homens' : 'mulheres';
+    document.getElementById('texto-sexo').innerHTML = `
+      <div class="sexo-linha"><i style="background:${COR.roxoProfundo}"></i><span>Masculino</span><strong>${dec(m / (m + f) * 100)}%</strong><em>${pctSinal(vm)}</em></div>
+      <div class="sexo-linha"><i style="background:${COR.verdeAzulado}"></i><span>Feminino</span><strong>${dec(f / (m + f) * 100)}%</strong><em>${pctSinal(vf)}</em></div>
+      <p>Em ${fim}, os homens tiveram <strong>${dec(m / f)}×</strong> mais casos que as mulheres. De ${ini} a ${fim}, os casos entre <strong>${quemMais}</strong> cresceram mais rápido.</p>`;
 
-    // Cards dos estados
-    document.getElementById('cards-estados').innerHTML = ESTADOS.map(n => {
-      const r = RECORTES[n];
-      const c = casosNoAno(n, ano);
-      return `<div class="estado">
-        <div class="estado-topo"><span class="estado-nome">${n}</span>${selo(r.status)}</div>
-        <div class="estado-dados">
-          <div><span class="r">Casos em ${ano}</span><span class="v">${num(c)}</span></div>
-          <div><span class="r">Participação no Brasil</span><span class="v">${dec(c / total * 100)}%</span></div>
-          <div><span class="r">Novos casos/ano</span><span class="v">${sinal(r.coeficiente_anual)}</span></div>
-          <div><span class="r">Projeção 2034 · R²</span><span class="v">${num(valorEm(r.projecao, 2034))} · ${dec(r.r2, 2)}</span></div>
-        </div>
-      </div>`;
-    }).join('');
+    // ---- participação no total (ano inicial × final) ----
+    if (window.Chart) {
+      const totIni = casosNoAno('Brasil', ini), totFim = casosNoAno('Brasil', fim);
+      const dados = {
+        labels: REGIOES,
+        datasets: [
+          { label: String(ini), data: REGIOES.map(n => casosNoAno(n, ini) / totIni * 100), backgroundColor: COR.lavanda, borderRadius: 4, maxBarThickness: 22 },
+          { label: String(fim), data: REGIOES.map(n => casosNoAno(n, fim) / totFim * 100), backgroundColor: COR.roxoProfundo, borderRadius: 4, maxBarThickness: 22 },
+        ],
+      };
+      const opcoes = {
+        scales: { x: { grid: { display: false } }, y: { grid: { color: COR.linha }, ticks: { callback: v => dec(v, 0) + '%' } } },
+        plugins: {
+          legend: { display: true, position: 'bottom', labels: { usePointStyle: true, pointStyle: 'rectRounded', padding: 14 } },
+          tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${dec(c.raw)}% do Brasil` } },
+        },
+      };
+      if (graficos.participacao) { graficos.participacao.destroy(); }
+      graficos.participacao = new Chart(document.getElementById('grafico-participacao'), { type: 'bar', data: dados, options: opcoes });
+    }
   }
 
-  selAno.addEventListener('change', () => renderRegioes(Number(selAno.value)));
+  selIni.addEventListener('change', () => { preencherAnoFim(Number(selIni.value), Number(selFim.value)); renderRegioes(); });
+  selFim.addEventListener('change', renderRegioes);
 
   // =========================================================
   // TELA 3 — Alertas
@@ -294,7 +432,7 @@
   // espera as fontes carregarem para os gráficos medirem os rótulos certo
   function iniciar() {
     renderVisaoGeral('Brasil');
-    renderRegioes(ANO_FINAL);
+    renderRegioes();
     renderAlertas();
     mostrarTela();
   }

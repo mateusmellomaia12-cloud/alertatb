@@ -122,8 +122,8 @@ Filtro por recorte, 4 indicadores (casos 2024, crescimento 2013–2024, novos ca
 
 ![Tela 1 — Visão Geral](assets/prints/tela1-visao-geral.png)
 
-### 2. Regiões e Perfil
-Filtro por ano (2013–2024), casos por macrorregião, distribuição por sexo e destaques de São Paulo e Rio de Janeiro.
+### 2. Regiões e Perfil: quem mais cresceu
+Compara dois anos à escolha (ex.: 2013 → 2024) e mostra **quanto cada região, estado e sexo cresceu**, com uma frase-resumo gerada automaticamente. Inclui ranking de variação com a média do Brasil, evolução das regiões com base 100, cartões comparativos, perfil por sexo e participação no total. Exemplo: de 2013 a 2024, o **Norte cresceu +69,5%**, 4,2× mais que o Sul.
 
 ![Tela 2 — Regiões e Perfil](assets/prints/tela2-regioes-perfil.png)
 
